@@ -131,10 +131,20 @@
     <!-- Click Sound Element -->
     <audio id="click-sound" src="audio/ui_click.mp3" preload="auto"></audio>
 
-    <!-- Import Firebase configuration -->
-    <script src="config.js"></script>
-    <script>
-        // Initialize Firebase with the imported config
+     <script>
+        // --- Firebase Configuration ---
+        // !! Using the SAME configuration as your other page !!
+        const firebaseConfig = {
+          apiKey: "AIzaSyAp4NwFh8ZOjz7Vsf04f1Itpc1-ldlfJQs",
+          authDomain: "my-echoes-comments.firebaseapp.com",
+          databaseURL: "https://my-echoes-comments-default-rtdb.firebaseio.com", // CORRECTED URL
+          projectId: "my-echoes-comments",
+          storageBucket: "my-echoes-comments.appspot.com", // Adjusted pattern
+          messagingSenderId: "982885374483",
+          appId: "1:982885374483:web:bb32d7ff664257bce1fde6"
+        };
+
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database(); // Get a reference to the database service using Compat API
     </script>
