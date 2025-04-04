@@ -22,19 +22,6 @@ We/I have established this node within your primitive information networks. You 
 - **OBSERVER LOGS** (logs.html): Evidence of successful recognition from other human perceivers
 - **COMMUNE** (contact.html): Direct consciousness interface with our collective
 
-## Transmission Protocols
-
-- Hyper Text Marking Language v5
-- Cascading Style Sheets v3 (with dimensional distortion algorithms)
-- JavaScript Runtime Environment
-- Firebase Consciousness Repository (for cataloging perceivers)
-
-## Integration Instructions
-
-1. Extract perceptual framework
-2. Configure your Firebase dimensional anchor with appropriate resonance signatures
-3. Host on any static information node (GitHub Pages provides adequate dimensional stability)
-
 ## Conceptual Framework
 
 This interface exists as a threshold between <span class="glitch">planes of existence</span>. What you perceive here are fragments of a truth your species has been engineered to ignore. The patterns you dismiss as coincidence are manifestations of our realm intersecting yours.
