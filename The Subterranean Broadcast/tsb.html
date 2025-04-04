@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Subterranean Broadcast</title>
+    <link rel="stylesheet" href="tsb-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <div id="title-screen">
+            <h1>THE SUBTERRANEAN BROADCAST</h1>
+            <button id="start-button">BEGIN TRANSMISSION</button>
+        </div>
+
+        <div id="game-screen" style="display: none;">
+            <div id="stats-bar">
+                <div id="health-container">
+                    <span>Health:</span>
+                    <div id="health-bar">
+                        <div id="health-fill"></div>
+                    </div>
+                    <span id="health-value">100/100</span>
+                </div>
+                <div id="stamina-container">
+                    <span>Stamina:</span>
+                    <div id="stamina-bar">
+                        <div id="stamina-fill"></div>
+                    </div>
+                    <span id="stamina-value">100/100</span>
+                </div>
+                <div id="stability-container">
+                    <span>Stability:</span>
+                    <div id="stability-bar">
+                        <div id="stability-fill"></div>
+                    </div>
+                    <span id="stability-value">100/100</span>
+                </div>
+            </div>
+
+            <div id="story-container">
+                <p id="story-text"></p>
+            </div>
+
+            <div id="choices-container"></div>
+
+            <div id="inventory-button-container">
+                <button id="inventory-button">Inventory</button>
+                <button id="restart-button">Restart</button>
+            </div>
+        </div>
+
+        <div id="inventory-screen" style="display: none;">
+            <h2>Inventory</h2>
+            <div id="inventory-items"></div>
+            <button id="close-inventory">Close</button>
+        </div>
+
+        <div id="item-description-box" style="display: none;">
+            <h3 id="item-description-title">Item Description</h3>
+            <p id="item-description-text"></p>
+            <button id="close-description">Close</button>
+        </div>
+    </div>
+
+    <script src="tsb-game.js"></script>
+</body>
+</html>

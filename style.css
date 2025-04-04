@@ -1,0 +1,1309 @@
+css
+/* --- Core Reset & Basic Setup --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Custom cursor style - neon green X for all elements */
+html, body, a, button, .comment-button, select, input, textarea, [role="button"], .crt-power-button, * {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M5,5 L19,19 M5,19 L19,5' stroke='%2300ff00' stroke-width='2'/></svg>") 12 12, auto !important;
+}
+
+body {
+    background-color: #0a0a0a; /* Very dark grey/black */
+    color: #c5c5c5; /* Dim white/grey */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* --- CRT Curved Screen Effect --- */
+body {
+    /* Apply perspective for 3D transforms */
+    perspective: 1000px;
+    background: #000;
+}
+
+/* Create a wrapper for curved screen effect */
+.crt-curved-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    /* Add vignette effect around the edges */
+    box-shadow:
+        inset 0 0 100px rgba(0, 0, 0, 0.9),
+        inset 0 0 30px rgba(0, 0, 0, 0.7);
+    /* Add subtle screen curvature */
+    border-radius: 5% / 5%;
+    /* Glass screen reflection effect */
+    background:
+        linear-gradient(
+            160deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0) 30%
+        );
+    /* Moving reflection effect */
+    animation: reflection-shift 10s infinite ease;
+}
+
+/* Create a second curved screen effect for enhanced depth */
+.crt-curved-screen::after {
+    content: "";
+    position: absolute;
+    top: -2%;
+    left: -2%;
+    right: -2%;
+    bottom: -2%;
+    border-radius: 7% / 7%;
+    box-shadow:
+        inset 0 0 15px 2px rgba(0, 255, 0, 0.05),
+        0 0 30px rgba(0, 0, 0, 0.8);
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Apply curved screen effect to main content */
+html::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 1000;
+    pointer-events: none;
+
+    /* Create the curved/bulging effect */
+    border-radius: 25px / 25px;
+    transform-style: preserve-3d;
+    transform: perspective(900px) rotateX(3deg);
+    box-shadow:
+        inset 0 0 65px 30px rgba(0, 0, 0, 0.7),
+        0 0 20px rgba(0, 255, 0, 0.05);
+}
+
+/* Apply subtle lens distortion to entire content */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 20px;
+    border: 2px solid #444;
+    background-color: #1a1a1a; /* Slightly lighter dark background */
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+    position: relative;
+    z-index: 2;
+
+    /* CRT screen bulge effect */
+    transform-style: preserve-3d;
+    transform: perspective(1500px) scale(0.97);
+    border-radius: 10px;
+    animation: subtle-bulge 15s infinite ease-in-out;
+    overflow: hidden;
+}
+
+@keyframes subtle-bulge {
+    0%, 100% { transform: perspective(1500px) scale(0.97); }
+    50% { transform: perspective(1500px) scale(0.975); }
+}
+
+@keyframes reflection-shift {
+    0%, 100% { background-position: 0% 0%; }
+    25% { background-position: 1% 1%; }
+    50% { background-position: 0% 0%; }
+    75% { background-position: -1% -1%; }
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 5000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(3px);
+    animation: modal-appear 0.3s ease;
+}
+
+@keyframes modal-appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    position: relative;
+    background-color: #1a1a1a;
+    margin: 10% auto;
+    padding: 25px;
+    border: 2px solid #444;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(159, 0, 186, 0.3), inset 0 0 8px rgba(159, 0, 186, 0.1);
+    animation: content-appear 0.4s ease;
+}
+
+@keyframes content-appear {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #00ffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #9f00ba;
+}
+
+.modal p {
+    margin-bottom: 20px;
+}
+
+.form-buttons {
+    text-align: right;
+    margin-top: 15px;
+}
+
+/* Create monitor edge around the screen */
+body::after {
+    content: "";
+    position: fixed;
+    top: -5%;
+    left: -5%;
+    right: -5%;
+    bottom: -5%;
+    background: #111;
+    border-radius: 50px / 50px;
+    box-shadow:
+        inset 0 0 15px 2px rgba(0, 0, 0, 1),
+        0 0 40px rgba(0, 0, 0, 0.8);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Add CRT power button - positioned in top right corner */
+.crt-power-button {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #222;
+    border: 1px solid #333;
+    box-shadow:
+        0 0 0 1px #000,
+        inset 0 0 8px rgba(0, 255, 0, 0.2);
+    z-index: 2000;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.crt-power-button::before {
+    content: "⏻";
+    font-size: 12px;
+    color: rgba(0, 255, 0, 0.6);
+    text-shadow: 0 0 3px rgba(0, 255, 0, 0.4);
+}
+
+.crt-power-button:hover {
+    box-shadow:
+        0 0 0 1px #000,
+        inset 0 0 10px rgba(0, 255, 0, 0.3),
+        0 0 5px rgba(0, 255, 0, 0.2);
+}
+
+.crt-power-button::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(0, 255, 0, 0.4);
+    box-shadow: 0 0 4px rgba(0, 255, 0, 0.6);
+    animation: power-indicator 4s infinite alternate;
+}
+
+@keyframes power-indicator {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+
+/* CRT Power Off Effect */
+.crt-power-off {
+    position: relative;
+}
+
+.crt-power-off::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 2000;
+    pointer-events: none;
+    animation: crt-shutdown 0.4s forwards;
+}
+
+@keyframes crt-shutdown {
+    0% {
+        opacity: 0;
+        transform: scaleY(0.005);
+    }
+    30% {
+        opacity: 0.8;
+        transform: scaleY(0.4);
+    }
+    100% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
+
+/* Animation for horizontal glitch lines */
+@keyframes horizontal-glitch-line {
+    0% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+    10% {
+        opacity: 0.7;
+        transform: translateY(3px);
+    }
+    30% {
+        opacity: 0.8;
+        transform: translateY(-2px);
+    }
+    50% {
+        opacity: 0.9;
+        transform: translateY(1px);
+    }
+    70% {
+        opacity: 0.7;
+        transform: translateY(-1px);
+    }
+    90% {
+        opacity: 0.5;
+        transform: translateY(1px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+}
+
+/* Animation for color split glitches */
+@keyframes color-split-glitch {
+    0% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+    20% {
+        opacity: 0.8;
+        transform: translateX(-5px);
+    }
+    40% {
+        opacity: 0.7;
+        transform: translateX(3px);
+    }
+    60% {
+        opacity: 0.8;
+        transform: translateX(-2px);
+    }
+    80% {
+        opacity: 0.6;
+        transform: translateX(1px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(0);
+    }
+}
+
+/* CRT screen edge light when powered off */
+.crt-power-off .crt-curved-screen {
+    box-shadow: inset 0 0 5px rgba(0, 150, 0, 0.1);
+    opacity: 0.3;
+    transition: box-shadow 0.5s, opacity 0.5s;
+}
+
+/* Entity styling */
+.entity-voice {
+    color: #9f00ba; /* Other-dimensional entity color */
+    font-style: italic;
+    text-shadow: 0 0 5px rgba(159, 0, 186, 0.5);
+    position: relative;
+}
+
+.entity-voice::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -10px;
+    right: -10px;
+    bottom: -5px;
+    background: radial-gradient(ellipse at center, rgba(159, 0, 186, 0.05) 0%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Subtle text reveal effect */
+.subtle-reveal {
+    position: relative;
+    color: #ded7e6;
+    transition: color 0.5s ease;
+}
+
+.subtle-reveal:hover {
+    color: #d900ff;
+    text-shadow: 0 0 5px rgba(217, 0, 255, 0.5);
+}
+
+/* Hidden message that appears occasionally */
+.hidden-message {
+    position: relative;
+    color: rgba(0, 0, 0, 0);
+    font-size: 0.8em;
+    margin-top: 25px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s ease, color 1s ease;
+    font-style: italic;
+    animation: reveal-hidden-message 40s infinite;
+}
+
+@keyframes reveal-hidden-message {
+    0%, 95%, 100% { opacity: 0; color: rgba(0, 0, 0, 0); }
+    96%, 99% { opacity: 0.3; color: rgba(200, 0, 255, 0.5); }
+}
+
+/* Enhanced link styling */
+a {
+    color: #00dfdf; /* Changed to cyan for otherworldly feel */
+    text-decoration: underline;
+    position: relative;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+a:hover {
+    color: #ffffff;
+    background-color: rgba(0, 223, 223, 0.1);
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(0, 223, 223, 0.6);
+}
+
+/* Create subtle entity presence during hover */
+a::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: radial-gradient(ellipse at center, rgba(0, 223, 223, 0) 0%, transparent 80%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+a:hover::before {
+    opacity: 0.5;
+}
+
+/* Entity signature styling */
+.entity-signature {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, transparent, rgba(159, 0, 186, 0.1), transparent);
+    padding: 3px 0;
+    animation: signature-pulse 8s infinite alternate;
+}
+
+@keyframes signature-pulse {
+    0% { text-shadow: 0 0 2px rgba(159, 0, 186, 0.3); }
+    50% { text-shadow: 0 0 3px rgba(159, 0, 186, 0.1); }
+    100% { text-shadow: 0 0 5px rgba(159, 0, 186, 0.4); }
+}
+
+hr.separator {
+    border: 0;
+    border-top: 1px solid #444; /* Solid for main separators */
+    margin: 15px 0;
+}
+
+hr.separator.dashed {
+    border-top: 1px dashed #444; /* Dashed for within sections */
+}
+
+
+/* --- Header --- */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #00ff00;
+}
+
+header .ascii-art {
+    font-size: 10px;
+    line-height: 1.1;
+    white-space: pre;
+    color: #888;
+    margin-bottom: 10px;
+    text-shadow: 0 0 3px #00ff00;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+    animation: text-flicker 3s linear infinite;
+}
+
+/* --- Navigation --- */
+nav {
+    margin-bottom: 25px;
+    padding: 10px;
+    border: 1px solid #333;
+    background-color: #111;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    font-weight: bold;
+}
+
+/* --- Main Content --- */
+main {
+    padding: 15px;
+    border: 1px dotted #333;
+    margin-bottom: 20px;
+    min-height: 200px;
+}
+
+main h2, main h3 {
+    color: #00ff00;
+    margin-bottom: 10px;
+}
+main h2 { font-size: 1.5em; }
+main h3 { font-size: 1.2em; }
+main h4 {
+    color: #00dd00;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+#status-text {
+    position: relative;
+    color: #00ff00;
+}
+
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    font-size: 0.8em;
+    color: #777;
+    padding-top: 10px;
+}
+
+/* --- Analog Horror Effects --- */
+
+.blinking-cursor {
+    animation: blink 1s step-end infinite;
+    font-weight: bold;
+    color: #00ff00;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes text-flicker {
+    0% { opacity: 0.8; text-shadow: 0 0 5px #00ff00, 0 0 8px #00ff00; transform: translateX(0); }
+    5% { opacity: 0.5; text-shadow: none; transform: translateX(-1px); }
+    8% { opacity: 0.2; text-shadow: -2px 0 #ff0000, 2px 0 #00ffff; transform: translateX(1px) skewX(2deg); }
+    10% { opacity: 0.9; text-shadow: 0 0 5px #00ff00; transform: translateX(0); }
+    15% { opacity: 0.4; text-shadow: none; transform: translateY(1px); }
+    18% { opacity: 0.1; text-shadow: 1px 0 #ff0000, -1px 0 #00ffff; transform: translateY(-1px) skewX(-2deg); }
+    20% { opacity: 1; text-shadow: 0 0 6px #00ff00, 0 0 10px #00ff00; transform: translateX(0) skewX(0); }
+    78% { opacity: 1; text-shadow: 0 0 6px #00ff00, 0 0 10px #00ff00; transform: translateX(0); }
+    80% { opacity: 0.5; text-shadow: -2px 0 #00ffff, 2px 0 #ff0000; transform: translateX(2px) skewX(3deg); }
+    82% { opacity: 0.8; text-shadow: 0 0 6px #00ff00, 0 0 10px #00ff00; transform: translateX(0) skewX(0); }
+    85% { opacity: 0.6; text-shadow: none; transform: translateY(-1px); }
+    90% { opacity: 1; text-shadow: 0 0 5px #00ff00; transform: translateY(0); }
+    92% { opacity: 0.3; text-shadow: 1px 0 #00ffff, -1px 0 #ff0000; transform: translateX(-1px) skewX(-1deg); }
+    100% { opacity: 0.8; text-shadow: 0 0 5px #00ff00, 0 0 8px #00ff00; transform: translateX(0) skewX(0); }
+}
+
+.glitch {
+    position: relative;
+    color: #ff00ff;
+    animation: glitch-anim-text 3s linear infinite alternate-reverse;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    overflow: hidden;
+    animation: vhs-damaged-frames 0.3s infinite alternate-reverse;
+}
+
+.glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #00ffff;
+    clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+    opacity: 0.8;
+    animation: glitch-anim-1 4.5s infinite;
+}
+
+.glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 #ff00ff;
+    clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+    opacity: 0.8;
+    animation: glitch-anim-2 4.5s infinite;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); transform: translateX(0); }
+    10% { clip-path: polygon(0 5%, 100% 0, 100% 25%, 0 35%); transform: translateX(-2px); }
+    20% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); transform: translateX(0); }
+    35% { clip-path: polygon(0 10%, 100% 5%, 100% 25%, 0 25%); transform: translateX(2px); }
+    49% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); transform: translateX(0); }
+    50% { clip-path: polygon(0 15%, 100% 10%, 100% 30%, 0 35%); transform: translateX(-1px); }
+    60% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); transform: translateX(0); }
+    70% { clip-path: polygon(0 0, 100% 0, 100% 40%, 0 25%); transform: translateX(1px); }
+    80% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); transform: translateX(0); }
+    90% { clip-path: polygon(0 5%, 100% 10%, 100% 20%, 0 30%); transform: translateX(-2px); }
+    100% { clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%); transform: translateX(0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); transform: translateX(0); }
+    15% { clip-path: polygon(0 65%, 100% 75%, 100% 100%, 0 95%); transform: translateX(2px); }
+    20% { clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); transform: translateX(0); }
+    35% { clip-path: polygon(0 75%, 100% 65%, 100% 90%, 0 100%); transform: translateX(-2px); }
+    49% { clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); transform: translateX(0); }
+    50% { clip-path: polygon(0 65%, 100% 70%, 100% 95%, 0 90%); transform: translateX(1px); }
+    65% { clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); transform: translateX(0); }
+    80% { clip-path: polygon(0 75%, 100% 70%, 100% 95%, 0 100%); transform: translateX(-1px); }
+    90% { clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%); transform: translateX(0); }
+    100% { clip-path: polygon(0 60%, 100% 65%, 100% 100%, 0 95%); transform: translateX(2px); }
+}
+
+@keyframes glitch-anim-text {
+    0% { text-shadow: none; color: #ff00ff; }
+    10% { text-shadow: -1px 0 #ff0000; color: #ff80ff; }
+    20% { text-shadow: 1px 0 #00ffff; color: #ff00aa; }
+    30% { text-shadow: none; color: #ff00ff; }
+    40% { text-shadow: 0 0 3px #ff00ff; color: #ff40ff; }
+    50% { text-shadow: none; color: #ff00ff; }
+    60% { text-shadow: 0 -1px #00ffff, 0 1px #ff0000; color: #ff80ff; }
+    70% { text-shadow: none; color: #ff00ff; }
+    80% { text-shadow: 1px 1px #ff0000; color: #ff60ff; }
+    90% { text-shadow: -1px -1px #00ffff; color: #ff40ff; }
+    100% { text-shadow: none; color: #ff00ff; }
+}
+
+@keyframes vhs-damaged-frames {
+    0% { background: #1a1a1a; }
+    20% { background: #1a1a1a; }
+    21% { background: rgba(40, 40, 40, 0.8); }
+    22% { background: #1a1a1a; }
+    92% { background: #1a1a1a; }
+    93% { background: rgba(40, 40, 40, 0.8); }
+    99% { background: #1a1a1a; }
+    100% { background: #1a1a1a; }
+}
+
+.status-glitching {
+    animation: status-flicker 3s infinite alternate;
+}
+
+.status-glitching::before,
+.status-glitching::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    overflow: hidden;
+    color: #00ff00;
+    opacity: 0.85;
+}
+
+.status-glitching::before {
+    left: 1px;
+    text-shadow: -2px 0 #00ffff, 2px 2px #00ffff;
+    animation: status-glitch-anim-1 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+
+.status-glitching::after {
+    left: -1px;
+    text-shadow: -2px 0 #ff00ff, 2px -2px #ff00ff;
+    animation: status-glitch-anim-2 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+}
+
+@keyframes status-flicker {
+    0% { opacity: 1; transform: skewX(0); }
+    10% { opacity: 0.9; transform: skewX(-0.5deg); }
+    15% { opacity: 1; transform: skewX(0); }
+    30% { opacity: 0.8; transform: skewX(0.5deg); }
+    35% { opacity: 0.9; transform: skewX(0); }
+    45% { opacity: 1; transform: skewX(0); }
+    50% { opacity: 0.2; transform: skewX(-1deg); }
+    51% { opacity: 0.8; transform: skewX(0); }
+    60% { opacity: 0.9; transform: skewX(0); }
+    70% { opacity: 1; transform: skewX(0); }
+    80% { opacity: 0.7; transform: skewX(1deg); }
+    85% { opacity: 0.9; transform: skewX(0); }
+    100% { opacity: 1; transform: skewX(0); }
+}
+
+@keyframes status-glitch-anim-1 {
+    0% { clip-path: inset(30% 0 40% 0); transform: translate(-1px, 1px); }
+    10% { clip-path: inset(80% 0 5% 0); transform: translate(1px, -1px); filter: hue-rotate(20deg); }
+    20% { clip-path: inset(15% 0 70% 0); transform: translate(-1px, 1px); }
+    30% { clip-path: inset(50% 0 45% 0); transform: translate(1px, -1px); filter: hue-rotate(-15deg); }
+    40% { clip-path: inset(90% 0 2% 0); transform: translate(-1px, 1px); }
+    50% { clip-path: inset(25% 0 50% 0); transform: translate(0, 0); filter: hue-rotate(5deg); }
+    60% { clip-path: inset(10% 0 60% 0); transform: translate(2px, 1px); }
+    70% { clip-path: inset(35% 0 35% 0); transform: translate(-2px, -1px); filter: hue-rotate(-10deg); }
+    80% { clip-path: inset(70% 0 20% 0); transform: translate(1px, 1px); }
+    90% { clip-path: inset(20% 0 65% 0); transform: translate(-1px, -1px); filter: hue-rotate(15deg); }
+    100% { clip-path: inset(30% 0 40% 0); transform: translate(0, 0); }
+}
+
+@keyframes status-glitch-anim-2 {
+    0% { clip-path: inset(5% 0 85% 0); transform: translate(1px, -1px); }
+    10% { clip-path: inset(60% 0 30% 0); transform: translate(-1px, 1px); filter: hue-rotate(-20deg); }
+    20% { clip-path: inset(22% 0 75% 0); transform: translate(1px, -1px); }
+    30% { clip-path: inset(70% 0 10% 0); transform: translate(-1px, 1px); filter: hue-rotate(15deg); }
+    40% { clip-path: inset(40% 0 40% 0); transform: translate(1px, -1px); }
+    50% { clip-path: inset(70% 0 15% 0); transform: translate(0, 0); filter: hue-rotate(-5deg); }
+    60% { clip-path: inset(30% 0 50% 0); transform: translate(-2px, -1px); }
+    70% { clip-path: inset(5% 0 80% 0); transform: translate(2px, 1px); filter: hue-rotate(10deg); }
+    80% { clip-path: inset(60% 0 25% 0); transform: translate(-1px, -1px); }
+    90% { clip-path: inset(15% 0 75% 0); transform: translate(1px, 1px); filter: hue-rotate(-15deg); }
+    100% { clip-path: inset(5% 0 85% 0); transform: translate(0, 0); }
+}
+
+
+/* --- Discussion Section --- */
+.discussion-section {
+    margin-top: 30px;
+    padding: 15px;
+    border: 1px dashed #444;
+    background-color: #111; /* Slightly darker background for contrast */
+}
+
+.case-selection {
+    margin-bottom: 20px;
+}
+
+.case-selection label {
+    margin-right: 10px;
+    color: #00ff00;
+}
+
+.case-selection select {
+    background-color: #0a0a0a;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 5px 8px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    outline: none;
+    cursor: pointer;
+}
+
+.case-selection select:focus {
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+}
+
+#comment-area {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+}
+
+#comment-form .form-group {
+    margin-bottom: 15px;
+}
+
+#comment-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #00cc00; /* Slightly dimmed green for labels */
+    font-weight: bold;
+}
+
+#comment-form input[type="text"],
+#comment-form textarea {
+    width: 100%;
+    background-color: #0f0f0f;
+    border: 1px solid #333;
+    color: #c5c5c5;
+    padding: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    line-height: 1.4;
+    resize: vertical; /* Allow vertical resize for textarea */
+}
+#comment-form input[type="text"]:focus,
+#comment-form textarea:focus {
+    outline: none;
+    border-color: #00ff00;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+}
+
+#comment-form textarea {
+    min-height: 80px; /* Minimum height for the text area */
+}
+
+.char-counter {
+    font-size: 0.8em;
+    color: #888;
+    text-align: right;
+    margin-top: 3px;
+}
+
+.comment-button {
+    display: inline-block;
+    padding: 8px 15px;
+    border: 1px solid #00ff00;
+    background-color: transparent;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    margin-right: 10px; /* Space between buttons */
+}
+
+.comment-button:hover {
+    background-color: #00ff00;
+    color: #0a0a0a;
+    box-shadow: 0 0 10px #00ff00, 0 0 15px #00ff00;
+    text-shadow: 0 0 2px #0a0a0a;
+}
+
+.comment-button.cancel-button {
+    border-color: #ff4444;
+    color: #ff4444;
+}
+.comment-button.cancel-button:hover {
+    background-color: #ff4444;
+    color: #0a0a0a;
+    box-shadow: 0 0 10px #ff4444, 0 0 15px #ff4444;
+    text-shadow: 0 0 2px #0a0a0a;
+}
+
+
+#comments-display {
+    margin-top: 25px;
+}
+
+.comment {
+    border: 1px solid #333;
+    background-color: #151515;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.comment-header {
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #444;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #00ff00;
+    margin-right: 15px;
+    flex-grow: 1;
+}
+
+.comment-timestamp {
+    font-size: 0.8em;
+    color: #888;
+    white-space: nowrap;
+    margin-left: auto;
+    padding-left: 10px;
+}
+
+.comment-content-wrapper {
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    max-height: 1000px; /* Adjust if very long comments are expected */
+}
+
+.comment-content-wrapper.collapsed {
+    max-height: 0;
+    /* border-top: 1px dashed #333; */ /* Optional: border when collapsed */
+    margin-top: -1px; /* Counteract border if added */
+}
+
+
+.comment-text {
+    margin-bottom: 10px;
+    margin-top: 5px; /* Add space below header */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.comment-actions {
+    text-align: right;
+    display: flex; /* Use flexbox for alignment */
+    justify-content: flex-end; /* Align buttons to the right */
+    align-items: center; /* Vertically align buttons */
+    gap: 10px; /* Space between buttons */
+}
+
+.reply-button {
+    background: none;
+    border: none;
+    color: #00aaaa;
+    text-decoration: underline;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9em;
+    cursor: pointer;
+    padding: 2px 5px;
+    line-height: 1; /* Align baseline */
+}
+
+.reply-button:hover {
+    color: #ffffff;
+    background-color: #003333;
+    text-decoration: none;
+}
+
+.delete-button {
+    opacity: 0; /* Visually hidden */
+    width: 20px; /* Clickable area width */
+    height: 20px; /* Clickable area height */
+    padding: 0;
+    margin: 0;
+    border: none; /* No visible border */
+    background-color: transparent; /* No background */
+    cursor: pointer;
+    font-size: 0.8em; /* Can still set font size for text content if any */
+    color: transparent; /* Hide text content visually */
+    /* Optional: Add slight visual cue on hover for admin use if needed */
+    /* transition: opacity 0.2s; */
+}
+/*
+.delete-button:hover {
+     opacity: 0.1; // Very subtle hover effect only if desired
+}
+*/
+
+.comment-replies {
+    margin-left: 30px;
+    margin-top: 10px;
+    padding-left: 15px;
+    border-left: 1px dotted #555;
+}
+
+.collapse-toggle {
+    background: none;
+    border: 1px solid #666;
+    color: #999;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8em;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0px 5px;
+    margin-right: 8px;
+    line-height: 1;
+    order: -1; /* Place at the start */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.collapse-toggle:hover {
+    color: #fff;
+    border-color: #aaa;
+}
+
+/* --- Donation Button (Modified Parent, Button styling updated) --- */
+.donation-section {
+    /* text-align: center; <-- Replaced by flex */
+    margin: 25px 0;
+    display: flex;           /* Use Flexbox */
+    justify-content: center; /* Center items horizontally */
+    gap: 20px;               /* Add space between buttons */
+    flex-wrap: wrap;         /* Allow wrapping on small screens */
+}
+
+.donate-button {
+    display: inline-block;   /* Keep as inline-block or block */
+    width: 290px;            /* <<< ADDED: Set fixed width for equality */
+    text-align: center;      /* <<< ADDED: Center text inside button */
+    padding: 8px 15px;
+    border: 1px solid #00ff00;
+    background-color: transparent;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
+    transition: all 0.2s ease-in-out;
+    animation: donate-flicker 4s linear infinite;
+    /* Max-width could be added if you want a limit on very large screens */
+    /* max-width: 320px; */
+}
+
+.donate-button:hover {
+    background-color: #00ff00;
+    color: #0a0a0a;
+    box-shadow: 0 0 10px #00ff00, 0 0 15px #00ff00;
+    text-shadow: 0 0 2px #0a0a0a;
+    animation: text-flicker 1.5s linear infinite;
+    cursor: alias; /* Note: 'alias' cursor might be confusing for 'Share Experience' */
+}
+
+@keyframes donate-flicker {
+    0% { opacity: 0.9; border-color: #00dd00; box-shadow: 0 0 4px rgba(0, 255, 0, 0.2); }
+    10% { opacity: 1; border-color: #00ff00; box-shadow: 0 0 5px rgba(0, 255, 0, 0.3); }
+    12% { opacity: 0.85; }
+    15% { opacity: 1; }
+    50% { opacity: 1; border-color: #00ff00; box-shadow: 0 0 5px rgba(0, 255, 0, 0.3); }
+    55% { opacity: 0.95; border-color: #00cc00; }
+    60% { opacity: 1; }
+    90% { opacity: 1; }
+    92% { opacity: 0.9; box-shadow: 0 0 6px rgba(0, 255, 0, 0.4); }
+    100% { opacity: 0.9; border-color: #00dd00; box-shadow: 0 0 4px rgba(0, 255, 0, 0.2); }
+}
+
+
+/* --- VHS Tape Damage Effects --- */
+
+/* --- Scanlines with more intensity --- */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, 0.3) 2px,
+        rgba(0, 0, 0, 0.3) 2px
+    );
+    opacity: 0.8;
+    z-index: 3;
+    pointer-events: none;
+    animation: scanline-flicker 0.08s linear infinite;
+}
+
+@keyframes scanline-flicker {
+    0% { opacity: 0.7; }
+    25% { opacity: 0.9; }
+    50% { opacity: 0.75; }
+    75% { opacity: 0.85; }
+    100% { opacity: 0.7; }
+}
+
+/* --- VHS Tracking Noise --- */
+.crt-effect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 4;
+    animation: crt-flicker 0.08s infinite;
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.7);
+    background:
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 3px, 3px 100%;
+}
+
+/* --- Horizontal Distortion Lines --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(transparent 0%, rgba(40, 40, 40, 0.3) 50%, transparent 100%);
+    background-size: 100% 8px;
+    z-index: 5;
+    pointer-events: none;
+    animation: horizontal-distortion 0.3s infinite alternate;
+    opacity: 0.8;
+}
+
+/* --- Color Bleed Effect --- */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(0, 0, 0, 0.2) 40%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+    mix-blend-mode: overlay;
+    z-index: 6;
+    pointer-events: none;
+    animation: vhs-color-shift 8s infinite;
+}
+
+/* --- Tape Damage Random Artifacts --- */
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(90deg, transparent 98%, rgba(255,255,255,0.1) 99%, transparent 100%),
+        linear-gradient(to bottom, transparent 98%, rgba(255,255,255,0.05) 99%, transparent 100%);
+    background-size: 40px 100%, 100% 90px;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 10;
+    animation: random-artifacts 20s infinite;
+}
+
+/* --- Random VHS Tape Skips --- */
+.container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9;
+    animation: vhs-tape-skip 15s infinite;
+}
+
+@keyframes random-artifacts {
+    0%, 100% { opacity: 0.1; }
+    15% { opacity: 0.15; background-position: 0 0, 0 0; }
+    20% { opacity: 0.1; background-position: 10px 0, 0 0; }
+    35% { opacity: 0.15; background-position: 0 0, 0 5px; }
+    40% { opacity: 0.07; background-position: -5px 0, 0 0; }
+    55% { opacity: 0.12; background-position: 0 0, 0 -5px; }
+    60% { opacity: 0.08; background-position: 0 0, 0 0; }
+    75% { opacity: 0.14; background-position: 5px 0, 0 10px; }
+    80% { opacity: 0.1; background-position: 0 0, 0 0; }
+    95% { opacity: 0.15; background-position: -10px 0, 0 -10px; }
+}
+
+@keyframes vhs-tape-skip {
+    0%, 100% { opacity: 0; transform: translateY(-100%); }
+    15% { opacity: 0; transform: translateY(-100%); }
+    15.1% { opacity: 0.7; transform: translateY(200px); }
+    15.3% { opacity: 0.7; transform: translateY(400px); }
+    15.4% { opacity: 0; transform: translateY(600px); }
+
+    45% { opacity: 0; transform: translateY(-100%); }
+    45.1% { opacity: 0.6; transform: translateY(100px); }
+    45.2% { opacity: 0.6; transform: translateY(300px); }
+    45.3% { opacity: 0; transform: translateY(500px); }
+
+    85% { opacity: 0; transform: translateY(-100%); }
+    85.1% { opacity: 0.8; transform: translateY(300px); }
+    85.3% { opacity: 0.8; transform: translateY(600px); }
+    85.4% { opacity: 0; transform: translateY(900px); }
+}
+
+@keyframes horizontal-distortion {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(0.8px); }
+}
+
+@keyframes vhs-color-shift {
+    0% { filter: hue-rotate(0deg) saturate(1); }
+    25% { filter: hue-rotate(-2deg) saturate(1.1); }
+    50% { filter: hue-rotate(0deg) saturate(1); }
+    75% { filter: hue-rotate(2deg) saturate(0.9); }
+    100% { filter: hue-rotate(0deg) saturate(1); }
+}
+
+/* --- Severe VHS Static Overlay --- */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><filter id="n" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23n)" opacity="0.3"/></svg>');
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 7;
+    animation: vhs-static 0.5s steps(1) infinite;
+    mix-blend-mode: overlay;
+}
+
+@keyframes vhs-static {
+    0%, 100% { opacity: 0.15; background-position: 0 0; }
+    20% { opacity: 0.2; background-position: -10px 0; }
+    40% { opacity: 0.12; background-position: 5px -5px; }
+    60% { opacity: 0.18; background-position: 0 10px; }
+    80% { opacity: 0.14; background-position: 3px -2px; }
+}
+
+/* --- Random Video Jitter --- */
+html {
+    animation: video-jitter 20s infinite;
+}
+
+@keyframes video-jitter {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    10%, 10.1% { transform: translateX(0) translateY(0); }
+    10.1%, 10.2% { transform: translateX(-4px) translateY(0); }
+    10.2%, 10.3% { transform: translateX(0) translateY(0); }
+
+    30%, 30.1% { transform: translateX(0) translateY(0); }
+    30.1%, 30.3% { transform: translateX(2px) translateY(-3px); }
+    30.3%, 30.4% { transform: translateX(0) translateY(0); }
+
+    50%, 50.1% { transform: translateX(0) translateY(0); }
+    50.1%, 50.15% { transform: translateX(-3px) translateY(2px); }
+    50.15%, 50.2% { transform: translateX(0) translateY(0); }
+
+    73%, 73.1% { transform: translateX(0) translateY(0); }
+    73.1%, 73.2% { transform: translateX(3px) translateY(-2px); }
+    73.2%, 73.5% { transform: translateX(-2px) translateY(2px); }
+    73.5%, 73.6% { transform: translateX(0) translateY(0); }
+
+    98%, 98.2% { transform: translateX(0) translateY(0); }
+    98.2%, 98.6% { transform: translateX(-5px) translateY(-3px); }
+    98.6%, 98.8% { transform: translateX(5px) translateY(2px); }
+    98.8%, 100% { transform: translateX(0) translateY(0); }
+}
+
+@keyframes crt-flicker {
+    0% { opacity: 0.85; }
+    10% { opacity: 0.9; }
+    20% { opacity: 0.85; }
+    30% { opacity: 0.95; }
+    40% { opacity: 0.8; }
+    50% { opacity: 0.9; }
+    60% { opacity: 0.7; transform: translateX(0.5px); }
+    70% { opacity: 0.9; transform: translateX(-0.3px); }
+    80% { opacity: 0.8; transform: translateX(0px); }
+    90% { opacity: 0.95; }
+    100% { opacity: 0.85; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .comment-timestamp {
+         margin-left: 0;
+         padding-left: 5px;
+         margin-top: 5px;
+    }
+    .comment-replies {
+        margin-left: 15px;
+        padding-left: 10px;
+    }
+    .comment-actions {
+        gap: 5px; /* Reduce gap slightly */
+    }
+    /* Adjust donation button width and layout for smaller screens */
+    .donation-section {
+        gap: 10px; /* Reduce gap */
+    }
+    .donate-button {
+        width: 45%; /* Allow two buttons side-by-side until very small */
+        min-width: 180px; /* Prevent extreme squishing */
+    }
+}
+
+@media (max-width: 480px) {
+    /* Stack donation buttons on very small screens */
+    .donation-section {
+        flex-direction: column; /* Stack vertically */
+        align-items: center;   /* Center vertically stacked items */
+    }
+    .donate-button {
+        width: 80%; /* Take up more width when stacked */
+        max-width: 290px; /* But don't exceed original width */
+    }
+}

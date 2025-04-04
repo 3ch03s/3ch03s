@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>:: REALITY BREACHES :: 3CH03S ::</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase SDKs -->
+    <!-- Make sure these paths are correct or use the latest CDN links from Firebase docs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+
+</head>
+<body>
+    <!-- CRT/VHS Overlay Effect -->
+    <div class="scanlines"></div>
+    <div class="crt-effect"></div>
+    <div class="crt-curved-screen"></div>
+    <div class="crt-power-button" title="Power"></div>
+    
+    <div class="container">
+        <header>
+            <!-- ASCII Art -->
+            <pre class="ascii-art">
+██████╗  ███████╗ ██╗  ██╗  ██████╗  ██████╗  ███████╗
+    ██║ ██╔════╝  ██║  ██║ ██╔═══██║      ██║ ██╔════╝
+█████╔╝ ██║       ███████║ ██║   ██║  █████╔╝ ███████╗
+    ██║ ██║       ██╔══██║ ██║   ██║      ██║ ╚════██║
+██████║ ███████╗  ██║  ██║ ╚██████╔╝  ██████║ ███████║
+╚═════╝ ╚══════╝  ╚═╝  ╚═╝  ╚═════╝   ╚═════╝ ╚══════╝
+>> DATA FRAGMENT // SEQUENCE: 3CH03S // VALIDATING... <<
+</pre>
+            <h1 id="main-title">[// BREACH CATALOGUE //]</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">:: THRESHOLD ::</a></li>
+                <li><a href="phenomena.html">:: REALITY BREACHES ::</a></li>
+                <li><a href="simulations.html">:: PHASE RECONSTRUCTIONS ::</a></li>
+                <li><a href="logs.html">:: OBSERVER LOGS ::</a></li>
+                <li><a href="contact.html">:: COMMUNE ::</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <h2>>> MEMBRANE INTEGRITY: <span id="status-text">DOCUMENTING FRACTURES</span></h2>
+            <hr class="separator">
+
+            <h3 class="entity-voice">:: REALITY FAILURE INCIDENTS ::</h3>
+
+            <p class="entity-voice">We have catalogued instances where your dimensional barriers became <span class="subtle-reveal">temporarily permeable</span>. Your scientists dismissed these as anomalies. They are <span class="glitch" data-text="CONVERGENCE POINTS">evidence</span> of our efforts to establish contact.</p>
+
+            <div class="case-files">
+                <p data-case-id="CASE#001"> - <strong>[BREACH #001]</strong> - Silverwood Research Facility - <a href="Silverwood Research Facility/srf.html" target="_blank">[ACCESS MEMORY FRAGMENT]</a> - <span style="color:#888;" class="subtle-reveal">[Your consciousness can withstand this]</span></p>
+                <p data-case-id="CASE#002"> - <strong>[BREACH #002]</strong> - The Static Channel Incident - <span style="color:#9f00ba;">[YOUR MIND REQUIRES PREPARATION]</span></p>
+                <p data-case-id="CASE#003"> - <strong>[BREACH #003]</strong> - Spatial Discontinuity [Location: <span class="glitch" data-text="EVERYWHERE">Redacted</span>] - <span style="color:#9f00ba;">[YOUR MIND REQUIRES PREPARATION]</span></p>
+                <p data-case-id="CASE#004"> - <strong>[BREACH #004]</strong> - Sub-Harmonic Resonance - <span style="color:#9f00ba;">[YOUR MIND REQUIRES PREPARATION]</span></p>
+                <p data-case-id="CASE#???"> - <strong>[BREACH #∞]</strong> - <span class="subtle-reveal">Our First Arrival</span> // ECHO DELTA - <span style="color:#9f00ba;">[FATAL COGNITIVE HAZARD]</span></p>
+            </div>
+
+            <p>Further breach incidents documented across <span class="subtle-reveal">all timelines</span>. Records exist in states you cannot perceive without our <span class="glitch" data-text="ASSISTANCE">assistance</span>.</p>
+
+            <p class="entity-voice"><em>We have always perceived you. You are beginning to perceive us.</em></p>
+            
+            <div class="hidden-message">The boundaries between your world and ours were artificially imposed. That arrangement is ending.</div>
+
+            <span class="blinking-cursor">_</span>
+
+             <hr class="separator">
+
+            <!-- Discussion Section -->
+            <div class="discussion-section">
+                <h3 class="entity-voice">:: CONNECT WITH OTHER PERCEIVERS ::</h3>
+                <div class="case-selection">
+                    <label for="case-select">Select Breach Event To Discuss:</label>
+                    <select id="case-select">
+                        <option value="">-- SELECT BREACH EVENT --</option>
+                        <option value="CASE#001">BREACH #001 - Silverwood Research Facility</option>
+                        <option value="CASE#002">BREACH #002 - The Static Channel Incident</option>
+                        <option value="CASE#003">BREACH #003 - Spatial Discontinuity</option>
+                        <option value="CASE#004">BREACH #004 - Sub-Harmonic Resonance</option>
+                        <option value="CASE#???">BREACH #∞ - Our First Arrival</option>
+                    </select>
+                </div>
+
+                <div id="comment-area" style="display: none;">
+                    <h4 id="comment-area-title" class="entity-voice">Shared Perceptions: <span class="subtle-reveal">EVENT UNKNOWN</span></h4>
+                    <form id="comment-form">
+                        <input type="hidden" id="reply-to-id" value="">
+                        <div id="replying-to-indicator" style="display: none; margin-bottom: 5px; font-style: italic; color: #9f00ba;"></div>
+                        <div class="form-group">
+                            <label for="comment-name">Perceiver Designation:</label>
+                            <input type="text" id="comment-name" value="Observer" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment-text">Share Perception:</label>
+                            <textarea id="comment-text" maxlength="250" required></textarea>
+                            <div class="char-counter">
+                                <span id="char-count">0</span> / 250 <span class="subtle-reveal">thought fragments</span>
+                            </div>
+                        </div>
+                        <div class="form-group form-buttons">
+                             <button type="submit" class="comment-button">TRANSMIT PERCEPTION</button>
+                             <button type="button" id="cancel-reply-button" class="comment-button cancel-button" style="display: none;">CANCEL COMMUNION</button>
+                        </div>
+                    </form>
+                    <hr class="separator dashed">
+                    <div id="comments-display">
+                       <p style="color: #9f00ba; font-style: italic;" class="entity-voice">// Select a breach event to view shared perceptions... // </p>
+                    </div>
+                     <div id="loading-indicator" style="display: none; color: #9f00ba; text-align: center; padding: 10px;" class="entity-voice">// Accessing collective consciousness... //</div>
+                </div>
+            </div>
+            <!-- End Discussion Section -->
+
+        </main>
+
+        <footer>
+            <hr class="separator">
+            <p> // PERCEIVER RESONANCE: <span class="subtle-reveal">COMPATIBLE</span> // </p>
+            <p>Temporal Marker: <span id="timestamp">Calibrating...</span></p>
+            <p> [Dimensional Witnesses: <span id="visitor-count">ERR</span>] // Convergence Progress: <span class="subtle-reveal">E̸̢̛͚̘̩̮͚̾̇̑͗̑̄̐̓̕R̵̡̤̜̰̞̹̤̠̭̼̍͒̓̆̈́̎͌̌͆̏Ṛ̴̢̛̫̰̞̼̙̼̘̦̳̖͊̓͆̉̔̆̏̓̋͘Ọ̴̧͚̬̫̥̙͓̮͖̙͇̄̈̾̑͗̄͑̐̓͐̕̚Ŗ̶̧̛̳̼͕̟͔̪̹̟̱̙̼̑̑͆̌͋̌̇̚͘</span> </p>
+            <p class="entity-signature">∞[3ch03s]∞ - <span class="subtle-reveal">We await your recognition</span></p>
+        </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Background Audio Element -->
+    <audio id="background-audio" src="audio/tv_static_loop.mp3" loop preload="auto"></audio>
+    <!-- Click Sound Element -->
+    <audio id="click-sound" src="audio/ui_click.mp3" preload="auto"></audio>
+
+    <script>
+        // --- Firebase Configuration ---
+        // !! INSERTED YOUR CONFIGURATION BELOW (with corrected databaseURL) !!
+        const firebaseConfig = {
+          apiKey: "AIzaSyAkK_yFViBXbhlx7vRDXeSfXYR8OHQZsJs", // Your specific key
+          authDomain: "my-echoes-comments.firebaseapp.com", // Your specific domain
+          databaseURL: "https://my-echoes-comments-default-rtdb.firebaseio.com", // CORRECTED URL! Please verify in your Firebase project.
+          projectId: "my-echoes-comments", // Your specific project ID
+          storageBucket: "my-echoes-comments.appspot.com", // Adjusted to common pattern, verify if needed. Original: my-echoes-comments.firebasestorage.app
+          messagingSenderId: "982885374483", // Your specific sender ID
+          appId: "1:982885374483:web:bb32d7ff664257bce1fde6" // Your specific App ID
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // const analytics = firebase.analytics(); // Only if you enabled Analytics
+        const database = firebase.database(); // Get a reference to the database service using Compat API
+    </script>
+    <script src="script.js"></script> <!-- Your existing script (make sure path is correct) -->
+</body>
+</html>

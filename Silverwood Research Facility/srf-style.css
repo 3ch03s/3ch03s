@@ -1,0 +1,1078 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Courier+Prime:wght@400;700&display=swap');
+
+:root {
+	/* Core Colors */
+	--main-bg: #000000;
+	--text-color: #00ff00; /* Brighter green */
+	--accent-color: #ff0000; /* Red */
+	--warning-color: #ffff00; /* Yellow */
+	--glitch-cyan: rgba(0, 255, 255, 0.7);
+	--glitch-magenta: rgba(255, 0, 255, 0.7);
+	--glitch-blue: rgba(0, 0, 255, 0.7);
+	--header-bg: #1a0000; /* Dark red */
+	--sidebar-bg-tint: rgba(0, 10, 0, 0.15); /* Slightly stronger green tint */
+    --pre-bg: #030303;
+    --pre-border: rgba(0, 255, 0, 0.15);
+    --pre-text: #00dd00;
+
+	/* Redacted Block Styles */
+	--redacted-bg: #000000;
+	--redacted-text: #111111;
+	--redacted-hover-bg: #8f0000; /* Dark red on hover */
+	--redacted-hover-text: var(--accent-color); /* Red text on hover (logged in) */
+    --redacted-tooltip-bg: var(--accent-color);
+    --redacted-tooltip-text: var(--main-bg);
+    --redacted-tooltip-border: var(--text-color);
+    --redacted-tooltip-bg-logged: var(--text-color);
+    --redacted-tooltip-text-logged: var(--main-bg);
+    --redacted-tooltip-border-logged: var(--accent-color);
+
+	/* CRT/VHS Effect Variables */
+	--scanline-opacity: 0.1; /* Slightly more visible */
+    --scanline-thickness: 4px;
+	--static-opacity: 0.06; /* Slightly more visible */
+    --static-speed: 0.08s;
+	--flicker-opacity-min: 0.92; /* Base flicker range */
+	--flicker-opacity-max: 1.0;
+    --vignette-intensity: rgba(0,0,0,0.45);
+    --vignette-size: 120px;
+    --border-style: 3px solid var(--accent-color);
+    --border-glow-color: rgba(255, 0, 0, 0.7);
+    --border-glow-size: 30px;
+    --inner-glow-color: rgba(0, 255, 255, 0.2); /* Subtle cyan inner */
+    --inner-glow-size: 15px;
+
+	/* Font & Layout */
+	--sidebar-width: 260px; /* Slightly wider */
+	--base-font-size: 16px; /* Slightly smaller */
+	--line-height: 1.65; /* Slightly looser */
+    --header-font-size: 2.8em;
+    --nav-font-size: 1.15em;
+
+	/* Glitch Effect Text Shadows */
+	--glitch-text-shadow-1: -1.5px -1px 0px var(--glitch-magenta), 1px 1px 0px var(--glitch-cyan);
+	--glitch-text-shadow-2: 1.5px -1px 0px var(--glitch-blue), -1px 1px 0px var(--accent-color);
+	--glitch-subtle-offset: 1px;
+}
+
+/* Base Reset */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+}
+
+body {
+	background-color: var(--main-bg);
+	color: var(--text-color);
+	font-family: 'Courier Prime', 'VT323', monospace;
+	font-size: var(--base-font-size);
+	line-height: var(--line-height);
+	overflow-x: hidden; /* Prevent horizontal scroll */
+	position: relative;
+	/* Vignette effect */
+	box-shadow: inset 0 0 var(--vignette-size) var(--vignette-size) var(--vignette-intensity);
+    transition: filter 0.3s ease-in-out; /* For JS filter effects */
+}
+
+/* JS Controlled Body Classes */
+body.aberration-effect {
+	/* filter: url(#svg-chromatic-aberration); You'd need to define this SVG */
+    filter: contrast(1.08) brightness(0.97) saturate(1.1); /* Simpler CSS version */
+}
+body.cursor-gone, body.cursor-gone * {
+	cursor: none !important;
+}
+body.logged-in {
+    /* Example: Slightly change hue when logged in */
+    /* filter: hue-rotate(5deg); */
+}
+body.high-stress { /* Triggered on multiple login fails etc */
+    animation: body-shake 0.3s linear 1;
+}
+@keyframes body-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+
+/* --- Screen Effects Overlays --- */
+.scanlines, .static-overlay, .flicker-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 999;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.scanlines {
+	background: linear-gradient(
+        to bottom,
+        rgba(18, 16, 16, 0) 50%, /* Transparent part */
+        rgba(0, 0, 0, 0.3) 50%  /* Black line part */
+    );
+	background-size: 100% var(--scanline-thickness);
+	opacity: var(--scanline-opacity);
+	animation: scanline-anim 35s linear infinite; /* Slower scroll */
+}
+@keyframes scanline-anim {
+	0% { background-position: 0 0; }
+	100% { background-position: 0 100vh; } /* Scroll full viewport height */
+}
+
+.static-overlay {
+	/* Using a more detailed static pattern (base64 encoded) */
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkAQMAAABKLAcXAAAABlBMVEUAAAAAAAClZ7nPAAAAAXRSTlMAQObYZgAAAB5JREFUOMtjCLUIg6lFIOrQSKQaEgg1pBCpBgSDQIABAOkMUv4eExhAAAAAAElFTkSuQmCC');
+	opacity: var(--static-opacity);
+	animation: static-anim var(--static-speed) linear infinite;
+}
+@keyframes static-anim {
+	0% { background-position: 0% 0%; } 10% { background-position: -5% -10%; } 20% { background-position: -15% 5%; } 30% { background-position: 7% -5%; } 40% { background-position: -5% 15%; } 50% { background-position: -10% 5%; } 60% { background-position: 15% 0; } 70% { background-position: 0 10%; } 80% { background-position: -15% 5%; } 90% { background-position: 10% 5%; } 100% { background-position: 5% 0; }
+}
+
+.flicker-overlay {
+	background-color: rgba(255, 255, 255, 0.03); /* Base flicker color/intensity */
+	animation: flicker-anim 0.15s infinite alternate; /* Default speed controlled by JS */
+    opacity: 1; /* Opacity controlled by JS for intensity */
+}
+@keyframes flicker-anim {
+	0% { opacity: var(--flicker-opacity-min); }
+	100% { opacity: var(--flicker-opacity-max); }
+}
+
+
+/* --- Page Structure --- */
+#page-border {
+	max-width: 1050px; /* Slightly wider */
+	margin: 20px auto; /* More margin */
+	padding: 0;
+	border: var(--border-style);
+	background-color: var(--main-bg);
+	position: relative;
+	z-index: 1;
+	/* Enhanced CRT glow effect */
+	box-shadow: 0 0 var(--border-glow-size) var(--border-glow-color),
+                inset 0 0 var(--inner-glow-size) var(--inner-glow-color);
+    /* For JS jitter/warp effects */
+	transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+    /* Optional subtle warp animation */
+    /* animation: subtle-warp 20s infinite alternate ease-in-out; */
+}
+/* Keyframes for optional warp */
+@keyframes subtle-warp {
+    0% { transform: perspective(2500px) rotateY(0.4deg) scale(1.003); }
+    100% { transform: perspective(2500px) rotateY(-0.4deg) scale(1.003); }
+}
+/* Keyframes for horizontal tracking/jitter */
+@keyframes horizontal-jitter {
+    0%, 100% { transform: translateX(0) skewX(0); }
+    25% { transform: translateX(-2px) skewX(-0.6deg); }
+    75% { transform: translateX(2px) skewX(0.6deg); }
+}
+
+
+#header {
+	background-color: var(--header-bg);
+	padding: 10px 20px; /* Slightly more padding */
+	text-align: center;
+	border-bottom: var(--border-style);
+}
+
+#header h1 {
+	font-size: var(--header-font-size);
+	font-family: 'VT323', monospace;
+	color: var(--accent-color);
+	text-shadow: 0 0 12px var(--accent-color), 0 0 6px rgba(255, 255, 255, 0.4);
+	margin: 0;
+	letter-spacing: 5px; /* Increased spacing */
+	text-transform: uppercase;
+}
+
+#sub-header {
+	background-color: #111;
+	border-bottom: var(--border-style);
+	padding: 5px 0;
+}
+
+#sub-header nav {
+	text-align: center;
+	padding: 10px 0;
+	border-bottom: 1px solid var(--accent-color);
+}
+
+nav a.nav-link {
+	color: var(--text-color);
+	text-decoration: none;
+	margin: 0 20px; /* More spacing */
+	padding: 3px 6px;
+	font-weight: bold;
+	text-transform: uppercase;
+	transition: color 0.15s ease, text-shadow 0.15s ease, transform 0.1s ease; /* Faster transition */
+	font-size: var(--nav-font-size);
+	display: inline-block; /* Needed for transform */
+}
+
+nav a.nav-link:hover, nav a.nav-link:focus {
+	color: #fff;
+	text-shadow: 0 0 10px var(--text-color), 0 0 18px #ffffff;
+    transform: scale(1.05); /* Slight grow on hover */
+}
+
+/* Warning Bars */
+.warning-bar {
+	color: var(--accent-color);
+	font-weight: bold;
+	text-align: center;
+	padding: 5px 10px; /* More padding */
+	font-size: 0.95em;
+	text-transform: uppercase;
+    text-shadow: 0 0 4px var(--accent-color);
+    background-color: rgba(50, 0, 0, 0.2); /* Subtle red background */
+}
+.warning-bar.secondary-warning {
+	border-top: 1px dashed var(--accent-color);
+    color: var(--warning-color); /* Yellow for secondary */
+    text-shadow: 0 0 4px var(--warning-color);
+    background-color: rgba(50, 50, 0, 0.2); /* Subtle yellow background */
+	margin-top: 5px;
+}
+
+.scrolling-warning {
+	overflow: hidden;
+	white-space: nowrap;
+	position: relative;
+}
+.scrolling-warning span {
+	display: inline-block;
+	padding-left: 100%;
+	animation: scroll-left 20s linear infinite; /* Faster scroll */
+}
+@keyframes scroll-left {
+	0% { transform: translateX(0%); }
+	100% { transform: translateX(-100%); }
+}
+
+.blinking-warning {
+	display: inline-block;
+	animation: blink-effect 0.7s step-end infinite; /* Faster blink */
+}
+@keyframes blink-effect {
+	0%, 100% { opacity: 1; color: inherit; }
+	50% { opacity: 0.2; color: var(--accent-color); } /* Dim and slightly red */
+}
+
+
+/* --- Main Layout --- */
+#content-wrapper {
+	display: flex;
+	border-top: var(--border-style);
+}
+
+#sidebar {
+	width: var(--sidebar-width);
+	border-right: var(--border-style);
+	padding: 20px; /* More padding */
+	flex-shrink: 0;
+    background-color: var(--sidebar-bg-tint);
+    transition: transform 0.2s ease-out; /* For JS jitter */
+}
+
+#sidebar section {
+	margin-bottom: 30px; /* More spacing */
+}
+
+#sidebar h3 {
+	color: var(--text-color);
+	font-family: 'VT323', monospace;
+	font-size: 1.7em; /* Larger sidebar headings */
+	text-transform: uppercase;
+	border-bottom: 1px solid var(--text-color);
+	padding-bottom: 6px;
+	margin-bottom: 18px;
+    text-shadow: 0 0 6px var(--text-color);
+}
+
+#sidebar ul {
+	list-style: '> '; /* Use a character for list style */
+	padding-left: 15px; /* Indent list */
+}
+
+#sidebar li {
+	margin-bottom: 10px; /* More spacing */
+}
+
+a.sidebar-link {
+	color: var(--text-color);
+	text-decoration: none;
+	transition: color 0.2s ease, text-shadow 0.2s ease, transform 0.1s ease;
+    display: inline-block;
+    position: relative; /* For potential ::before elements */
+}
+a.sidebar-link:hover, a.sidebar-link:focus {
+	color: #fff;
+	text-decoration: none; /* Remove underline, rely on glow */
+    text-shadow: 0 0 8px var(--text-color);
+    transform: translateX(3px); /* Slight move on hover */
+}
+/* Add subtle static effect on hover */
+a.sidebar-link:hover::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -5px; right: -5px; bottom: 0;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAAXNSR0IArs4c6QAAABNJREFUCB1jYEAF/GcgyDIMAwBmRwEA8Q0GdwAAAABJRU5ErkJggg=='); /* Tiny static pattern */
+    opacity: 0.1;
+    pointer-events: none;
+    animation: hover-static 0.1s infinite;
+}
+@keyframes hover-static {
+    0% { background-position: 0 0; }
+    100% { background-position: 4px 4px; }
+}
+
+
+.update-item {
+	font-size: 0.9em;
+	margin-bottom: 10px;
+    transition: opacity 0.4s ease, color 0.4s ease;
+    padding-left: 5px;
+    border-left: 2px solid transparent; /* Space for indicator */
+}
+.update-item:hover {
+    border-left-color: var(--text-color);
+}
+.update-item.fading-out { /* Controlled by JS */
+    opacity: 0.3;
+}
+.update-item.urgent {
+	color: var(--accent-color);
+	font-weight: bold;
+    text-shadow: 0 0 5px var(--accent-color);
+    border-left-color: var(--accent-color);
+}
+.update-item.status-warning { /* Make sidebar warnings distinct */
+    color: var(--warning-color);
+    font-weight: bold;
+    text-shadow: 0 0 5px var(--warning-color);
+    border-left-color: var(--warning-color);
+}
+.update-item.status-missing { /* Make sidebar missing distinct */
+    color: #aaa; /* Grey */
+    font-style: italic;
+    border-left-color: #555;
+}
+
+
+/* Clearance Section */
+#clearance .clearance-box {
+	border: 1px solid var(--text-color);
+	padding: 12px;
+	text-align: center;
+	margin-bottom: 12px;
+	font-weight: bold;
+    background-color: rgba(0, 50, 0, 0.25);
+    font-family: 'VT323', monospace;
+    font-size: 1.1em;
+    text-transform: uppercase;
+}
+#clearance .access-restricted {
+	text-align: center;
+	color: var(--accent-color);
+	font-weight: bold;
+	font-size: 1.2em; /* Larger */
+	text-transform: uppercase;
+    animation: pulse-restricted 1.3s infinite alternate;
+}
+@keyframes pulse-restricted {
+    from { text-shadow: 0 0 6px var(--accent-color); opacity: 0.8; }
+    to { text-shadow: 0 0 18px var(--accent-color), 0 0 8px #ff5555; opacity: 1; }
+}
+
+
+/* --- Main Content Area --- */
+#main-content {
+	flex-grow: 1;
+	padding: 20px 30px; /* More padding */
+	min-width: 0; /* Prevents flex overflow */
+    transition: transform 0.2s ease-out; /* For JS jitter */
+}
+
+#main-content p, #main-content li {
+	margin-bottom: 1.2em; /* Slightly more spacing */
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	hyphens: auto; /* Better word breaking */
+}
+
+#main-content section {
+	margin-bottom: 35px; /* More spacing */
+	padding-bottom: 20px;
+	border-bottom: 1px dashed rgba(0, 255, 0, 0.15); /* Fainter dash */
+    transition: transform 0.1s ease-out; /* For JS jitter on sections */
+}
+#main-content section:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+#main-content h2 {
+	font-size: 1.5em; /* Larger */
+	color: var(--accent-color);
+	text-transform: uppercase;
+	margin-bottom: 18px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid var(--accent-color);
+	display: inline-block;
+    text-shadow: 0 0 8px var(--accent-color);
+    font-family: 'VT323', monospace;
+}
+#main-content h3 { /* Style section subheadings */
+    font-size: 1.25em;
+    color: var(--text-color);
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px var(--text-color);
+    font-family: 'VT323', monospace;
+}
+
+
+#main-content ul {
+	list-style: disc; /* Use standard list style in main content */
+	padding-left: 25px; /* Indent lists more */
+}
+#main-content li {
+	 margin-bottom: 10px;
+}
+
+/* Preformatted Text / Logs */
+#main-content pre.log-text { /* Add class for specific styling */
+	background-color: var(--pre-bg);
+	border: 1px solid var(--pre-border);
+	padding: 15px; /* More padding */
+	margin: 15px 0 20px 0; /* More margin */
+	font-size: 0.95em; /* Slightly larger log text */
+	white-space: pre-wrap; /* Ensure wrapping */
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	color: var(--pre-text);
+	font-family: 'Courier Prime', 'VT323', monospace;
+    box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1);
+    line-height: 1.5; /* Slightly looser for logs */
+    max-height: 400px; /* Limit height and make scrollable */
+    overflow-y: auto;
+    /* Custom scrollbar for logs */
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-color) var(--main-bg);
+}
+#main-content pre.log-text::-webkit-scrollbar { width: 8px; }
+#main-content pre.log-text::-webkit-scrollbar-track { background: var(--main-bg); }
+#main-content pre.log-text::-webkit-scrollbar-thumb { background-color: var(--text-color); border: 1px solid var(--main-bg); }
+
+
+/* Redacted Text Styling */
+.redacted {
+	background-color: var(--redacted-bg);
+	color: var(--redacted-text);
+	padding: 0 5px; /* Slightly more padding */
+	cursor: help; /* Default cursor */
+	transition: background-color 0.1s ease, color 0.1s ease, text-shadow 0.1s ease;
+	position: relative;
+    text-shadow: none; /* Ensure no inherited shadow */
+    user-select: none; /* Prevent selecting the block */
+    font-weight: bold; /* Make the block stand out more */
+}
+body.logged-in .redacted {
+	cursor: crosshair; /* Specific cursor when revealable */
+}
+/* Hover effect when NOT logged in */
+body:not(.logged-in) .redacted:hover {
+    background-color: #111;
+    color: #222;
+    text-shadow: 0 0 2px #333; /* Subtle glow */
+}
+/* Hover effect WHEN logged in */
+body.logged-in .redacted:hover {
+	background-color: var(--redacted-hover-bg);
+    color: var(--redacted-hover-text);
+    text-shadow: 0 0 5px var(--accent-color);
+}
+
+
+/* Redacted Text Tooltip */
+.redacted::after {
+	content: "LEVEL 4 CLEARANCE REQUIRED"; /* Default message */
+	position: absolute;
+	bottom: 130%; /* Move up slightly more */
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: var(--redacted-tooltip-bg);
+	color: var(--redacted-tooltip-text);
+	padding: 4px 10px; /* Slightly larger padding */
+	border: 1px solid var(--redacted-tooltip-border);
+	font-size: 0.8em; /* Smaller font */
+	white-space: nowrap;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s ease, visibility 0.2s ease;
+	z-index: 10;
+	pointer-events: none;
+    font-family: 'VT323', monospace; /* Use pixel font */
+    text-transform: uppercase;
+    font-weight: normal; /* Normal weight for tooltip */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+/* Logged-in tooltip style */
+body.logged-in .redacted::after {
+	content: attr(data-revealed); /* Show revealed text */
+	background-color: var(--redacted-tooltip-bg-logged);
+    color: var(--redacted-tooltip-text-logged);
+    border-color: var(--redacted-tooltip-border-logged);
+    max-width: 300px; /* Allow tooltip to wrap */
+    white-space: normal;
+    text-align: center;
+}
+.redacted:hover::after {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* Status Indicators */
+.status-warning {
+	color: var(--warning-color);
+	font-weight: bold;
+	background-color: rgba(80, 80, 0, 0.5); /* More prominent background */
+	padding: 1px 4px;
+    border: 1px dashed var(--warning-color); /* Dashed border */
+    animation: pulse-warning 2.5s infinite ease-in-out;
+    text-shadow: 0 0 3px #000; /* Add shadow for readability */
+}
+@keyframes pulse-warning {
+    0%, 100% { background-color: rgba(80, 80, 0, 0.5); color: var(--warning-color); border-style: dashed; }
+    50% { background-color: rgba(120, 120, 0, 0.7); color: #ffffcc; border-style: solid;}
+}
+
+.status-missing {
+	color: var(--accent-color);
+	font-weight: bold;
+	background-color: rgba(80, 0, 0, 0.5); /* More prominent background */
+	padding: 1px 4px;
+	animation: blink-missing 0.8s step-end infinite; /* Use specific blink */
+    text-shadow: 0 0 3px #000; /* Add shadow */
+    border: 1px dotted var(--accent-color); /* Dotted border */
+}
+@keyframes blink-missing {
+	50% { opacity: 0.1; background-color: rgba(30, 0, 0, 0.5); color: #500; }
+}
+
+.urgent { /* Already styled in update-item, but can be used elsewhere */
+	color: var(--accent-color);
+	font-weight: bold;
+    text-shadow: 0 0 6px var(--accent-color);
+}
+
+
+/* --- Glitch Effects --- */
+/* More aggressive main glitch effect */
+.glitch-effect { position: relative; display: inline-block; } /* Ensure inline-block */
+.glitch-effect::before, .glitch-effect::after {
+    content: attr(data-text);
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: inherit; /* Use parent background - important! */
+    overflow: hidden; clip: rect(0, 0, 0, 0);
+    color: inherit; /* Use parent color */
+    z-index: -1; /* Ensure they are behind the main text */
+}
+.glitch-effect::before {
+    left: var(--glitch-subtle-offset);
+    text-shadow: var(--glitch-text-shadow-1);
+    animation: glitch-anim-1 1.8s infinite linear alternate-reverse steps(3, end); /* Slower, steps */
+}
+.glitch-effect::after {
+    left: calc(-1 * var(--glitch-subtle-offset));
+    text-shadow: var(--glitch-text-shadow-2);
+    animation: glitch-anim-2 2.2s infinite linear alternate-reverse steps(2, end); /* Slower, steps */
+}
+@keyframes glitch-anim-1 { /* More erratic clipping */
+  0% { clip: rect(42px, 9999px, 44px, 0); transform: skew(0.4deg); }
+  20% { clip: rect(15px, 9999px, 80px, 0); transform: skew(-0.2deg); }
+  40% { clip: rect(70px, 9999px, 75px, 0); transform: skew(0.3deg); }
+  60% { clip: rect(30px, 9999px, 55px, 0); transform: skew(-0.1deg); }
+  80% { clip: rect(90px, 9999px, 110px, 0); transform: skew(0.2deg); }
+  100% { clip: rect(5px, 9999px, 30px, 0); transform: skew(-0.3deg); }
+}
+@keyframes glitch-anim-2 { /* More erratic clipping */
+  0% { clip: rect(15px, 9999px, 75px, 0); transform: skew(0.1deg); }
+  25% { clip: rect(80px, 9999px, 120px, 0); transform: skew(-0.4deg); }
+  50% { clip: rect(40px, 9999px, 60px, 0); transform: skew(0.2deg); }
+  75% { clip: rect(100px, 9999px, 135px, 0); transform: skew(-0.3deg); }
+  100% { clip: rect(25px, 9999px, 90px, 0); transform: skew(0.1deg); }
+}
+
+/* JS controlled subtle glitch - more intense */
+.glitch-effect-subtle-js {
+    display: inline-block;
+    animation: glitch-subtle-js 0.15s infinite steps(1); /* Faster */
+}
+@keyframes glitch-subtle-js {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  20% { transform: translate(2px, -1px); opacity: 0.85; color: var(--glitch-magenta); }
+  40% { transform: translate(-1px, 2px); opacity: 0.85; color: var(--glitch-cyan); }
+  60% { transform: translate(1px, 1px); opacity: 0.85; color: var(--accent-color); }
+  80% { transform: translate(-2px, -1px); opacity: 0.85; color: var(--warning-color);}
+}
+
+/* CSS only subtle glitch (less frequent) */
+.glitch-effect-subtle { display: inline-block; animation: glitch-subtle 8s infinite steps(1); }
+@keyframes glitch-subtle {
+    0%, 98% { transform: translate(0, 0); opacity: 1; color: inherit; } /* Much longer stable period */
+    98.5% { transform: translate(var(--glitch-subtle-offset), calc(-1 * var(--glitch-subtle-offset))); opacity: 0.8; color: var(--glitch-magenta); }
+    99% { transform: translate(calc(-1 * var(--glitch-subtle-offset)), var(--glitch-subtle-offset)); opacity: 0.8; color: var(--glitch-cyan); }
+    99.5% { transform: translate(0, 0); opacity: 1; color: inherit; }
+}
+
+
+/* --- Forms (Login, Contact) --- */
+/* Main Login Form */
+#access form {
+	margin-top: 15px;
+	border: none;
+	padding: 0;
+	display: inline-block; /* Keep inline */
+}
+#access label {
+	display: inline-block;
+	margin-right: 6px;
+	font-weight: normal;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+#access input[type="text"],
+#access input[type="password"] {
+	width: 110px; /* Slightly wider */
+	padding: 4px 6px;
+	margin-right: 12px;
+	background-color: #111;
+	border: 1px solid var(--text-color);
+	color: var(--text-color);
+	font-family: inherit;
+	font-size: 0.9em;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    caret-color: var(--text-color); /* Green cursor */
+}
+#access input[type="text"]:focus,
+#access input[type="password"]:focus {
+    background-color: #222;
+    outline: 1px solid var(--accent-color);
+    box-shadow: 0 0 5px var(--accent-color);
+}
+
+/* Shared Button Style */
+#access button, .popup-content button, #dummy-contact-form button {
+	background-color: var(--text-color);
+	color: var(--main-bg);
+	border: 1px solid var(--text-color);
+	padding: 4px 12px; /* More padding */
+	font-family: inherit;
+	font-weight: bold;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: all 0.1s ease; /* Faster transition */
+    position: relative;
+    overflow: hidden; /* For pseudo-elements */
+    font-size: 0.9em;
+}
+/* Scanline effect on button */
+#access button::before, .popup-content button::before, #dummy-contact-form button::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
+    transition: left 0.3s ease;
+}
+#access button:hover::before, .popup-content button:hover::before, #dummy-contact-form button:hover::before {
+    left: 100%;
+}
+#access button:hover, .popup-content button:hover, #dummy-contact-form button:hover {
+	background-color: var(--accent-color);
+	border-color: var(--accent-color);
+	color: #fff;
+    text-shadow: 0 0 6px #fff;
+}
+/* Click feedback */
+#access button:active, .popup-content button:active, #dummy-contact-form button:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+}
+/* Disabled button style */
+#access button:disabled, .popup-content button:disabled, #dummy-contact-form button:disabled {
+    background-color: #555;
+    color: #999;
+    border-color: #777;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+#access button:disabled:hover::before, .popup-content button:disabled:hover::before, #dummy-contact-form button:disabled:hover::before {
+    left: -100%; /* Prevent hover effect */
+}
+
+
+/* Login Messages */
+.login-message {
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 0.9em;
+    height: 1.5em; /* Reserve space */
+    text-align: center;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+}
+.login-message.error {
+    color: var(--accent-color);
+    text-shadow: 0 0 5px var(--accent-color);
+    animation: shake-error 0.4s 1 linear;
+}
+.login-message.success {
+    color: #0f0; /* Bright green */
+    text-shadow: 0 0 5px #0f0;
+}
+@keyframes shake-error {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+  20%, 40%, 60%, 80% { transform: translateX(6px); }
+}
+
+
+/* Access Counter / Stability */
+.access-info {
+	font-size: 0.85em;
+	opacity: 0.7;
+	margin-top: 18px;
+	text-align: right;
+    font-family: 'VT323', monospace;
+    letter-spacing: 1px;
+}
+#access-counter {
+    display: inline-block;
+    min-width: 55px; /* Ensure space */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    font-weight: bold;
+}
+#access-counter.unstable {
+    color: var(--warning-color);
+    text-shadow: 0 0 5px var(--warning-color);
+    animation: pulse-warning 1s infinite; /* Reuse warning pulse */
+}
+#stability-indicator {
+    font-weight: bold;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+#stability-indicator.nominal { color: var(--text-color); }
+#stability-indicator.unstable { color: var(--warning-color); text-shadow: 0 0 5px var(--warning-color); }
+#stability-indicator.critical { color: var(--accent-color); text-shadow: 0 0 5px var(--accent-color); animation: blink-effect 0.5s infinite; }
+
+
+/* --- Popup Styling --- */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed; left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.97); /* Very dark overlay */
+    z-index: 1000;
+    backdrop-filter: blur(3px) contrast(0.9); /* More distortion */
+    animation: fade-in 0.3s ease-out forwards;
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+.popup-content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--main-bg);
+	padding: 30px; /* More padding */
+	border: var(--border-style);
+	box-shadow: 0 0 40px var(--accent-color), 0 0 20px var(--inner-glow-color) inset; /* Stronger glow */
+	min-width: 400px;
+	/* Added float and glitch */
+    animation: popup-float 9s infinite ease-in-out, popup-glitch-subtle 5s infinite alternate steps(2, end);
+}
+@keyframes popup-float { /* Slower float */
+    0%, 100% { transform: translate(-50%, -50%); }
+    50% { transform: translate(-50%, -50.8%); }
+}
+@keyframes popup-glitch-subtle { /* Subtle position/shadow glitch */
+    0% { transform: translate(-50%, -50%) skewX(-0.1deg); box-shadow: 0 0 40px var(--accent-color), 0 0 20px var(--inner-glow-color) inset; }
+    100% { transform: translate(-50.1%, -49.9%) skewX(0.1deg); box-shadow: 0 0 45px var(--accent-color), 0 0 22px var(--inner-glow-color) inset; }
+}
+
+.popup-close {
+    position: absolute; top: -8px; right: -8px; /* Position over border */
+    color: var(--main-bg); background-color: var(--accent-color); /* Inverted */
+    font-size: 22px; font-weight: bold; cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    width: 28px; height: 28px; line-height: 28px; text-align: center;
+    border: 1px solid var(--text-color);
+    font-family: 'VT323', monospace;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+}
+.popup-close:hover {
+    transform: rotate(180deg) scale(1.15);
+    background-color: var(--text-color);
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--text-color);
+}
+
+.popup-content h2 {
+    text-align: center; margin-bottom: 18px; color: var(--accent-color);
+    font-family: 'VT323', monospace; font-size: 2em; /* Larger */
+    text-transform: uppercase; text-shadow: 0 0 10px var(--accent-color);
+}
+.popup-content p { text-align: center; margin-bottom: 25px; font-size: 0.95em;}
+
+.popup-content form { margin-top: 0; border: none; padding: 0; text-align: center; }
+.popup-content label {
+    display: block; margin-bottom: 5px; font-weight: bold;
+    font-size: 1em; text-transform: uppercase; color: var(--text-color);
+    font-family: 'VT323', monospace; letter-spacing: 1px;
+}
+.popup-content input[type="text"],
+.popup-content input[type="password"] {
+	width: calc(85% - 12px); /* Wider input */
+	padding: 6px 8px; /* More padding */
+	margin-bottom: 18px;
+	background-color: #111;
+	border: 1px solid var(--text-color);
+	color: var(--text-color);
+	font-family: inherit;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+    text-align: center; /* Center input text */
+    font-size: 1.1em; /* Larger input text */
+    caret-color: var(--text-color);
+}
+.popup-content input[type="text"]:focus,
+.popup-content input[type="password"]:focus {
+    background-color: #222;
+    outline: 2px solid var(--accent-color); /* Thicker outline */
+    box-shadow: 0 0 8px var(--accent-color);
+}
+
+.popup-content button { /* Uses shared button style */
+    padding: 8px 18px; /* Larger button */
+    display: block;
+    margin: 15px auto 0 auto;
+    font-size: 1em;
+}
+.popup-content .login-message { text-align: center; height: 1.8em; } /* Taller message area */
+#login-attempts-counter { /* Style for attempt counter */
+    text-align: center; font-size: 0.8em; opacity: 0.5; margin-top: 10px;
+    color: var(--warning-color);
+}
+
+
+/* --- Hidden & Faint Clues --- */
+.hidden-clue {
+    display: block; /* Block level */
+    opacity: 0.015; /* Very low base opacity */
+    transition: opacity 0.9s ease-in-out; /* Slower fade in */
+    margin: 15px 0;
+    font-size: 0.75em;
+    color: #113311; /* Very dark green */
+    text-align: center;
+    user-select: none;
+    pointer-events: none; /* Don't interfere with parent hover */
+    font-style: italic;
+    line-height: 1.3;
+}
+.header-clue { margin-top: 20px; }
+.bottom-clue { margin-top: 20px; text-align: left; font-size: 0.7em;}
+
+/* Reveal on parent container hover */
+#sidebar section:hover .hidden-clue,
+#main-content section:hover .hidden-clue,
+footer:hover .hidden-clue {
+    opacity: 0.45; /* Still quite faint */
+    pointer-events: auto; /* Allow hover on clue itself now */
+}
+.hidden-clue:hover {
+    opacity: 0.85; /* Brighter on direct hover */
+    color: #ccffcc; /* Pale green */
+    text-shadow: 0 0 3px #ccffcc;
+}
+
+
+.faint-clue {
+    opacity: 0.08; /* Very faint */
+    transition: opacity 0.6s ease, color 0.6s ease;
+    color: var(--text-color);
+    font-style: italic;
+    /* user-select: none; */ /* Optional: prevent easy selection */
+}
+.faint-clue:hover {
+    opacity: 1.0;
+    color: var(--warning-color); /* Yellow on hover */
+}
+
+
+/* --- Footer --- */
+footer {
+	text-align: center;
+	padding: 15px; /* More padding */
+	font-size: 0.85em; /* Slightly larger */
+	opacity: 0.4; /* Dimmer footer */
+	border-top: var(--border-style);
+	margin-top: 0;
+	text-transform: uppercase;
+    letter-spacing: 1.5px; /* More spacing */
+    font-family: 'VT323', monospace;
+    transition: opacity 0.5s ease;
+}
+footer:hover {
+    opacity: 0.7; /* Make slightly more visible on hover */
+}
+
+
+/* --- System Alert Overlay --- */
+.system-alert-overlay {
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    background-color: var(--accent-color);
+    color: var(--main-bg);
+    padding: 5px 10px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 13px; /* Slightly larger */
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out, transform 0.2s ease-out;
+    border: 1px solid var(--text-color);
+    box-shadow: 0 0 12px var(--accent-color);
+    max-width: 350px; /* Wider */
+    pointer-events: none; /* Don't block clicks */
+}
+.system-alert-overlay.visible {
+    opacity: 0.95; /* More opaque */
+    animation: alert-glitch 0.2s infinite alternate;
+}
+@keyframes alert-glitch {
+    0% { transform: translateX(0) skewX(-0.8deg); opacity: 0.95; }
+    100% { transform: translateX(2px) skewX(0.8deg); opacity: 0.9; }
+}
+
+
+/* --- Infohazard Styling --- */
+.infohazard-source:hover {
+    /* Indicate potential danger on hover */
+    box-shadow: inset 0 0 15px rgba(255, 0, 0, 0.2);
+    border-left: 3px solid var(--accent-color);
+    padding-left: 10px;
+    margin-left: -13px; /* Compensate for padding */
+}
+.audio-hazard::before {
+    content: "[AUDIO HAZARD] ";
+    color: var(--warning-color);
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+.visual-hazard::before {
+    content: "[VISUAL HAZARD] ";
+    color: var(--warning-color);
+    font-weight: bold;
+    font-size: 0.8em;
+    margin-right: 5px;
+}
+
+/* --- Ghost Entry Styling --- */
+.ghost-entry {
+    opacity: 0.3;
+    filter: blur(0.5px);
+    transition: opacity 0.5s ease, filter 0.5s ease;
+}
+.ghost-entry:hover {
+    opacity: 0.6;
+    filter: blur(0);
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 850px) { /* Adjusted breakpoint */
+	#content-wrapper {
+		flex-direction: column;
+	}
+	#sidebar {
+		width: 100%;
+		border-right: none;
+		border-bottom: var(--border-style);
+        padding: 15px; /* Reduce padding */
+	}
+	#main-content {
+		padding: 20px; /* Reduce padding */
+	}
+	 nav a.nav-link {
+		margin: 0 12px; /* Less margin */
+		font-size: 1.1em;
+	}
+	#header h1 {
+		font-size: 2.2em; /* Smaller */
+	}
+    #page-border {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+}
+
+@media (max-width: 600px) { /* Adjusted breakpoint */
+	 nav a.nav-link {
+		display: block; /* Stack nav links */
+		margin: 8px auto;
+		text-align: center;
+        font-size: 1.05em;
+	}
+    #sub-header nav { padding: 5px 0; }
+	#header h1 {
+		font-size: 1.9em; /* Smaller */
+        letter-spacing: 3px;
+	}
+    #main-content h2 { font-size: 1.3em; }
+    #main-content h3 { font-size: 1.15em; }
+	.popup-content {
+		min-width: calc(95% - 40px); /* Adjust popup width */
+		padding: 20px;
+	}
+	 .popup-content input[type="text"],
+	 .popup-content input[type="password"] {
+		width: calc(90% - 12px);
+	}
+	#access input[type="text"],
+	#access input[type="password"] {
+		width: 90px; /* Adjust login inputs */
+		margin-right: 8px;
+	}
+	#access form { display: block; text-align: center; } /* Center main login */
+	#access label { display: block; margin-bottom: 3px; }
+    .access-info { text-align: center; margin-top: 10px; } /* Center access info */
+
+    .system-alert-overlay {
+        max-width: calc(100% - 30px); /* Fit alert */
+        font-size: 11px;
+        bottom: 10px; left: 10px;
+    }
+    #main-content ul { padding-left: 20px; } /* Less indent */
+    #main-content pre.log-text { font-size: 0.9em; padding: 10px; }
+}
+
+@media (max-width: 400px) {
+    #header h1 { font-size: 1.6em; letter-spacing: 2px;}
+    :root { --base-font-size: 15px; }
+    .warning-bar { font-size: 0.85em; }
+}

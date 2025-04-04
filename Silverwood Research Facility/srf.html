@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRF // CLASSIFIED // SYSTEM UNSTABLE //</title> <!-- Changed Title -->
+    <link rel="stylesheet" href="srf-style.css">
+</head>
+<body class=""> <!-- Class added dynamically by JS -->
+    <div class="scanlines"></div>
+    <div class="static-overlay"></div>
+    <div class="flicker-overlay"></div> <!-- Controlled by JS -->
+
+    <div id="page-border">
+        <header id="header">
+            <!-- data-text attribute used by CSS/JS for glitch effect -->
+            <h1 class="glitch-effect" data-text="SILVERWOOD RESEARCH FACILITY">SILVERWOOD RESEARCH FACILITY</h1>
+        </header>
+
+        <div id="sub-header">
+            <nav>
+                <a href="srf.html" class="nav-link">HOME</a>
+                <a href="reports.html" class="nav-link">REPORTS</a> <!-- Restricted -->
+                <a href="evidence.html" class="nav-link">EVIDENCE</a> <!-- Restricted -->
+                <a href="personnel.html" class="nav-link">PERSONNEL</a> <!-- Restricted -->
+                <a href="contact.html" class="nav-link">CONTACT</a> <!-- Restricted -->
+            </nav>
+            <!-- Unreliable Warning Bars -->
+            <p class="warning-bar scrolling-warning"><span>*** WARNING: UNAUTHORIZED ACCESS IS A FELONY OFFENSE - ALL ACTIVITY LOGGED - THEY ARE WATCHING ***</span></p>
+            <p class="warning-bar secondary-warning"><span class="blinking-warning">!! SYSTEM INTEGRITY: <span class="glitch-effect-subtle">74</span>% ?? - ANOMALOUS READINGS DETECTED - REALITY FLUX HIGH !!</span></p>
+        </div>
+
+        <div id="content-wrapper">
+            <aside id="sidebar">
+                <section id="case-files">
+                    <h3>CASE FILES</h3>
+                    <ul>
+                        <!-- Added hover effects via JS -->
+                        <li><a href="reports.html#incident1" class="sidebar-link">Incident #1994-01</a></li>
+                        <li><a href="reports.html#incident2" class="sidebar-link">Incident #1994-02</a></li>
+                        <li><a href="reports.html#incident3" class="sidebar-link">Incident #1994-03</a></li>
+                        <li><a href="reports.html#incident4" class="sidebar-link">Incident #1994-04</a></li>
+                        <li><a href="reports.html#incident5" class="sidebar-link glitch-effect-subtle">Incident #1994-05</a></li>
+                        <li><a href="reports.html#incident6" class="sidebar-link">Incident #1994-06</a></li>
+                        <li><a href="reports.html#incident7" class="sidebar-link">Incident #1994-07</a></li>
+                        <li><a href="reports.html#incident8" class="sidebar-link urgent">Incident #1994-08</a></li>
+                        <li><a href="#" class="sidebar-link faint-clue">[CORRUPTED LOG ENTRY]</a></li> <!-- Fake entry -->
+                    </ul>
+                </section>
+                <section id="updates">
+                    <h3>UPDATES / ERRATA</h3> <!-- Changed -->
+                    <!-- Added hover effects via JS -->
+                    <p class="update-item urgent">SECURITY BREACH // LOCKDOWN IN EFFECT - <span class="glitch-effect-subtle">3/28/94</span> // REALITY INTEGRITY FAILING</p>
+                    <p class="update-item status-missing">Personnel unaccounted for: 7? 8? [COUNT UNRELIABLE]</p>
+                    <p class="update-item status-warning">Sub-level Gamma sealed // Life support failing // Sounds coming from walls</p>
+                    <p class="update-item">Network Instability Increasing // Data Corruption Cascade // [IT IS IN THE WIRES]</p>
+                    <p class="update-item">[SYSTEM] Automated Log Purge: ACTIVE // <span class="faint-clue">Manual Override Failed?</span></p>
+                    <p class="update-item">[SYSTEM] TIME DESYNCHRONIZATION DETECTED: -1.337s</p> <!-- New -->
+                </section>
+                <section id="clearance">
+                    <div class="clearance-box">
+                        Level 4 Clearance Required
+                    </div>
+                    <p class="access-restricted">ACCESS RESTRICTED</p>
+                     <!-- Modified hidden clue - relies on parent hover in CSS -->
+                     <span class="hidden-clue header-clue">His name is the user. The protocol is the pass. Don't forget the number. It pulses.</span>
+                </section>
+            </aside>
+
+            <main id="main-content">
+                <section id="overview">
+                     <!-- More fragmented -->
+                    <h2>FACILITY OVERVIEW // FRAGMENTED LOG: DATE <span class="glitch-effect-subtle">UNCERTAIN</span> // CORRUPTION LEVEL: HIGH</h2>
+                    <p>Silverwood Research Facility (SRF) ... operational since <span class="glitch-effect-subtle">1989</span>? Or was it earlier? Records conflict.</p>
+                    <p>Mandate: Investigate ... entities? ... geometric anomalies ... formations within the Silverwood Mine complex. Purpose <span class="redacted" data-revealed="Unknown, potentially related to weaponization or dimensional control attempts by [REDACTED CORPORATE ENTITY]" data-target-page="personnel.html#Ingram">███████████████████████████████████████</span>.</p>
+                    <p>Primary focus: <span class="redacted" data-revealed="Crystalline structures exhibiting reality-warping resonance and bio-contaminant properties. Potential Infohazard." data-target-page="reports.html#incident1">█████████████████████████████████████████████████████████████████████████████████████████████████████</span> [DESIGNATION: ANOMALY-01].</p>
+                    <p>Team status ... compromised. Lost. Changed. <span class="faint-clue">[Are they still human?]</span></p>
+                    <p>Formations ... older than time? Impossible geometry. They sing... a discordant harmony. <span class="glitch-effect-subtle">They feel... aware.</span></p>
+                    <p>Material composition <span class="redacted" data-revealed="unknown; analysis causes sensor failure, localized temporal flux, and acute psychological distress in observers" data-target-page="reports.html#incident1">██████████████████████████████████████████</span>. Do not touch.</p>
+                    <p>Shaft 7-B ... source identified. Containment ... failed. It's spreading. The geometry is <span class="urgent">WRONG</span>.</p>
+                    <p>[...] Log fragment ends. Further data...</p> 
+                    <p><span class="status-missing">Irretrievable</span> or <span class="status-warning">intentionally purged</span>.</p>
+
+                    <!-- Modified hidden clue -->
+                    <p class="hidden-clue bottom-clue">The crystal protocol needs the number... the fifth harmonic? Check Reyes' last transmission fragments...</p>
+                </section>
+
+                <section id="projects">
+                    <h2>ACTIVE RESEARCH PROJECTS // STATUS: <span class="urgent glitch-effect">CRITICAL FAILURE</span></h2>
+                     <ul>
+                        <!-- Added hover effects via JS -->
+                        <li><strong>PROJECT AMBER:</strong> Resonance Mapping. (Harmon):</li>
+                        <p>[<span class="status-warning">DATA OVERLOAD - HARMON ISOLATED</span>]</p>
+                        <li><strong>PROJECT OPAL:</strong> Bio-Contamination Study. (Abrams):</li>
+                        <p>[<span class="urgent status-missing">CONTAINMENT BREACH IMMINENT - BIO-SIGNATURES MUTATING</span>]</p>
+                        <li><strong>PROJECT QUARTZ:</strong> Resonance Manipulation. (Miller):</li>
+                        <p>[<span class="status-missing urgent">SUBJECT LOST - INFO HAZARD ACTIVE - REALITY FRACTURE</span>]</p>
+                        <li><strong>PROJECT OBSIDIAN:</strong> <span class="redacted" data-revealed="Entity Appeasement & Dimensional Stabilization Protocols - FAILED - ENTITY AWAKENED" data-target-page="reports.html#incident8">█████████████████████████████</span>(Ingram):</li>
+                        <p>[<span class="urgent status-missing glitch-effect">STATUS UNKNOWN - INGRAM COMPROMISED? - PROTOCOL ACTIVE?</span>]</p>
+                    </ul>
+                </section>
+
+                <section id="team">
+                     <h2>PERSONNEL STATUS // LAST KNOWN // [DATA UNVERIFIABLE]</h2>
+                     <ul>
+                        <!-- Added hover effects via JS -->
+                        <li>Ingram, E.: Director</li>
+                        <p>STATUS: [<span class="status-missing urgent">LOCATION UNKNOWN - PRESUMED COMPROMISED/LOST</span>]</li>
+                        <li>Harmon, L.: Geology Lead</li>
+                        <p> STATUS:[<span class="status-warning">SECURE LAB - UNREACHABLE - COMMS DEGRADING</span>]</p>
+                        <li>Miller, S.: Theoretical Lead</li>
+                        <p> STATUS:[<span class="status-missing urgent">LOST - BIOHAZARD/INFOHAZARD - ACTIVE THREAT?</span>]</p>
+                        <li><span class="glitch-effect-subtle">Reyes, M.:</span> Geology Senior</li>
+                        <p> STATUS:[<span class="status-missing urgent">LOST - PRESUMED ABSORBED/INTEGRATED - INC#1994-05</span>]</p>
+                        <li>Abrams, A.: Field Lead</li>
+                        <p> STATUS:[<span class="urgent">BIO-LAB 3 - DISTRESS SIGNAL ACTIVE - LIFE SUPPORT CRITICAL - SOUNDS...</span>]</p>
+                        <li>Davies, M.: Security Chief</li>
+                        <p> STATUS:[<span class="status-missing urgent">LOST - INCIDENT #1994-08 - PRESUMED K.I.A.</span>]</p>
+                        <li>[REDACTED PERSONNEL - 3]</li>
+                        <p> STATUS:[<span class="status-missing">RECORDS PURGED - EXISTENCE UNVERIFIED</span>]</p> <!-- New mystery -->
+                    </ul>
+
+                    <!-- Modified hidden clue -->
+                    <p class="hidden-clue bottom-clue">Reyes' password... something about the crystals... five? The fifth note in the sequence? Log analysis needed...</p>
+                </section>
+
+                 <section id="access">
+                    <h2>ACCESS TERMINAL // SRF NETWORK INTERFACE // [UNSTABLE]</h2>
+                    <form id="main-login-form">
+                        <label for="main-username">USER:</label>
+                        <input type="text" id="main-username" name="username" required autocomplete="off">
+                        <label for="main-password">PASS:</label>
+                        <input type="password" id="main-password" name="password" required autocomplete="new-password">
+                        <button type="submit">AUTH</button>
+                    </form>
+                    <p id="main-login-message" class="login-message"></p> <!-- Populated by JS -->
+                    <div class="access-info">NODE CONNECTIONS: <span id="access-counter">004815</span> // STABILITY: <span id="stability-indicator">NOMINAL</span></div> <!-- Stability added -->
+                </section>
+            </main>
+        </div>
+         <footer>
+             <!-- Unreliable Footer -->
+             <p>© <span class="glitch-effect-subtle">1994</span> SILVERWOOD // MONITORING ACTIVE // DATA INTEGRITY <span class="urgent">COMPROMISED</span> // IT KNOWS YOU ARE HERE //</p>
+             <!-- Fainter Clue -->
+             <p class="faint-clue" style="opacity: 0.03; margin-top: 5px;">Is this real? The humming... it gets louder when I look away. The screen feels warm.</p>
+         </footer>
+    </div>
+
+    <!-- Login Popup -->
+    <div id="login-popup" class="popup">
+        <div class="popup-content">
+            <span class="popup-close" title="Close Authentication Window">×</span>
+            <h2 class="glitch-effect" data-text="AUTHENTICATION REQUIRED">AUTHENTICATION REQUIRED</h2>
+            <p>LEVEL 4 CLEARANCE MANDATORY. UNAUTHORIZED ATTEMPTS LOGGED.</p>
+            <form id="popup-login-form">
+                <label for="popup-username">USERNAME:</label>
+                <input type="text" id="popup-username" name="username" required autocomplete="off">
+                <label for="popup-password">PASSWORD:</label>
+                <input type="password" id="popup-password" name="password" required autocomplete="new-password">
+                <button type="submit">VERIFY</button>
+            </form>
+            <p id="popup-message" class="login-message"></p> <!-- Populated by JS -->
+            <div id="login-attempts-counter" style="text-align: center; font-size: 0.8em; opacity: 0.5; margin-top: 10px;"></div> <!-- Added -->
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="bg-hum" src="audio/crt_hum_loop.mp3" preload="auto"></audio>
+    <audio id="static-burst" src="audio/static_burst.mp3" preload="auto"></audio>
+    <audio id="whisper" src="audio/whisper_fragment.mp3" preload="auto"></audio>
+    <audio id="login-fail-sound" src="audio/login_fail.mp3" preload="auto"></audio>
+    <audio id="login-success-sound" src="audio/login_success.mp3" preload="auto"></audio>
+    <audio id="ui-click" src="audio/ui_click.mp3" preload="auto"></audio>
+    <audio id="ui-hover" src="audio/ui_hover.ogg" preload="auto"></audio>
+    <audio id="redacted-reveal" src="audio/redacted_reveal.mp3" preload="auto"></audio>
+    <audio id="ambient-creak" src="audio/ambient_creak.ogg" preload="auto"></audio>
+    <audio id="resonance-ping" src="audio/resonance_ping.ogg" preload="auto"></audio>
+    <!-- New Audio -->
+    <audio id="distorted-typing" src="audio/distorted_typing.mp3" preload="auto"></audio>
+    <audio id="low-rumble" src="audio/low_rumble.ogg" preload="auto"></audio>
+    <audio id="electronic-error" src="audio/electronic_error.wav" preload="auto"></audio>
+    <audio id="faint-breathing" src="audio/faint_breathing.mp3" preload="auto"></audio>
+
+
+    <script src="srf-script.js"></script>
+    <!-- Console Log Hint -->
+    <script>console.log("%cCheck the console (F12) for system messages... if you dare.", "color: #555; font-style: italic;");</script>
+</body>
+</html>
