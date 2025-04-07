@@ -219,6 +219,13 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("%c/// SYSTEM BOOTING... CORRUPTION DETECTED: ██████% ///", "color: red; font-weight: bold; font-size: 1.2em;");
     console.warn("~*~ Welcome to the show! Don't lose your head... ~*~");
 
+    // Start playing background music if available
+    const bgMusic = document.getElementById('bgMusic');
+    if (bgMusic) {
+        bgMusic.volume = 0.4; // Lower volume for background music
+        bgMusic.play().catch(error => console.warn(`Background music playback failed:`, error));
+    }
+    
     // Add listener for interactive redacted text
     document.querySelectorAll('.interactive-redacted').forEach(element => {
         element.addEventListener('click', () => decodeRedacted(element));
