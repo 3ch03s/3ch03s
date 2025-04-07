@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wither Creek Census</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- The Bezel Container -->
+    <div id="crt-bezel">
+        <!-- The Screen Area Inside the Bezel -->
+        <div id="crt-screen">
+
+            <!-- Audio Elements (can stay here or outside bezel) -->
+            <audio id="typewriter-sound" src="sounds/typewriter_click.mp3" preload="auto"></audio>
+            <audio id="title-music" src="sounds/title_horror.mp3" loop preload="auto"></audio>
+            <audio id="click-sound" src="sounds/ui_click.mp3" preload="auto"></audio>
+            <audio id="ambient-sound" src="sounds/ominous_drone.mp3" loop preload="auto"></audio>
+            <audio id="power-on-sound" src="sounds/ui_click.mp3" preload="auto"></audio>
+
+            <!-- CRT Effects -->
+            <div class="scanlines"></div>
+            <div class="vignette"></div>
+            <div class="crt-curvature"></div>
+            <div class="flicker-overlay"></div>
+            <div class="crt-glare"></div>
+            <div class="noise-overlay"></div>
+            <div class="glitch-container"></div>
+
+            <!-- Title Screen Container (now inside crt-screen) -->
+            <div class="title-screen">
+                <!-- Removed scanlines/vignette from here -->
+                <header class="game-header">
+                    <h1 class="game-title">WITHER CREEK CENSUS</h1>
+                    <p class="subtitle">FBSAA FILE 734</p>
+                </header>
+                <div class="start-menu">
+                    <button id="start-button" class="menu-button">START</button>
+                </div>
+                <footer class="copyright">
+                    © 1991 ANOMALY ASSESSMENT BUREAU (SIMULATED)
+                </footer>
+            </div>
+
+            <!-- Game Screen Container (now inside crt-screen) -->
+            <div id="game-screen">
+                <div class="scene" id="scene-1">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-2">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-3">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-4">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-5">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-6">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-7">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-8">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-9">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-10">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-11">
+                    <div class="scene-background"></div>
+                </div>
+                <div class="scene" id="scene-12">
+                    <div class="scene-background"></div>
+                </div>
+                <!-- Dialogue Box (now positioned relative to crt-screen) -->
+                <div class="dialogue-box">
+                    <p id="dialogue-text"></p>
+                </div>
+                <!-- Other scenes... -->
+            </div>
+
+            <!-- Logs Screen Container -->
+            <div id="logs-screen">
+                <div class="logs-header">
+                    <h2>AGENT LOGS</h2>
+                    <button id="close-logs" class="small-button">CLOSE</button>
+                </div>
+                <div class="logs-content"></div>
+            </div>
+
+            <!-- Save/Load Screen Container -->
+            <div id="save-load-screen">
+                <div class="save-load-header">
+                    <h2 id="save-load-title">SAVE GAME</h2>
+                    <button id="close-save-load" class="small-button">CLOSE</button>
+                </div>
+                <div class="save-slots">
+                    <div class="save-slot" data-slot="1">
+                        <h3>SLOT 1</h3>
+                        <p class="slot-details">Empty</p>
+                    </div>
+                    <div class="save-slot" data-slot="2">
+                        <h3>SLOT 2</h3>
+                        <p class="slot-details">Empty</p>
+                    </div>
+                    <div class="save-slot" data-slot="3">
+                        <h3>SLOT 3</h3>
+                        <p class="slot-details">Empty</p>
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- End #crt-screen -->
+
+        <!-- Computer Control Panel -->
+        <div class="control-panel">
+            <button id="power-button" class="control-button">
+                <div class="button-icon power-icon"></div>
+                <span>POWER</span>
+            </button>
+            <button id="save-button" class="control-button">
+                <div class="button-icon save-icon"></div>
+                <span>SAVE</span>
+            </button>
+            <button id="load-button" class="control-button">
+                <div class="button-icon load-icon"></div>
+                <span>LOAD</span>
+            </button>
+            <button id="logs-button" class="control-button">
+                <div class="button-icon logs-icon"></div>
+                <span>LOGS</span>
+            </button>
+        </div>
+    </div> <!-- End #crt-bezel -->
+
+    <script src="script.js"></script>
+</body>
+</html>

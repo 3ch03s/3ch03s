@@ -1,0 +1,732 @@
+/* --- Reset & Basic Setup --- */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #111; /* Dark background behind the bezel */
+    color: #c0c0c0;
+    font-family: 'VT323', monospace;
+    overflow: hidden; /* Prevent scrollbars from body */
+}
+
+/* --- NEW: CRT Bezel Styles --- */
+#crt-bezel {
+    position: absolute; /* Changed to absolute */
+    top: 50%;           /* Center vertically */
+    left: 50%;          /* Center horizontally */
+    transform: translate(-50%, -50%); /* Fine-tune centering */
+    width: 95vw;        /* Adjust width as desired */
+    height: 90vh;       /* Adjust height as desired */
+    max-width: 1200px;  /* Optional: Max width */
+    max-height: 900px;  /* Optional: Max height */
+    background-color: #1c1c1c; /* Darker grey bezel color */
+    border: 1px solid #1a1a1a; /* Subtle outer border */
+    border-radius: 15px; /* Rounded corners for the bezel */
+    padding: 20px 20px 0 20px; /* Less padding at bottom to join with control panel */
+    box-shadow: 
+        inset 0 0 10px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(0, 0, 0, 0.6); /* Stronger shadow for depth */
+    box-sizing: border-box; /* Padding included in width/height */
+    display: flex; /* For layout of screen and control panel */
+    flex-direction: column; /* Stack vertically */
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- NEW: CRT Screen Styles --- */
+#crt-screen {
+    width: 100%; /* Fill the space inside the bezel's padding */
+    height: 80%; /* Reduced height to make room for control panel */
+    background-color: #000; /* Black screen background */
+    position: relative; /* Positioning context for game/title screens */
+    overflow: hidden; /* Crucial: hide overflow for curvature/effects */
+    border-radius: 20px 20px 0 0; /* More pronounced rounded corners at top */
+    box-shadow: 
+        inset 0 0 25px 3px rgba(50, 50, 50, 0.9),
+        0 0 7px rgba(10, 255, 120, 0.15); /* Green glow for CRT feel */
+    margin-bottom: 0; /* Remove margin to connect with control panel */
+    border: 10px solid #111; /* Thicker, darker border for screen */
+    
+    /* Add perspective effect */
+    transform-style: preserve-3d;
+    perspective: 900px;
+    
+    /* Curve the screen using pseudo element */
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: transparent;
+        border-radius: 20px / 15px;
+        box-shadow: 
+            inset 0 0 50px 10px rgba(0, 0, 0, 0.9),
+            inset 0 0 20px rgba(0, 20, 0, 0.5);
+        pointer-events: none;
+        z-index: 4;
+    }
+}
+
+/* --- Control Panel Styles --- */
+.control-panel {
+    width: 100%;
+    height: 15%; /* Adjust as needed */
+    background-color: #333;
+    border-radius: 0 0 1vmin 1vmin;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: relative;
+    border-top: 4px solid #3a3a3a;
+    box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Vents on the control panel */
+.control-panel::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        #292929,
+        #292929 3px,
+        #3a3a3a 3px,
+        #3a3a3a 6px
+    );
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.control-button {
+    width: 70px;
+    height: 65%;
+    background-color: #1e1e1e;
+    border: none;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #aaa;
+    font-family: 'VT323', monospace;
+    font-size: 0.9em;
+    cursor: pointer;
+    box-shadow: 
+        0 3px 0 #151515,
+        inset 1px 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.1s ease;
+    position: relative;
+    border: 1px solid #151515;
+    margin-top: -3px; /* Pull up slightly to create raised effect */
+    z-index: 2; /* Above the vents */
+}
+
+.control-button:hover {
+    background-color: #303030;
+    color: #ccc;
+}
+
+.control-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 0 0 #191919;
+    margin-top: 0;
+}
+
+.control-button:hover {
+    background-color: #555;
+    color: #ddd;
+}
+
+.control-button:active {
+    transform: translateY(3px);
+    box-shadow: 0 0 0 #222;
+    margin-top: 0;
+}
+
+.button-icon {
+    width: 22px;
+    height: 22px;
+    margin-bottom: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-radius: 3px;
+}
+
+.power-icon {
+    background-color: #333; /* Dark gray instead of red */
+    border-radius: 50%;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    border: 1px solid #444;
+}
+
+#power-button:hover .power-icon {
+    background-color: #444;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.save-icon {
+    background-color: #333; /* Dark gray instead of green */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%);
+    border: 1px solid #444;
+}
+
+.load-icon {
+    background-color: #333; /* Dark gray instead of blue */
+    clip-path: polygon(50% 0%, 100% 50%, 75% 50%, 75% 100%, 25% 100%, 25% 50%, 0% 50%);
+    border: 1px solid #444;
+}
+
+.logs-icon {
+    background-color: #333; /* Dark gray instead of orange */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 20%, 0% 20%, 0% 40%, 70% 40%, 70% 60%, 0% 60%, 0% 80%, 100% 80%, 100% 100%, 0% 100%);
+    border: 1px solid #444;
+}
+
+/* --- Title Screen Adjustments --- */
+.title-screen {
+    position: absolute; /* Positioned within #crt-screen */
+    top: 0;
+    left: 0;
+    width: 100%;        /* Fill #crt-screen */
+    height: 100%;       /* Fill #crt-screen */
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+    z-index: 10; /* Above game screen initially */
+    display: flex; /* Re-add flex for layout of title elements */
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px; /* Add padding back for content spacing */
+    box-sizing: border-box;
+    background-color: transparent; /* Should be see-through to the #crt-screen background or title image */
+    background-image: url('images/welcome_to_wither_creek.png'); /* Put title background here */
+    background-size: cover;
+    background-position: center;
+    
+    /* Apply bulge effect to title screen content */
+    transform: perspective(1000px) scale(0.96);
+}
+
+.title-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: none; /* Still hide completely */
+}
+
+/* --- Dark Overlay (Applied to Title Screen Background) --- */
+.title-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.0));
+    z-index: 1; /* Below title text, above background */
+    border-radius: inherit; /* Match screen rounding */
+}
+
+/* --- CRT / Effects (Positioned within #crt-screen) --- */
+.scanlines, .vignette, .crt-curvature, .flicker-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-radius: inherit; /* Match screen rounding */
+}
+
+.scanlines {
+    background: linear-gradient(
+        to bottom,
+        rgba(20, 20, 20, 0) 50%,
+        rgba(0, 0, 0, 0.4) 50%
+    );
+    background-size: 100% 4px; /* Thinner lines */
+    opacity: 1; /* More visible */
+    z-index: 5;
+    mix-blend-mode: multiply;
+}
+
+.vignette {
+    background: radial-gradient(
+        ellipse at center, 
+        rgba(0, 0, 0, 0) 30%, 
+        rgba(0, 0, 0, 0.9) 100%
+    );
+    opacity: 0.8;
+    z-index: 6;
+    mix-blend-mode: multiply;
+}
+
+/* Curved CRT screen effect */
+.crt-curvature {
+    border-radius: 50% / 10%;
+    z-index: 4;
+    box-shadow: 
+        inset 0 0 50px 10px rgba(0, 0, 0, 0.7),
+        inset 0 0 20px rgba(0, 50, 0, 0.3);
+    background: transparent;
+    
+    /* Add bulging effect */
+    transform: perspective(800px) rotateX(4deg);
+    
+    &::before, &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+    
+    &::before {
+        background: 
+            radial-gradient(
+                circle at 50% 50%,
+                rgba(95, 155, 95, 0.02) 10%, 
+                rgba(0, 0, 0, 0.1) 100%
+            );
+        z-index: 2;
+    }
+    
+    &::after {
+        background: linear-gradient(
+            rgba(255, 255, 255, 0.03) 0%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        height: 50%;
+        border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        z-index: 3;
+    }
+}
+
+/* Light flicker effect */
+.flicker-overlay {
+    background: rgba(120, 255, 180, 0.03);
+    opacity: 0;
+    animation: screen-flicker 6s infinite;
+    z-index: 7;
+    mix-blend-mode: screen;
+}
+
+/* --- Header & Title (Positioning relative to .title-screen) --- */
+.game-header {
+    text-align: center;
+    margin-top: 02vh; /* Adjust as needed within the screen */
+    position: relative;
+    z-index: 6; /* Above potential title overlay */
+}
+
+.game-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.8em;
+    color: #e0e0e0;
+    text-shadow: 2px 2px #a00000, 4px 4px #333;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    animation: title-flicker 5s infinite alternate ease-in-out;
+}
+
+.subtitle {
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    color: #888;
+    text-shadow: 1px 1px #000;
+    margin-top: 0;
+}
+
+/* --- Start Menu (Positioning relative to .title-screen) --- */
+.start-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 02vh; /* Adjust as needed */
+    position: relative;
+    z-index: 6; /* Above potential title overlay */
+}
+
+.menu-button {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #ccc;
+    background-color: rgba(30, 30, 30, 0.8);
+    border: 2px solid #555;
+    padding: 10px 30px;
+    margin: 10px 0;
+    cursor: pointer;
+    min-width: 200px;
+    text-align: center;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+    box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.1),
+                inset -1px -1px 0px rgba(0, 0, 0, 0.5);
+}
+.menu-button:hover {
+    background-color: rgba(80, 20, 20, 0.9);
+    color: #fff;
+    border-color: #a00000;
+}
+.menu-button:active {
+    background-color: rgba(50, 10, 10, 0.9);
+    color: #aaa;
+    transform: scale(0.98);
+    box-shadow: inset 2px 2px 1px rgba(0, 0, 0, 0.5);
+}
+.menu-button.disabled { color: #666; background-color: rgba(20, 20, 20, 0.7); border-color: #333; cursor: not-allowed; box-shadow: none; }
+.menu-button.disabled:hover { background-color: rgba(20, 20, 20, 0.7); border-color: #333; }
+
+/* --- Footer (Positioning relative to .title-screen) --- */
+.copyright {
+    font-family: 'VT323', monospace;
+    font-size: 0.9em;
+    color: #555;
+    text-align: center;
+    margin-bottom: 10px; /* Adjust as needed */
+    position: relative;
+    z-index: 6; /* Above potential title overlay */
+}
+
+/* --- Animations (title-flicker, screen-glitch remain the same) --- */
+@keyframes title-flicker {
+    0%, 100% { opacity: 1; }
+    40% { opacity: 1; }
+    42% { opacity: 0.8; }
+    44% { opacity: 1; }
+    60% { opacity: 1; }
+    62% { opacity: 0.9; }
+    64% { opacity: 1; }
+    80% { opacity: 1; }
+    92% { opacity: 0.8; }
+}
+
+@keyframes glitch-color {
+    0%, 100% { filter: none; }
+    50% { filter: brightness(1.1) contrast(1.1); }
+    100% { filter: none; }
+}
+
+/* New animation for screen flicker */
+@keyframes screen-flicker {
+    0%, 100% { opacity: 0; }
+    5% { opacity: 0.1; }
+    10% { opacity: 0.02; }
+    15% { opacity: 0.05; }
+    20% { opacity: 0; }
+    50% { opacity: 0; }
+    55% { opacity: 0.03; }
+    60% { opacity: 0.01; }
+    70% { opacity: 0.3; }
+    71% { opacity: 0; }
+    80% { opacity: 0.04; }
+    90% { opacity: 0; }
+}
+
+/* Animation for screen on/off effect */
+@keyframes crt-on {
+    0% { 
+        background-color: #000; 
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    5% { 
+        background-color: #fff; 
+        opacity: 1;
+        transform: scale(1.02);
+    }
+    10% { 
+        background-color: #222; 
+        transform: scale(0.98);
+    }
+    15% { 
+        background-color: #000; 
+        transform: scale(1);
+    }
+    20%, 100% { opacity: 1; background-color: #000; }
+}
+
+/* --- Game Screen Adjustments --- */
+/* --- Game Screen Adjustments --- */
+#game-screen {
+    position: absolute; /* Positioned within #crt-screen */
+    top: 0;
+    left: 0;
+    width: 100%;        /* Fill #crt-screen */
+    height: 100%;       /* Fill #crt-screen */
+    display: none;      /* Initially hidden */
+    opacity: 0;         /* Start transparent for fade-in */
+    transition: opacity 0.5s ease-in;
+    z-index: 8; /* Above title screen *when* visible */
+    transform-origin: center center;
+}
+
+#game-screen.visible {
+    display: block; /* Make visible */
+    opacity: 1;
+    animation: crt-static 0.2s;
+}
+
+/* CRT static flicker when switching screens */
+@keyframes crt-static {
+    0% { filter: brightness(2) contrast(3); }
+    10% { filter: brightness(1.8) contrast(2.5); }
+    20% { filter: brightness(1) contrast(1); }
+    30% { filter: brightness(1.5) contrast(2); }
+    40% { filter: brightness(1) contrast(1); }
+    50% { filter: brightness(1.3) contrast(1.7); }
+    60% { filter: brightness(1) contrast(1); }
+    100% { filter: brightness(1) contrast(1); }
+}
+
+/* --- Scene Styles --- */
+.scene {
+    width: 100%;
+    height: 100%;
+    position: absolute; /* Scenes stack within #game-screen */
+    top: 0;
+    left: 0;
+    display: none;
+    overflow: hidden;
+}
+
+.scene.active {
+    display: block; /* Show active scene */
+    z-index: 1; /* Base layer within #game-screen */
+}
+
+.scene-background {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Behind any elements within the scene */
+}
+
+/* --- Scene Background Images --- */
+#scene-1 .scene-background { background-image: url('images/driving_road.png'); }
+#scene-2 .scene-background { background-image: url('images/welcome_to_wither_creek_2.png'); }
+#scene-3 .scene-background { background-image: url('images/main_street.png'); }
+#scene-4 .scene-background { background-image: url('images/roadside_vegitation.png'); }
+#scene-5 .scene-background { background-image: url('images/victorian_house.png'); }
+#scene-6 .scene-background { background-image: url('images/dark_alleyway.png'); }
+#scene-7 .scene-background { background-image: url('images/abandoned_sheriffs_office.png'); }
+#scene-8 .scene-background { background-image: url('images/map.png'); }
+#scene-9 .scene-background { background-image: url('images/general_store.png'); }
+#scene-10 .scene-background { background-image: url('images/general_store_interior.png'); }
+#scene-11 .scene-background { background-image: url('images/abernathy.png'); }
+#scene-12 .scene-background { background-image: url('images/shelves.png'); }
+
+/* --- Dialogue Box (Positioned relative to #crt-screen) --- */
+.dialogue-box {
+    position: absolute;
+    bottom: 20px; /* Position near the bottom of #crt-screen */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Adjust width relative to screen */
+    max-width: 700px; /* Max width */
+    background-color: rgba(10, 10, 20, 0.85);
+    border: 2px solid #303050;
+    padding: 15px 25px;
+    box-sizing: border-box;
+    z-index: 20; /* Ensure it's above everything else inside #crt-screen */
+    color: #e0e0e0;
+    font-family: 'VT323', monospace;
+    font-size: 1.6em;
+    line-height: 1.4;
+    min-height: 4em;
+    display: none; /* Hide initially */
+    border-radius: 5px; /* Slightly round dialogue box corners */
+}
+
+.dialogue-box p {
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Logs Screen Styles --- */
+#logs-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(20, 20, 40, 0.95);
+    z-index: 30; /* Above everything else */
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: inherit;
+}
+
+.logs-header {
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #304060;
+    color: #e0e0e0;
+    font-family: 'VT323', monospace;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #203050;
+    box-sizing: border-box;
+}
+
+.logs-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+.logs-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px;
+    color: #aac;
+    font-size: 1.2em;
+}
+
+.logs-content p {
+    margin: 0 0 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(80, 100, 150, 0.3);
+}
+
+.logs-content p:last-child {
+    border-bottom: none;
+}
+
+/* --- Save/Load Screen Styles --- */
+#save-load-screen {
+    position: absolute;
+    top: 10%;
+    left: 15%;
+    width: 70%;
+    height: 80%; /* Increased height to fit all slots */
+    background-color: rgba(30, 30, 50, 0.95);
+    z-index: 30; /* Above everything else */
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border: 2px solid #304060;
+}
+
+.save-load-header {
+    width: 100%;
+    padding: 15px;
+    background-color: #304060;
+    color: #e0e0e0;
+    font-family: 'VT323', monospace;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #203050;
+    box-sizing: border-box;
+    min-height: 60px; /* Ensure consistent header height */
+}
+
+.save-load-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+.save-slots {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    height: calc(100% - 60px); /* Adjust for header */
+    overflow-y: auto; /* Add scrolling if needed */
+}
+
+.save-slot {
+    width: 80%;
+    background-color: rgba(60, 60, 90, 0.5);
+    border: 2px solid #506090;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 80px; /* Ensure minimum height */
+}
+
+.save-slot:hover {
+    background-color: rgba(80, 80, 120, 0.7);
+    transform: scale(1.02);
+}
+
+.save-slot h3 {
+    margin: 0 0 10px 0;
+    color: #e0e0e0;
+    font-size: 1.3em;
+}
+
+.slot-details {
+    color: #aaa;
+    font-size: 1em;
+    margin: 0;
+}
+
+.small-button {
+    background-color: #405070;
+    color: #e0e0e0;
+    border: 1px solid #506080;
+    border-radius: 4px;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    padding: 2px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 20px; /* Add space on the right to move the button inward */
+}
+
+.small-button:hover {
+    background-color: #506080;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #crt-bezel { padding: 2vmin 2vmin 1vmin 2vmin; border-radius: 1.5vmin; }
+    #crt-screen { border-radius: 1vmin 1vmin 0 0; height: 75%; }
+    .control-panel { height: 20%; }
+    .control-button { width: 60px; font-size: 0.9em; }
+    .button-icon { width: 20px; height: 20px; }
+    .game-title { font-size: 2em; }
+    .subtitle { font-size: 1em; }
+    .menu-button { font-size: 1.5em; min-width: 150px; padding: 8px 20px; }
+    .dialogue-box { font-size: 1.2em; width: 95%; bottom: 10px; padding: 10px 15px; min-height: 3.5em; }
+    #save-load-screen { width: 85%; left: 7.5%; height: 80%; }
+    .save-slot { width: 90%; }
+}
+
+@media (max-width: 480px) {
+     #crt-bezel { width: 100vw; height: 100vh; padding: 1vmin 1vmin 0.5vmin 1vmin; border-radius: 0; } /* Full screen bezel */
+     #crt-screen { border-radius: 0; height: 70%; }
+     .control-panel { height: 25%; flex-wrap: wrap; }
+     .control-button { width: 45%; height: 45%; margin: 2px; font-size: 0.8em; }
+     .game-title { font-size: 1.8em; }
+     .subtitle { font-size: 0.9em; }
+     .menu-button { font-size: 1.3em; }
+     .dialogue-box { font-size: 1.1em; min-height: 3em; }
+     .scanlines { background-size: 100% 3px; }
+     #save-load-screen { width: 95%; left: 2.5%; height: 80%; top: 10%; }
+     .save-slot { width: 95%; padding: 10px; }
+     .save-slot h3 { font-size: 1.1em; }
+}
