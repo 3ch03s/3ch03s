@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Crimson Trail - A Barlow Scrapbook</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Every town has its secrets. Some get buried deeper than others. -->
+    <meta name="keywords" content="barlow murders, crimson trail, carnival killings, cold cases, serial killers">
+    <meta name="description" content="Evidence and case files from the infamous Barlow family killing spree">
+</head>
+<body class="page-murders">
+    <div id="wrapper">
+        <header class="late-night-header">
+            <h1>The Crimson <span style="color: var(--glitch-green);">Trail</span></h1>
+            <p class="tagline">~ Follow the Blood Dots ~ Evidence Locker 666 ~</p>
+        </header>
+
+        <nav class="main-nav">
+             <ul>
+                <li><a href="index.html">Home Sick Home</a></li>
+                <li><a href="history.html">Our Twisted History</a></li>
+                <li><a href="murder.html" class="active">The Crimson Trail</a></li>
+                <li><a href="classified.html" onclick="playAudio('staticSound', 0.5)">///CLASSIFIED///</a></li>
+                <li><a href="#" id="lost-link" onclick="revealHorror('lostPageHint')">?¿?¿?</a></li>
+            </ul>
+        </nav>
+
+        <!-- Moved sidebar BEFORE main content for proper left positioning -->
+        <!-- *** ENHANCED Quirky 90s Sidebar *** -->
+        <aside class="sidebar">
+            <div class="sidebar-header">Nightmare Fuel Depot</div>
+
+            <!-- Pixel Clown -->
+            <div class="sidebar-section pixel-art-clickable" onclick="playAudio('laughSound', 0.8); triggerGlitchEffect(this, 200);" title="Don't click me!">
+                 <img src="images/pixel_clown.gif" alt="Pixelated clown head">
+                 <span>Poke the Clown!</span>
+            </div>
+
+            <!-- Visitor Counter -->
+            <div class="sidebar-section visitor-counter">
+                <div>SOULS CONSUMED:</div>
+                <span class="flicker-fast">0 0 6 6 6</span>
+            </div>
+
+            <!-- Fake Ad: Chainsaw Oil -->
+            <div class="sidebar-section fake-ad">
+                <div class="ad-title">Barlow's Best©</div>
+                <img src="images/blood_drip.gif" alt="Dripping blood" style="float:right; width: 20px; margin-left: 5px;">
+                <p>Chainsaw Oil! EXTRA Viscosity!</p>
+                <a href="#" onclick="alert('ERROR 404: Soul not found. Required for purchase.'); return false;">ORDER NOW!</a>
+            </div>
+
+            <!-- Sound Blaster of Souls -->
+            <div class="sidebar-section midi-player">
+                <div style="color: var(--accent-gore);">SOUND BLASTER OF SOULS</div>
+                <div class="midi-controls">
+                    <button class="midi-button" onclick="playAudio('laughSound', 0.3)" title="Play Dirge">►</button>
+                    <button class="midi-button" onclick="stopAudio('laughSound')" title="Silence Scream">■</button>
+                    <button class="midi-button" onclick="loopAudio('laughSound')" title="Eternal Nightmare">↻</button>
+                </div>
+            </div>
+
+             <!-- Hypno Wheel -->
+            <div class="sidebar-section hypno-wheel">
+                 <img src="images/hypno_wheel.gif" alt="Hypnotic wheel" title="Look deep into the void...">
+                 <span>OBEY BARLOW</span>
+            </div>
+
+            <!-- Marquee -->
+            <div class="sidebar-section marquee">
+                 <span>●●● M̷ISSING SINCE 1968 ● HAVE YOU SEEN T̸H̷EM? ●●● R̸E̵W̵A̵RD OFFERED ●●● APPROACH WITH EX̷TREME C̸A̶UTION ●●●</span>
+            </div>
+
+            <!-- Fake Ad: Haunted Tamagotchi -->
+            <div class="sidebar-section fake-ad tamagotchi-ad">
+                 <img src="images/tamagotchi.gif" alt="Haunted Tamagotchi">
+                 <p>Feed it SCREAMS!</p>
+                 <a href="#" onclick="playAudio('scream', 0.6); return false;">TRY FEEDING!</a>
+            </div>
+
+            <!-- Guestbook -->
+            <div class="sidebar-section guestbook">
+                <div style="color: var(--accent-gore);">SIGN OUR DAMNATION BOOK</div>
+                <a href="#" class="interactive-text" onclick="triggerGlitchEffect(document.body, 500); showDetail('guestbookSecret')">ETCH YOUR NAME IN BLOOD</a>
+                <p id="guestbookSecret" class="hidden detail">Names added to the 'volunteer' list for the next performance... Don't be late!</p>
+            </div>
+
+            <!-- Pull Lever -->
+            <div class="sidebar-section pull-lever" onclick="pullTheLever(this)">
+                 <img src="images/lever.png" alt="Pull Lever">
+                 <span>PULL ME!</span>
+            </div>
+
+            <!-- Webring -->
+            <div class="sidebar-section webring">
+                <div style="color: var(--text-dim); margin-bottom: 5px;">DEATH WEBRING</div>
+                <a href="#" onclick="triggerGlitchEffect(document.body, 200); return false;" title="Previous Nightmare">◄</a> |
+                <a href="#" onclick="triggerGlitchEffect(document.body, 500); alert('Lost in the static...'); return false;" title="Random Horror">◆</a> |
+                <a href="#" onclick="triggerGlitchEffect(document.body, 200); return false;" title="Next Descent">►</a>
+            </div>
+
+            <!-- Countdown -->
+            <div class="sidebar-section countdown">
+                <div class="countdown-title">NEXT SHOWING</div>
+                <div class="countdown-value flicker-slow">18:45:03</div>
+            </div>
+
+            <!-- Fake Webcam -->
+            <div class="sidebar-section fake-webcam">
+                <div class="webcam-title">LIVE FEED: BACKSTAGE</div>
+                <img src="images/webcam_static.gif" alt="Static with occasional flashes of something horrific" title="Is something moving back there?">
+            </div>
+
+             <!-- Fake Ad: Geocities Grave Plot -->
+            <div class="sidebar-section fake-ad">
+                 <img src="images/skull_icon.gif" alt="Skull Icon" style="width: 30px; float: left; margin-right: 5px;">
+                 <p>FREE Geocities Grave Plot!</p>
+                 <a href="http://www.geocities.ws/404/" target="_blank">CLAIM YOURS!</a> <!-- Link to a real Geocities archive 404 -->
+            </div>
+
+            <!-- Morse Light -->
+            <div class="morse-light" title="... --- ... (SOS)"></div>
+
+            <!-- Secret Message -->
+            <div class="secret-message invisible-ink" title="Hover to reveal... if you dare.">Coordinates: 36.4°N 113.9°W</div>
+
+            <!-- Rate this Nightmare -->
+             <div class="sidebar-section rate-nightmare">
+                 <div>RATE THIS NIGHTMARE:</div>
+                 <span class="star" onclick="rateNightmare(1)">★</span>
+                 <span class="star" onclick="rateNightmare(2)">★</span>
+                 <span class="star" onclick="rateNightmare(3)">★</span>
+                 <span class="star" onclick="rateNightmare(4)">★</span>
+                 <span class="star" onclick="rateNightmare(5)">★</span>
+                 <div id="ratingResponse" class="hidden detail" style="font-size: 0.8em; padding: 5px;"></div>
+             </div>
+
+        </aside>
+
+        <main>
+            <!-- Added interactive map -->
+            <div class="map-container" style="height: 180px; background-image: url('images/usa_map.jpg'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+                <div class="map-title">TRAIL OF TERROR - 1962-1968</div>
+                <!-- Map pins for different crime locations -->
+                <div class="map-pin" style="top: 120px; left: 180px;" title="Arizona, 1964" onclick="showDetail('caseAZ')"></div>
+                <div class="map-pin" style="top: 90px; left: 280px;" title="Kansas, 1967" onclick="showDetail('caseKS')"></div>
+                <div class="map-pin" style="top: 60px; left: 100px;" title="Nevada, 1963" onclick="showDetail('caseNV')"></div>
+                <div class="map-pin" style="top: 110px; left: 330px;" title="Kentucky, 1965" onclick="showDetail('caseKY')"></div>
+                <div class="map-pin" style="top: 75px; left: 130px;" title="Utah, 1968" onclick="showDetail('caseUT')"></div>
+                <div class="blood-drop" style="top: 125px; left: 185px;"></div>
+                <div class="blood-drop" style="top: 95px; left: 285px;"></div>
+                <div class="blood-drop" style="top: 65px; left: 105px;"></div>
+            </div>
+            <p id="caseAZ" class="hidden detail">Arizona, 1964: The "Painted Grin" killings. Two hikers murdered and "decorated" near Benson.</p>
+            <p id="caseKS" class="hidden detail">Kansas, 1967: The "Silent Audience" incident. State Trooper Unit 4 disappeared investigating carnival. Recording of final transmission mentions "smiling" entities.</p>
+            <p id="caseNV" class="hidden detail">Nevada, 1963: The "Searchlight Incident" - Three locals went missing after attending the carnival. Military personnel observed on site the following day.</p>
+            <p id="caseKY" class="hidden detail">Kentucky, 1965: The "Harvest Moon Massacre" - Family of five found arranged in carnival seating formation. Bodies showed signs of "theatrical modification."</p>
+            <p id="caseUT" class="hidden detail">Utah, 1968: The "Chimera Lake Incident" - Final known location. Three search parties went missing. Area remains quarantined under guise of "chemical spill."</p>
+
+            <h2>Case Files: The Barlow Bloodbath</h2>
+            <p>Authorities across a dozen states linked the Barlow family's carnival to disappearances and grotesque discoveries between 1962 and 1968. Here are just a few recovered fragments...</p>
+
+            <!-- CASE FILE 1 -->
+            <section class="case-file">
+                <h3>Case #AZ-07B-64 - "The Painted Grin" - Sonora Desert, AZ</h3>
+                <span class="evidence-tag">Newspaper</span><span class="evidence-tag">Police Report</span>
+
+                <article class="newspaper-clipping">
+                    <h4>Desert Sun Chronicle - Oct 19, 1964</h4>
+                    <p><strong>Hikers Discover Grisly Scene</strong> - Authorities were called to a remote desert location yesterday after hikers stumbled upon the remains of an unidentified couple. Sheriff Thompson described the scene as "deeply disturbing," noting signs of extreme violence. The victims' identities remain unknown. Curiously, the traveling 'Crimson Smile Carnival' passed through nearby Benson just last week, departing abruptly. Sheriff Thompson declined to comment on any potential connection but urged locals to report any sightings of the carnival's distinctive, dilapidated trailer...</p>
+                </article>
+
+                <article class="police-report">
+                    <p>INCIDENT REPORT - PIMA COUNTY SHERIFF'S DEPT.</p>
+                    <p>DATE: 641018</p>
+                    <p>LOCATION: APPROX 15MI SE BENSON, OFF HWY ██</p>
+                    <p>VICTIMS: 1 MALE CAUCASIAN (DOE, JOHN), 1 FEMALE CAUCASIAN (DOE, JANE)</p>
+                    <p>DETAILS: BODIES DISCOVERED PARTIALLY BURIED. SIGNIFICANT TRAUMA. EVIDENCE OF POST-MORTEM MUTILATION. FACIAL FEATURES <span class="redacted">[DATA EXPUNGED]</span> OBSCURED BY CRUDE APPLICATION OF RED/WHITE GREASEPAINT IN SMILEY FACE PATTERN. LIGATURE MARKS CONSISTENT WITH ROPE (JUTE?). TIME OF DEATH EST. 48-72 HRS. TRACKS NEARBY MATCH RV TIRE TREADS. SAMPLE OF PAINT COLLECTED (EVIDENCE BAG #AZ64-P01). SMELL OF DECOMPOSITION AND... CLOVES?</p>
+                    <p>NOTE: CRIMSON SMILE CARNIVAL CONFIRMED IN BENSON 641012-641015. DEPARTED NIGHT OF 15TH. NO FORWARDING ADDRESS.</p>
+                </article>
+                <p class="interactive-text" onclick="showDetail('clovesSecret')">Why cloves?</p>
+                <p id="clovesSecret" class="hidden detail">Mama Barlow used clove oil to try and mask other... smells. Didn't always work.</p>
+
+                <!-- Added autopsy report -->
+                <div class="evidence-container">
+                    <div class="evidence-label">AUTOPSY FINDINGS [RESTRICTED]</div>
+                    <div class="police-report" style="background-color: #111; color: #cccccc;">
+                        <p>MEDICAL EXAMINER: DR. S. RAMIREZ</p>
+                        <p>FINDINGS OF NOTE:</p>
+                        <p>1. FINGERNAILS REMOVED PRE-MORTEM</p>
+                        <p>2. UNUSUAL BLUE RESIDUE IN BLOODSTREAM (SAMPLE SENT TO FBI LAB)</p>
+                        <p>3. <span class="interactive-text" onclick="showDetail('autopsySecret')">STOMACH CONTENTS</span> INCLUDE COTTON CANDY, POPCORN, SMALL METAL OBJECTS (TOKENS?)</p>
+                        <p>4. CAUSE OF DEATH: EXSANGUINATION VIA MULTIPLE LACERATIONS</p>
+                        <p>NOTE: FACIAL TISSUE SHOWS SIGNS OF <span class="redacted">CHEMICAL ALTERATION</span>. EXTREME ELASTICITY NOTED. FBI CONSULTED.</p>
+                    </div>
+                    <p id="autopsySecret" class="hidden detail">Dr. Ramirez noted that forced ingestion occurred. The female victim had a tiny circus ticket lodged in her throat with the words "ADMIT ONE TO THE SHOW BELOW" handwritten on back.</p>
+                </div>
+            </section>
+
+            <!-- CASE FILE 2 -->
+            <section class="case-file">
+                <h3>Case #KS-11A-67 - "The Silent Audience" - Rural Kansas</h3>
+                <span class="evidence-tag">Witness Testimony</span><span class="evidence-tag">Lost Media (Audio)</span>
+
+                <article class="witness-testimony">
+                    <p>...yeah, the carnival was here. Creepy bunch. That tall fella, the Pa, he stared right through ya. And the little girl... saw her talkin' to her doll behind the big top. Doll looked too real. Heard laughin' late at night, sounded wrong. Then Jed, who runs the feed store, he went missin'. Just vanished. Found his truck by the highway, empty. Only thing left was one of them cheap plastic clown noses on the dashboard...</p>
+                    <p style="text-align: right;">- Testimony of Maryanne Parker, [REDACTED], KS, Nov 1967</p>
+                </article>
+
+                <article class="police-report"> <!-- Placeholder for Lost Media description -->
+                    <h4>Lost Media Note - KHP Evidence Log</h4>
+                    <p>ITEM: Audio Cassette (Damaged)</p>
+                    <p>SOURCE: Recovered from abandoned State Trooper vehicle (Unit 4 - see file KS-TRPR-LOST-67)</p>
+                    <p>DESCRIPTION: Cassette heavily warped, playback intermittent. Contains fragments of Unit 4's final transmission. Audible sounds include static, what sounds like wet clicking or chattering, distorted carnival music loop, and a final, garbled phrase interpreted as <span class="interactive-text" onclick="playAudio('staticSound', 1.0)">"...it's smiling at me..."</span> followed by abrupt cutoff.</p>
+                    <p>STATUS: Unplayable / Archived.</p>
+                </article>
+
+                <!-- Added transcript -->
+                <div class="evidence-container">
+                    <div class="evidence-label">PARTIAL TRANSCRIPT - UNIT 4 FINAL TRANSMISSION</div>
+                    <div style="background-color: #000; padding: 15px; font-family: monospace; color: #33ff33; font-size: 0.9em; line-height: 1.4;">
+                        <p><static></p>
+                        <p>DISPATCH: Unit 4, please report status.</p>
+                        <p>UNIT 4: ...found the carnival trailers abandoned about two miles off Route 40. No personnel visible but <static> still warm. Smells like cotton candy and something... metallic.</p>
+                        <p>DISPATCH: Roger, Unit 4. Any sign of the missing persons?</p>
+                        <p>UNIT 4: Negative, but there's... wait. There's movement in the big tent. Going to investigate.</p>
+                        <p><footsteps, radio crackle></p>
+                        <p>UNIT 4: <whispering> Dispatch, there's... there's some kind of performance happening. I can see... four figures on a small stage. They're not moving right. Something's wrong with their <static></p>
+                        <p>DISPATCH: Unit 4, please repeat. Are you in danger?</p>
+                        <p>UNIT 4: They're wearing clown makeup but it's... Jesus Christ, it's moving on its own. The little girl just saw me. Her face is... oh God, it's coming off. There's something underneath, it's...</p>
+                        <p><wet clicking sounds></p>
+                        <p>UNIT 4: <struggling> It's smiling at me...</p>
+                        <p><scream, static, transmission ends></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NEW CASE FILE -->
+            <section class="case-file">
+                <h3>Case #KY-23C-65 - "The Harvest Show" - Millfield, KY</h3>
+                <span class="evidence-tag">Newspaper</span><span class="evidence-tag">FBI Notes</span>
+
+                <article class="newspaper-clipping">
+                    <h4>Millfield Tribune - September 8, 1965</h4>
+                    <p><strong>LOCAL FAMILY FOUND DECEASED IN BIZARRE SCENE</strong> - The bodies of the Wilson family were discovered yesterday in their farmhouse just outside town limits. Sheriff Davis has declined to provide details, citing an ongoing investigation, but sources close to the case describe the scene as "ritualistic" and "staged like some kind of twisted theater." The Wilsons—parents Robert and June, and their three children—were last seen attending the traveling Crimson Smile Carnival on Saturday evening. The carnival, which had been set up at the county fairgrounds for the harvest festival, departed unexpectedly Sunday morning, a full day ahead of schedule...</p>
+                </article>
+
+                <div class="security-cam" style="margin: 15px auto; width: 90%;">
+                    <img src="images/crime_scene.jpg" alt="Crime scene photograph" style="width: 100%; filter: grayscale(100%) brightness(0.6) contrast(1.3);">
+                </div>
+
+                <article class="police-report" style="background-color: #001a33; color: #99ccff;">
+                    <h4>FBI FIELD NOTES - AGENT T. MATTHEWS</h4>
+                    <p>CASE #KY-23C-65 / "HARVEST SHOW"</p>
+                    <p>OBSERVATIONS:</p>
+                    <p>1. VICTIMS ARRANGED IN SEMI-CIRCLE FACING EMPTY CHAIR</p>
+                    <p>2. ALL VICTIMS SHOWING SIGNS OF <span class="interactive-text" onclick="showDetail('modificationSecret')">PHYSICAL MODIFICATION</span></p>
+                    <p>3. BLUE RESIDUE IDENTIFIED AS IDENTICAL TO ARIZONA CASE (AZ-07B-64)</p>
+                    <p>4. CARNIVAL TOKENS PLACED IN MOUTHS OF ALL VICTIMS</p>
+                    <p>5. MESSAGE WRITTEN ON WALL IN UNKNOWN SUBSTANCE: <span style="color: var(--accent-red);">"THANK YOU FOR ATTENDING THE SHOW"</span></p>
+                    <p>NOTE: REQUESTING IMMEDIATE CROSS-REFERENCE WITH PROJECT CHIMERA FILES. PATTERN CONSISTENT WITH KNOWN TEST SUBJECTS.</p>
+                </article>
+                <p id="modificationSecret" class="hidden detail" style="color: var(--accent-red);">Bodies showed evidence of attempted "reshaping" - bones partially dislocated and reset in unnatural positions. Faces altered with crude surgical techniques. Eldest child's jaw had been extended using wire apparatus, creating an exaggerated "smile." Medical examiner quit after autopsy, citing "nightmares."</p>
+            </section>
+
+            <!-- FINAL CASE FILE -->
+            <section class="case-file">
+                <h3>Case #UT-19F-68 - "The Chimera Lake Incident" - FINAL SIGHTING</h3>
+                <span class="evidence-tag">Search Report</span><span class="evidence-tag">Military Action</span>
+
+                <div class="cryptic-journal">
+                    <p style="text-align:center; text-transform:uppercase; letter-spacing:2px;">SEARCH & RESCUE REPORT #3</p>
+                    <p>Date: November 2, 1968</p>
+                    <p>Location: Chimera Lake, Utah wilderness area</p>
+                    <p>Team: S&R Unit 7 (Third attempt)</p>
+                    <p>Mission: Locate previous search teams and investigate reported carnival encampment</p>
+                    <p>...</p>
+                    <p>Day 2: Located abandoned army jeep belonging to previous military recon team. No personnel. Found trail of <span class="interactive-text" onclick="showDetail('strangeSecret')">strange blue fluid</span> leading to cave system.</p>
+                    <p>Day 3: Cave exploration revealed partial carnival setup. Tents, equipment all abandoned. Found unusual markings/symbols carved into cave walls. Team member Phillips reported hearing "carnival music" deeper in cave system.</p>
+                    <p>Day 4: Located what appears to be a ritual site. Circle of painted stones. Center containing unidentifiable organic material. Multiple footprints but unusual gait/spacing.</p>
+                    <p>Day 5: Phillips missing this morning. Heard screaming from deeper tunnels. Located tattered clown costume with unusual stains. Team reporting <span class="interactive-text" onclick="showDetail('hallucinationSecret')">hallucinations</span>. Radio contact intermittent.</p>
+                    <p>Final entry: Something moving in tunnel darkness. Not human movement. Children laughing. Can smell cotton candy. They're watching us. Their faces keep changing. Getting closer. God help us, they're not wearing masks, those are their actual fa---</p>
+                    <p style="text-align:right; color: var(--glitch-green); font-style: italic;">No further contact with S&R Unit 7</p>
+                </div>
+                <p id="strangeSecret" class="hidden detail">Lab analysis of blue fluid showed chemical markers consistent with Project CHIMERA serum - designed to enhance cellular elasticity and mutation. Primary researcher Dr. Finch noted "profound molecular instability."</p>
+                <p id="hallucinationSecret" class="hidden detail">Team members reported seeing their own faces "peeling away" in reflective surfaces. Several described feeling their skin "no longer fit right" after exposure to the cave atmosphere.</p>
+
+                <article class="police-report" style="background-color: #330000; color: #ff9999; margin-top: 20px;">
+                    <h4>MILITARY ACTION REPORT - OPERATION STITCH-FACE</h4>
+                    <p>DATE: NOVEMBER 15, 1968</p>
+                    <p>UNITS DEPLOYED: 7TH SPECIAL CONTAINMENT DIVISION</p>
+                    <p>OBJECTIVE: TERMINATE ALL CHIMERA SUBJECTS AND RECOVER RESEARCH MATERIALS</p>
+                    <p>OUTCOME: <span style="color: var(--accent-red); font-weight: bold;">MISSION FAILURE</span></p>
+                    <p>CASUALTIES: 17 PERSONNEL - 5 KIA, 12 MIA</p>
+                    <p>STATUS: ALL BARLOW FAMILY MEMBERS <span class="interactive-text" onclick="showDetail('escapeSecret')">UNACCOUNTED FOR</span></p>
+                    <p>ACTION TAKEN: AREA QUARANTINED UNDER CHEMICAL SPILL COVER STORY. PROJECT CHIMERA OFFICIALLY TERMINATED. ALL FILES SEALED.</p>
+                    <p style="color: var(--glitch-green);">NOTE: ANOMALOUS ACTIVITY CONTINUES TO BE REPORTED WITHIN EXCLUSION ZONE. RECOMMEND PERMANENT MONITORING.</p>
+                </article>
+                <p id="escapeSecret" class="hidden detail" style="color: var(--glitch-green);">Surveillance footage from perimeter cameras showed distorted humanoid figures escaping containment zone. Figures exhibited impossible anatomical configurations and appeared to "shift" between forms. Nuclear option was considered but rejected due to proximity to populated areas.</p>
+            </section>
+
+            <!-- Lost page hint -->
+            <p id="lostPageHint" class="hidden detail" style="text-align:center; color: var(--glitch-green); font-style: italic; margin-top: 30px;">
+                Look for "remnants.html" - Some pages were never meant to be found. The truth lies in code.
+            </p>
+
+            <hr class="section-divider">
+
+            <p style="text-align: center; font-size: 1.1em; color: var(--text-dim);">
+                Just the tip of the blood-soaked iceberg, folks... Many more towns, many more smiles left behind...
+                <span style="color: var(--accent-red); display:block; margin-top: 10px;">Where did they go next? Where are they NOW?</span>
+            </p>
+        </main>
+
+        <footer class="site-footer">
+            <p>~*~ The Trail Never Ends, It Just Gets Colder ~*~</p>
+            <p id="consoleHint" class="subtle-text flicker-slow">Unit 4 mentioned clicking... Lilybeth's 'collections'?</p>
+            <!-- THEY WERE BECOMING SOMETHING ELSE. SOMETHING... BETWEEN. -->
+        </footer>
+    </div>
+    <!-- Audio Elements -->
+    <audio id="staticSound" src="audio/static_burst.mp3" preload="auto"></audio>
+    <audio id="laughSound" src="audio/creepy_laugh.mp3" preload="auto"></audio>
+    <audio id="scream" src="audio/scream.mp3" preload="auto"></audio> <!-- Added Scream -->
+    <audio id="leverSound" src="audio/lever_sound.mp3" preload="auto"></audio> <!-- Added Lever Sound -->
+    <script src="script.js"></script>
+    <script>
+        // Additional script for murders page
+        console.log("%cFROM AGENT CARROLL'S FINAL REPORT:", "color: red; font-weight: bold;");
+        console.log("%cThe transformation is accelerating. They're shedding the human form like a cheap costume.", "color: #ff4040;");
+        console.log("%cGod help us if they complete the metamorphosis. Find the coordinates.", "color: #ff4040;");
+
+        // Add visual effect to blood drops
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelectorAll('.blood-drop').forEach(drop => {
+                    drop.style.animation = "drip 3s forwards";
+                });
+            }, 2000);
+        });
+
+        // Function to stop audio (implementation would go in main script.js)
+        // Redundant declaration here if script.js is loaded correctly, but keep for standalone reference
+        function stopAudio(audioId) {
+            const sound = document.getElementById(audioId);
+            if (sound) {
+                sound.pause();
+                sound.currentTime = 0;
+            }
+        }
+
+        // Function to loop audio (implementation would go in main script.js)
+        // Redundant declaration here if script.js is loaded correctly, but keep for standalone reference
+        function loopAudio(audioId) {
+            const sound = document.getElementById(audioId);
+            if (sound) {
+                sound.loop = true;
+                sound.play().catch(error => console.warn(`Audio loop failed:`, error));
+            }
+        }
+    </script>
+</body>
+</html>

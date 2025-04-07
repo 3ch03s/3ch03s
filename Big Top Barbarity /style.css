@@ -1,0 +1,1344 @@
+/* --- Core Decay & 90s Vibe --- */
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@700&family=Creepster&display=swap'); /* Adding Creepster for gore fun */
+
+:root {
+    --main-bg: #0a0000; /* Deeper black */
+    --primary-dark: #1f0000; /* Dark blood red */
+    --primary-red: #8B0000; /* Dark red */
+    --accent-red: #FF0000; /* Bright, stark blood red */
+    --accent-gore: #ff4040; /* Fleshy pink/red */
+    --text-light: #e0e0e0; /* Off-white */
+    --text-dim: #777; /* Dim grey */
+    --glitch-green: #00ff00;
+    --glitch-blue: #0000ff;
+}
+
+body {
+    background-color: var(--main-bg);
+    color: var(--text-light);
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Essential for glitch effects */
+    /* VHS Scanlines Overlay */
+    position: relative; /* Needed for pseudo-element */
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Fixed overlay */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(10, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.03));
+    background-size: 100% 3px, 5px 100%;
+    z-index: 1000; /* On top of everything */
+    pointer-events: none; /* Click through it */
+    animation: vhsFlicker 0.15s infinite alternate;
+    opacity: 0.5; /* Adjust opacity */
+}
+
+#wrapper {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px 25px;
+    background-color: var(--primary-dark);
+    border: 5px ridge var(--primary-red);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    position: relative; /* For absolute positioned glitches */
+    overflow: hidden; /* Contain internal absolute elements */
+    z-index: 1; /* Below the body overlay */
+}
+
+/* --- Header - Late Night Commercial Style --- */
+.late-night-header {
+    text-align: center;
+    border-bottom: 5px double var(--accent-red);
+    margin-bottom: 30px;
+    padding: 20px 0;
+    background: repeating-linear-gradient(
+        45deg,
+        #111,
+        #111 10px,
+        #2a0000 10px,
+        #2a0000 20px /* Dark stripes */
+    );
+    text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+    position: relative;
+}
+
+.late-night-header h1 {
+    font-family: 'Creepster', cursive; /* Spooky fun font */
+    color: var(--accent-red);
+    font-size: 4.5em; /* BIGGER */
+    margin: 0;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px var(--accent-red), 0 0 15px var(--accent-red), 2px 2px 2px #000;
+    animation: neonFlicker 1.5s infinite alternate ease-in-out;
+}
+
+.late-night-header .tagline {
+    color: var(--text-light);
+    font-size: 1.1em;
+    margin-top: 5px;
+    letter-spacing: 2px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-transform: uppercase;
+    background-color: rgba(0,0,0,0.5);
+    display: inline-block;
+    padding: 0 10px;
+}
+
+/* --- Navigation - Tacked On & Glitchy --- */
+.main-nav {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 10px;
+    border: 2px dashed var(--primary-red);
+    background-color: rgba(0,0,0,0.3);
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.main-nav a {
+    font-family: 'Changa', sans-serif; /* Bold, slightly condensed */
+    font-weight: 700;
+    color: var(--accent-gore);
+    text-decoration: none;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--primary-red);
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: var(--text-light);
+    background-color: var(--accent-red);
+    text-shadow: 0 0 5px #fff;
+    transform: scale(1.1) rotate(-2deg);
+    box-shadow: 0 0 10px var(--accent-red);
+}
+
+/* --- General Content Styles --- */
+h2 {
+    font-family: 'Creepster', cursive;
+    color: var(--accent-gore);
+    border-bottom: 3px solid var(--primary-red);
+    padding-bottom: 10px;
+    margin-top: 40px;
+    font-size: 2.8em;
+    text-transform: capitalize;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 1px #000, 0 0 8px var(--accent-gore);
+}
+
+h3 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: var(--text-light);
+    font-size: 1.6em;
+    margin-top: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-left: 5px solid var(--accent-red);
+    padding-left: 10px;
+}
+
+hr.section-divider {
+    border: 0;
+    height: 8px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><rect width="5" height="5" fill="red"/><rect x="5" y="5" width="5" height="5" fill="black"/></svg>');
+    background-size: 10px 10px; /* Checkered pattern */
+    margin: 50px 0;
+    border-top: 2px solid var(--primary-red);
+    border-bottom: 2px solid var(--primary-red);
+    opacity: 0.6;
+}
+
+
+/* --- Specific Page Element Styles --- */
+
+/* History Page */
+.family-bio {
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid var(--primary-red);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.family-bio strong { color: var(--accent-gore); }
+.diary-entry {
+    font-family: 'Courier New', Courier, monospace; /* Change if using a cursive font file */
+    color: #ffbaba; /* Sickly pale pink */
+    background-color: #310101; /* Dark red */
+    border: 2px dashed var(--accent-gore);
+    padding: 20px;
+    margin: 25px 0;
+    line-height: 1.8;
+    font-size: 1.1em;
+    white-space: pre-wrap; /* Preserve formatting */
+    box-shadow: inset 3px 3px 10px rgba(0,0,0,0.7);
+}
+
+/* Murders Page */
+.case-file {
+    background-color: #1a1a0f; /* Murky greenish black */
+    border: 3px double #444;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+.case-file h3 { border-left-color: var(--glitch-green); } /* Different accent */
+
+.evidence-tag {
+    display: inline-block;
+    background-color: #333;
+    color: var(--text-light);
+    padding: 3px 8px;
+    font-size: 0.8em;
+    margin-right: 10px;
+    border: 1px solid #555;
+    font-weight: bold;
+}
+.newspaper-clipping {
+    background-color: #4d4400; /* Murky yellow-brown */
+    border: 1px solid #808000; /* Dark yellow */
+    color: #ffffdd; /* Pale yellow text */
+    padding: 15px;
+    margin: 15px 0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+.police-report {
+    background-color: #102027; /* Dark blue-grey */
+    border: 1px solid #37474F;
+    color: #B0BEC5; /* Pale blue-grey text */
+    padding: 15px;
+    margin: 15px 0;
+    font-family: 'Courier New', Courier, monospace;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    white-space: pre-wrap; /* Preserve spaces */
+}
+.witness-testimony {
+    background-color: rgba(0,0,0,0.3);
+    border-left: 4px solid var(--accent-gore);
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-style: italic;
+    color: var(--text-light);
+}
+.witness-testimony::before { content: '"'; font-size: 1.5em; color: var(--accent-gore); margin-right: 5px; }
+.witness-testimony::after { content: '"'; font-size: 1.5em; color: var(--accent-gore); margin-left: 5px; }
+
+/* Classified Page */
+.classified-doc {
+    background-color: #001a00; /* Dark, sickly green */
+    border: 5px solid #004d00; /* Darker green */
+    padding: 25px;
+    margin-bottom: 30px;
+    font-family: 'Lucida Console', Monaco, monospace;
+    color: #90ee90; /* Light green text */
+    line-height: 1.4;
+    white-space: pre-wrap;
+    position: relative; /* For stamp */
+    animation: docGlitch 10s infinite linear alternate; /* Constant subtle glitch */
+}
+.classified-header {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--accent-red);
+    text-transform: uppercase;
+    border: 2px solid var(--accent-red);
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: rgba(255,0,0,0.1);
+}
+.stamp {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 3px solid var(--accent-red);
+    color: var(--accent-red);
+    padding: 5px 10px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    font-weight: bold;
+    transform: rotate(15deg);
+    opacity: 0.7;
+    z-index: 5;
+}
+.redacted {
+    background-color: #000;
+    color: #000;
+    padding: 1px 0px; /* Thinner redaction */
+    border: 1px solid #333; /* Slight outline */
+    user-select: none;
+    cursor: not-allowed; /* Indicate non-interactive */
+}
+.interactive-redacted { /* For clickable redactions */
+    background-color: #111;
+    color: #111;
+    padding: 1px 0px;
+    border: 1px dashed var(--accent-gore);
+    user-select: none;
+    cursor: help;
+    transition: background-color 0.3s, color 0.3s;
+}
+.interactive-redacted:hover {
+    background-color: #222;
+    color: #333; /* Slightly reveal */
+}
+.revealed-text { /* Class added by JS */
+    background-color: transparent !important;
+    color: var(--accent-gore) !important; /* Make revealed text stand out */
+    font-weight: bold;
+    border: none !important;
+    padding: 1px 0px;
+    animation: revealFlash 0.5s 1;
+}
+
+/* --- Images & Media --- */
+.disturbing-image {
+    display: block; /* Or inline-block if needed */
+    max-width: 80%; /* Control size */
+    margin: 15px auto; /* Center */
+    border: 8px groove var(--primary-red); /* Chunky 90s border */
+    padding: 5px;
+    background-color: #111;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
+    filter: grayscale(50%) contrast(1.5) brightness(0.8) sepia(30%);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+.disturbing-image:hover {
+    filter: grayscale(20%) contrast(1.7) brightness(1.0) sepia(10%);
+    transform: scale(1.02) rotate(1deg);
+    cursor: pointer; /* If interactive */
+}
+.caption {
+    font-size: 0.9em;
+    color: var(--text-dim);
+    margin-top: 8px;
+    text-align: center;
+    font-style: italic;
+}
+
+/* --- Interactive Elements & Gore --- */
+.interactive-text {
+    color: var(--accent-gore);
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+.interactive-text:hover {
+    color: var(--text-light);
+    text-shadow: 0 0 5px var(--accent-gore);
+}
+
+.hidden { display: none; }
+.detail {
+    margin-top: 10px;
+    padding: 12px;
+    background-color: rgba(255, 0, 0, 0.08);
+    border: 1px dashed var(--primary-red);
+    font-style: italic;
+    color: #ffcdd2;
+    font-size: 0.95em;
+}
+
+/* --- Warning Section --- */
+#warning {
+    /* Style as before, or enhance */
+    background-color: #000000;
+    color: #ffffff;
+    border: 5px solid var(--accent-red);
+    padding: 30px;
+    text-align: center;
+    margin-top: 40px;
+    text-shadow: 1px 1px 3px var(--accent-red);
+    position: relative;
+    z-index: 50;
+}
+/* ... rest of warning styles from previous example ... */
+#warning h2 {
+    font-family: 'Creepster', cursive;
+    color: var(--accent-red);
+    font-size: 4em;
+     /* ... rest */
+}
+#warning button {
+     /* ... rest */
+     font-family: Impact, sans-serif;
+     font-size: 1.4em;
+     background-color: #300;
+     color: #fff;
+     border: 2px outset #600;
+     padding: 10px 20px;
+}
+
+
+/* --- Footer --- */
+.site-footer {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 3px dotted var(--primary-red);
+    font-size: 0.85em;
+    color: var(--text-dim);
+    clear: both; /* Clear the floated sidebar */
+}
+.site-footer p { margin: 5px 0; }
+
+
+/* --- VHS/CRT Glitch & Distortion Animations --- */
+
+/* Scanlines Flicker */
+@keyframes vhsFlicker {
+    0% { opacity: 0.4; }
+    100% { opacity: 0.6; }
+}
+
+/* Neon Header Flicker */
+@keyframes neonFlicker {
+    0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--accent-red), 0 0 15px var(--accent-red), 2px 2px 2px #000; }
+    50% { opacity: 0.7; text-shadow: 0 0 3px var(--accent-red), 0 0 10px var(--accent-red), 2px 2px 2px #000; }
+}
+
+/* General Screen Shake/Jitter */
+@keyframes screenShake {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  10% { transform: translate(-2px, -1px) rotate(-0.2deg); }
+  20% { transform: translate(1px, 2px) rotate(0.1deg); }
+  30% { transform: translate(-1px, -2px) rotate(0.2deg); }
+  /* ... add more steps for more erratic shaking */
+}
+.shake-effect { animation: screenShake 0.3s linear infinite; } /* Apply class via JS */
+
+/* Color Bleed / Channel Shift */
+@keyframes colorBleed {
+    0%, 100% { transform: translate(0, 0); filter: none; }
+    25% { transform: translate(2px, 1px); filter: hue-rotate(5deg); } /* Red shift */
+    50% { transform: translate(-1px, -2px); filter: hue-rotate(-5deg); } /* Blue/Green shift */
+    75% { transform: translate(1px, -1px); filter: none; }
+}
+.bleed-effect { animation: colorBleed 0.5s 1 ease-in-out; } /* Trigger via JS */
+
+/* Document Glitch (Subtle constant instability) */
+@keyframes docGlitch {
+    0% { filter: brightness(1) contrast(1); transform: skewX(0); }
+    25% { filter: brightness(1.02) contrast(1.01); transform: skewX(-0.1deg); }
+    50% { filter: brightness(0.98) contrast(1); transform: skewX(0.1deg); }
+    75% { filter: brightness(1) contrast(0.99); transform: skewX(0); }
+    100% { filter: brightness(1) contrast(1); transform: skewX(0); }
+}
+
+/* Text Reveal Flash */
+@keyframes revealFlash {
+    0% { opacity: 0; }
+    50% { opacity: 1; background-color: var(--accent-gore); color: var(--primary-dark) !important; }
+    100% { opacity: 1; background-color: transparent; color: var(--accent-gore) !important; }
+}
+
+/* Add the .glitch-effect from previous CSS if needed for sharp jumps */
+.glitch-effect {
+    animation: screenJump 0.3s 1;
+}
+@keyframes screenJump {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(5px, -3px) rotate(1deg); }
+    50% { transform: translate(-4px, 4px) rotate(-0.5deg); }
+    75% { transform: translate(3px, -2px); }
+    100% { transform: translate(0, 0); }
+}
+
+/* --- Sidebar Styles (Enhanced) --- */
+.sidebar {
+    width: 190px; /* Slightly wider for more content */
+    float: left;
+    margin-right: 25px; /* Increased margin */
+    margin-bottom: 20px;
+    background: repeating-linear-gradient(
+        0deg,
+        var(--primary-dark),
+        var(--primary-dark) 15px,
+        #150000 15px,
+        #150000 30px
+    ); /* Subtle stripes */
+    border: 4px ridge #660000; /* Thicker ridge border */
+    padding: 15px; /* More padding */
+    font-size: 0.85em; /* Slightly smaller base font */
+    position: relative;
+    z-index: 10;
+    min-height: 600px; /* Adjust as needed */
+    box-shadow: inset 0 0 10px #000; /* Inner shadow */
+}
+
+/* Adjust main content margin */
+main {
+    margin-left: 230px; /* Adjusted space for wider sidebar */
+}
+
+.sidebar-header {
+    font-family: 'Creepster', cursive;
+    text-align: center;
+    color: var(--accent-gore);
+    font-size: 1.8em; /* Larger header */
+    text-transform: uppercase;
+    border-bottom: 3px double var(--accent-red); /* Double border */
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px #000;
+    letter-spacing: 1px;
+}
+
+.sidebar-section {
+    margin-bottom: 18px; /* Increased spacing */
+    border-bottom: 1px dashed #444; /* Separator */
+    padding-bottom: 15px; /* Space before separator */
+}
+.sidebar-section:last-child {
+    border-bottom: none; /* No border on last section */
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.visitor-counter {
+    text-align: center;
+    background-color: #000;
+    border: 2px inset #444;
+    padding: 8px 5px; /* More padding */
+    margin: 15px 0;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #0f0;
+}
+.visitor-counter div {
+    font-size: 0.9em;
+    color: var(--text-dim);
+    margin-bottom: 3px;
+    text-transform: uppercase;
+}
+.visitor-counter span {
+    letter-spacing: 3px; /* Wider spacing */
+    font-size: 1.1em;
+}
+
+.webring {
+    text-align: center;
+    margin: 20px 0;
+}
+.webring div {
+     text-transform: uppercase;
+     font-size: 0.9em;
+}
+.webring a {
+    display: inline-block;
+    margin: 0 8px; /* More space */
+    color: var(--accent-red);
+    text-decoration: none;
+    font-size: 1.3em; /* Larger symbols */
+    font-weight: bold;
+}
+.webring a:hover {
+    color: var(--accent-gore);
+    text-shadow: 0 0 8px var(--accent-red);
+    transform: scale(1.1);
+}
+
+.guestbook {
+    font-size: 0.9em;
+    text-align: center;
+}
+.guestbook div {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.guestbook a {
+    display: inline-block; /* Changed to inline-block */
+    background-color: #300;
+    color: var(--text-light);
+    text-align: center;
+    padding: 6px 12px; /* More padding */
+    margin-top: 10px;
+    border: 2px outset #660000;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    font-size: 0.9em;
+}
+.guestbook a:hover {
+    background-color: var(--accent-red);
+    color: #000;
+    transform: scale(1.05);
+    box-shadow: 0 0 5px var(--accent-red);
+}
+
+.midi-player {
+    text-align: center;
+    background-color: #111;
+    border: 2px inset #333; /* Changed to inset */
+    padding: 8px 5px;
+    margin: 15px 0;
+}
+.midi-player div:first-child {
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.midi-controls {
+    display: flex;
+    justify-content: center;
+    gap: 8px; /* Increased gap */
+    margin-top: 5px;
+}
+.midi-button {
+    background-color: #333;
+    color: #ddd;
+    border: 2px outset #555; /* Lighter outset */
+    font-size: 0.9em;
+    padding: 3px 6px;
+    cursor: pointer;
+}
+.midi-button:active {
+    border-style: inset; /* Press effect */
+}
+.midi-button:hover {
+    background-color: #555;
+}
+
+.secret-message {
+    font-size: 0.7em;
+    color: var(--primary-dark);
+    text-align: center;
+    margin-top: 15px;
+    cursor: help;
+    border-top: 1px solid #333;
+    padding-top: 10px;
+}
+
+.marquee {
+    background-color: #000;
+    color: var(--accent-red);
+    padding: 5px 0; /* Increased padding */
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+    margin: 15px 0;
+    border: 2px solid var(--accent-red); /* Thicker border */
+    font-weight: bold;
+}
+
+.marquee span {
+    display: inline-block;
+    animation: marquee 20s linear infinite; /* Slower scroll */
+    padding-left: 100%;
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-150%); } /* Longer translation for full clear */
+}
+
+/* --- New Sidebar Element Styles --- */
+
+.pixel-art-clickable {
+    text-align: center;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px dashed var(--accent-gore);
+    margin-bottom: 15px;
+    transition: background-color 0.2s;
+}
+.pixel-art-clickable img {
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 0 auto 5px auto;
+    image-rendering: pixelated; /* Keep it blocky */
+}
+.pixel-art-clickable span {
+    font-size: 0.8em;
+    color: var(--accent-gore);
+    text-transform: uppercase;
+    display: block;
+}
+.pixel-art-clickable:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.fake-ad {
+    background-color: rgba(0,0,0,0.3);
+    border: 1px solid #444;
+    padding: 8px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 0.9em;
+}
+.fake-ad .ad-title {
+    font-weight: bold;
+    color: var(--accent-gore);
+    text-decoration: underline;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+.fake-ad p {
+    margin: 5px 0;
+    color: var(--text-light);
+}
+.fake-ad a {
+    display: inline-block;
+    background-color: var(--glitch-green);
+    color: #000;
+    padding: 3px 8px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.8em;
+    border: 1px solid #008000;
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+.fake-ad a:hover {
+    background-color: #fff;
+    color: #000;
+}
+.tamagotchi-ad img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+    image-rendering: pixelated;
+}
+
+.hypno-wheel {
+    text-align: center;
+}
+.hypno-wheel img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
+    border: 2px solid #555;
+}
+.hypno-wheel span {
+    display: block;
+    color: var(--accent-red);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+}
+
+.pull-lever {
+    text-align: center;
+    cursor: pointer;
+    padding: 10px 5px;
+    border: 2px dashed #666;
+    transition: background-color 0.3s;
+}
+.pull-lever img {
+    width: 60px; /* Adjust size as needed */
+    display: block;
+    margin: 0 auto 5px auto;
+    transition: transform 0.1s ease-in-out;
+}
+.pull-lever span {
+    color: var(--glitch-green);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.pull-lever:hover img {
+    transform: translateY(2px);
+}
+.pull-lever:active img {
+    transform: translateY(5px) rotate(10deg);
+}
+.pull-lever:hover {
+    background-color: rgba(0, 255, 0, 0.1);
+}
+
+.fake-webcam {
+    background-color: #000;
+    border: 2px solid #333;
+    padding: 5px;
+    text-align: center;
+}
+.fake-webcam .webcam-title {
+    color: #f00;
+    font-size: 0.7em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+    font-weight: bold;
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+.fake-webcam img {
+    width: 100%;
+    height: 80px; /* Adjust height */
+    object-fit: cover;
+    display: block;
+    background-color: #111; /* Fallback */
+}
+
+.rate-nightmare {
+    text-align: center;
+}
+.rate-nightmare div:first-child {
+    font-size: 0.9em;
+    color: var(--text-dim);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+.rate-nightmare .star {
+    font-size: 1.5em;
+    color: #ffcc00; /* Gold */
+    cursor: pointer;
+    transition: color 0.2s, text-shadow 0.2s;
+    margin: 0 2px;
+}
+.rate-nightmare .star:hover {
+    color: var(--accent-red);
+    text-shadow: 0 0 5px var(--accent-red);
+}
+
+/* --- New additions for cryptic journal --- */
+.cryptic-journal {
+    background-color: #0a0a00; /* Yellowish dark */
+    border: 3px double #333300;
+    padding: 15px;
+    margin: 25px 0;
+    font-family: 'Courier New', monospace;
+    color: #aa9900; /* Dark gold text */
+    line-height: 1.4;
+    white-space: pre-wrap;
+    position: relative;
+}
+
+.cryptic-journal:before {
+    content: "RECOVERED DOCUMENT #JN-663";
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background-color: #000;
+    color: #aa9900;
+    padding: 2px 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.cryptic-note {
+    background-color: #110800; /* Very dark brown */
+    border: 1px solid #332200;
+    color: #bb7700; /* Amber text */
+    padding: 10px 15px;
+    margin: 15px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    line-height: 1.3;
+}
+
+/* --- Polaroid styles --- */
+.polaroid {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    padding: 10px 10px 25px 10px;
+    display: inline-block;
+    transform: rotate(-3deg);
+    width: 200px;
+    margin: 15px;
+    position: relative;
+}
+
+.polaroid img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: sepia(50%) contrast(1.1);
+    border: 1px solid #ccc;
+}
+
+.polaroid-caption {
+    text-align: center;
+    margin-top: 10px;
+    font-family: 'Courier New', monospace;
+    color: #333;
+    font-size: 0.8em;
+}
+
+.polaroid:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.7) 38%, rgba(255,255,255,0) 40%);
+    pointer-events: none;
+}
+
+/* Blood drop effect (use with ::before on elements) */
+.blood-drop::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 15px;
+    background-color: var(--accent-red);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    filter: drop-shadow(0 3px 2px rgba(0,0,0,0.5));
+}
+
+/* --- Map pin styles --- */
+.map-container {
+    background-color: #332211;
+    border: 3px solid #553311;
+    padding: 15px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.map-title {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    background-color: #000;
+    color: #aa8855;
+    padding: 3px 12px;
+    font-size: 1em;
+    font-weight: bold;
+    border: 1px solid #553311;
+}
+
+.map-pin {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent-red);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.map-pin:after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #000;
+    border-radius: 50%;
+    top: 6px;
+    left: 6px;
+}
+
+/* --- Artifact tagging system --- */
+.evidence-container {
+    position: relative;
+    margin: 30px 0;
+}
+
+.evidence-label {
+    position: absolute;
+    top: -12px;
+    left: 15px;
+    background-color: #000;
+    color: var(--accent-gore);
+    padding: 2px 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+    border: 1px solid var(--accent-red);
+    z-index: 5;
+}
+
+/* --- Countdown timer --- */
+.countdown {
+    background-color: #000;
+    border: 2px inset #333;
+    padding: 8px 5px; /* More padding */
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    color: var(--accent-red);
+    margin: 15px 0;
+}
+
+.countdown-title {
+    font-size: 0.9em; /* Larger title */
+    color: var(--text-light);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.countdown-value {
+    font-size: 1.3em; /* Larger numbers */
+    font-weight: bold;
+    letter-spacing: 3px; /* Wider spacing */
+}
+
+/* --- TV static animation --- */
+.static-container {
+    position: relative;
+    min-height: 50px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.static-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><rect width="100%" height="100%" fill="black"/><rect x="0" y="0" width="1" height="1" fill="white" opacity="0.3"/><rect x="5" y="7" width="1" height="1" fill="white" opacity="0.3"/><rect x="12" y="15" width="1" height="1" fill="white" opacity="0.3"/><rect x="25" y="10" width="1" height="1" fill="white" opacity="0.3"/><rect x="30" y="35" width="1" height="1" fill="white" opacity="0.3"/><rect x="40" y="25" width="1" height="1" fill="white" opacity="0.3"/><rect x="20" y="40" width="1" height="1" fill="white" opacity="0.3"/></svg>');
+    animation: staticNoise 0.1s infinite alternate;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+@keyframes staticNoise {
+    0% { background-position: 0 0; }
+    100% { background-position: 5px 5px; }
+}
+
+/* --- Security camera style --- */
+.security-cam {
+    background-color: #000;
+    border: 3px solid #333;
+    padding: 10px;
+    position: relative;
+    margin: 25px 0;
+}
+
+.security-cam::before {
+    content: "CAM 04";
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Courier New', monospace;
+    font-size: 0.8em;
+    z-index: 5;
+}
+
+.security-cam::after {
+    content: "08/14/67 03:27:55";
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'Courier New', monospace;
+    font-size: 0.8em;
+    z-index: 5;
+}
+
+/* --- Morse code animation --- */
+.morse-light {
+    width: 15px;
+    height: 15px;
+    background-color: var(--accent-red);
+    border-radius: 50%;
+    margin: 15px auto 10px auto; /* Adjusted margin */
+    animation: morseCode 4s infinite;
+    box-shadow: 0 0 10px var(--accent-red);
+}
+
+@keyframes morseCode {
+    /* SOS in Morse code: ... --- ... */
+    0%, 4%, 8%, 12%, 36%, 44%, 52%, 76%, 80%, 84%, 88%, 100% { opacity: 1; }
+    2%, 6%, 10%, 14%, 38%, 48%, 56%, 78%, 82%, 86%, 90% { opacity: 0; }
+    16%, 34%, 58%, 74% { opacity: 0; }
+    20%, 28%, 62%, 70% { opacity: 1; }
+}
+
+/* Upside-down text */
+.inverted-text {
+    transform: rotate(180deg);
+    display: inline-block;
+}
+
+/* Hidden message revealed on hover */
+.invisible-ink {
+    color: rgba(255,255,255,0.05);
+    transition: color 0.5s;
+}
+
+.invisible-ink:hover {
+    color: var(--accent-gore);
+}
+
+/* Animation for blood drips */
+@keyframes drip {
+    0% { height: 0; opacity: 1; }
+    90% { opacity: 1; }
+    100% { height: 100px; opacity: 0; } /* Fade out at end */
+}
+
+.blood-drip {
+    position: absolute;
+    width: 2px;
+    background-color: var(--accent-red);
+    top: 0;
+    transition: height 5s;
+    z-index: 10;
+    /* Removed animation from here, apply via JS if needed or on map dots */
+}
+
+/* Text flicker animation */
+@keyframes textFlicker {
+    0%, 80% { opacity: 1; }
+    81%, 100% { opacity: 0.8; }
+}
+
+.flicker-slow {
+    animation: textFlicker 3s infinite alternate;
+}
+
+.flicker-fast {
+    animation: textFlicker 0.5s infinite alternate;
+}
+
+/* Horror reveal animation */
+@keyframes horrorReveal {
+    0% { transform: scaleY(0); opacity: 0; }
+    100% { transform: scaleY(1); opacity: 1; }
+}
+
+.horror-reveal {
+    animation: horrorReveal 0.5s ease-in-out;
+    transform-origin: top;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .late-night-header h1 {
+        font-size: 3em;
+    }
+
+    .sidebar {
+        float: none;
+        width: 90%;
+        margin: 20px auto;
+        min-height: auto;
+    }
+
+    main {
+        margin-left: 0;
+    }
+
+    .polaroid {
+        width: 150px;
+    }
+
+    .main-nav li {
+        margin: 0 5px;
+    }
+
+    .main-nav a {
+        font-size: 1.1em;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    #wrapper {
+        padding: 10px;
+    }
+
+    .late-night-header h1 {
+        font-size: 2.5em;
+    }
+
+    .case-file, .classified-doc, .diary-entry {
+        padding: 15px 10px;
+    }
+
+    .main-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-nav li {
+        margin: 5px;
+    }
+
+    .security-cam::before, .security-cam::after {
+        font-size: 0.7em;
+    }
+
+    .sidebar {
+        width: calc(100% - 30px); /* Adjust for padding */
+    }
+}
+
+/* Terminal styling for remnants.html */
+.terminal-text {
+    font-family: 'Courier New', monospace;
+    color: #33ff33;
+    background-color: #000;
+    padding: 10px;
+    border: 1px solid #333;
+    white-space: pre-wrap;
+    line-height: 1.4;
+}
+
+.terminal-command {
+    color: #ffff00;
+    font-weight: bold;
+}
+
+.terminal-error {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+/* Blood splatter effect */
+.blood-splatter {
+    position: absolute;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><path d="M40,20 C60,5 80,30 70,50 C90,70 60,90 40,70 C20,90 0,60 20,40 C0,20 20,5 40,20 Z" fill="red" opacity="0.7"/></svg>');
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 100;
+    transform: scale(0.5);
+    opacity: 0.7;
+    filter: blur(1px);
+    transition: opacity 5s;
+}
+
+/* Password input styling */
+input[type="password"] {
+    background-color: #000;
+    color: #33ff33;
+    border: 1px solid #333;
+    padding: 5px 10px;
+    font-family: 'Courier New', monospace;
+}
+
+button {
+    background-color: #300;
+    color: #fff;
+    border: 2px outset #600;
+    padding: 5px 15px;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #600;
+}
+
+button:active {
+    border-style: inset;
+}
+
+/* Special effects for the classified page */
+.page-classified {
+    animation: shake 10s infinite;
+}
+
+@keyframes shake {
+    0%, 92%, 96%, 100% { transform: translate(0, 0) rotate(0); }
+    93% { transform: translate(-2px, 0) rotate(-0.5deg); }
+    94% { transform: translate(2px, 1px) rotate(0.5deg); }
+    95% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+}
+
+/* Special transition effects */
+.fade-in {
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Special hover effects for interactive elements */
+.interactive-text:hover::after {
+    content: "...?"; /* Added question mark */
+    animation: ellipsisBlink 1s infinite;
+    margin-left: 3px; /* Spacing */
+    font-size: 0.8em;
+    vertical-align: baseline;
+}
+
+@keyframes ellipsisBlink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Heartbeat animation for urgency */
+.heartbeat {
+    animation: heartbeat 1.5s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Typewriter effect */
+.typing-text {
+    overflow: hidden;
+    border-right: 0.15em solid #33ff33;
+    white-space: nowrap;
+    letter-spacing: 0.1em;
+    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #33ff33 }
+}
+
+/* Special classes for JavaScript-triggered effects */
+.flash-red {
+    animation: flashRed 0.3s 1;
+}
+
+@keyframes flashRed {
+    0%, 100% { background-color: transparent; }
+    50% { background-color: rgba(255,0,0,0.3); }
+}
+
+.shake-violent {
+    animation: shakeViolent 0.5s 1;
+}
+
+@keyframes shakeViolent {
+    0%, 100% { transform: translate(0, 0) rotate(0); }
+    10% { transform: translate(-5px, -5px) rotate(-2deg); }
+    20% { transform: translate(5px, 3px) rotate(2deg); }
+    30% { transform: translate(-5px, 5px) rotate(-1d

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>!!! Big Top BARBARITY !!! - Presented by Barlow & Sons</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- WARNING: VIEWING MAY CAUSE NOSEBLEEDS, DIZZINESS, OR EXISTENTIAL DREAD -->
+    <meta name="keywords" content="barlow, carnival, murders, clowns, project chimera, circus, nightmare, blood">
+    <meta name="description" content="The official archive of America's most terrifying carnival family">
+    <meta name="author" content="Unknown_Archivist">
+</head>
+<body>
+    <div id="wrapper">
+        <header class="late-night-header">
+            <h1>Big Top <span style="color: var(--glitch-green);">BARBARITY</span></h1>
+            <p class="tagline">~*~ Your ONE-STOP Shop for Carnage & Cotton Candy! ~*~</p>
+        </header>
+
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active">Home Sick Home</a></li>
+                <li><a href="history.html">Our Twisted History</a></li>
+                <li><a href="murder.html">The Crimson Trail</a></li>
+                <li><a href="classified.html" onclick="playAudio('staticSound', 0.5)">///CLASSIFIED///</a></li>
+                <li><a href="#" id="lost-link" onclick="revealHorror('lostPageHint')">?¿?¿?</a></li>
+            </ul>
+        </nav>
+
+        <!-- *** ENHANCED Quirky 90s Sidebar *** -->
+        <aside class="sidebar">
+            <div class="sidebar-header">Nightmare Fuel Depot</div>
+
+            <!-- Pixel Clown -->
+            <div class="sidebar-section pixel-art-clickable" onclick="playAudio('laughSound', 0.8); triggerGlitchEffect(this, 200);" title="Don't click me!">
+                 <img src="images/pixel_clown.gif" alt="Pixelated clown head">
+                 <span>Poke the Clown!</span>
+            </div>
+
+            <!-- Visitor Counter -->
+            <div class="sidebar-section visitor-counter">
+                <div>SOULS CONSUMED:</div>
+                <span class="flicker-fast">0 0 6 6 6</span>
+            </div>
+
+            <!-- Fake Ad: Chainsaw Oil -->
+            <div class="sidebar-section fake-ad">
+                <div class="ad-title">Barlow's Best©</div>
+                <img src="images/blood_drip.gif" alt="Dripping blood" style="float:right; width: 20px; margin-left: 5px;">
+                <p>Chainsaw Oil! EXTRA Viscosity!</p>
+                <a href="#" onclick="alert('ERROR 404: Soul not found. Required for purchase.'); return false;">ORDER NOW!</a>
+            </div>
+
+            <!-- Sound Blaster of Souls -->
+            <div class="sidebar-section midi-player">
+                <div style="color: var(--accent-gore);">SOUND BLASTER OF SOULS</div>
+                <div class="midi-controls">
+                    <button class="midi-button" onclick="playAudio('laughSound', 0.3)" title="Play Dirge">►</button>
+                    <button class="midi-button" onclick="stopAudio('laughSound')" title="Silence Scream">■</button>
+                    <button class="midi-button" onclick="loopAudio('laughSound')" title="Eternal Nightmare">↻</button>
+                </div>
+            </div>
+
+             <!-- Hypno Wheel -->
+            <div class="sidebar-section hypno-wheel">
+                 <img src="images/hypno_wheel.gif" alt="Hypnotic wheel" title="Look deep into the void...">
+                 <span>OBEY BARLOW</span>
+            </div>
+
+            <!-- Marquee -->
+            <div class="sidebar-section marquee">
+                 <span>●●● M̷ISSING SINCE 1968 ● HAVE YOU SEEN T̸H̷EM? ●●● R̸E̵W̵A̵RD OFFERED ●●● APPROACH WITH EX̷TREME C̸A̶UTION ●●●</span>
+            </div>
+
+            <!-- Fake Ad: Haunted Tamagotchi -->
+            <div class="sidebar-section fake-ad tamagotchi-ad">
+                 <img src="images/tamagotchi.gif" alt="Haunted Tamagotchi">
+                 <p>Feed it SCREAMS!</p>
+                 <a href="#" onclick="playAudio('scream', 0.6); return false;">TRY FEEDING!</a>
+            </div>
+
+            <!-- Guestbook -->
+            <div class="sidebar-section guestbook">
+                <div style="color: var(--accent-gore);">SIGN OUR DAMNATION BOOK</div>
+                <a href="#" class="interactive-text" onclick="triggerGlitchEffect(document.body, 500); showDetail('guestbookSecret')">ETCH YOUR NAME IN BLOOD</a>
+                <p id="guestbookSecret" class="hidden detail">Names added to the 'volunteer' list for the next performance... Don't be late!</p>
+            </div>
+
+            <!-- Pull Lever -->
+            <div class="sidebar-section pull-lever" onclick="pullTheLever(this)">
+                 <img src="images/lever.png" alt="Pull Lever">
+                 <span>PULL ME!</span>
+            </div>
+
+            <!-- Webring -->
+            <div class="sidebar-section webring">
+                <div style="color: var(--text-dim); margin-bottom: 5px;">DEATH WEBRING</div>
+                <a href="#" onclick="triggerGlitchEffect(document.body, 200); return false;" title="Previous Nightmare">◄</a> |
+                <a href="#" onclick="triggerGlitchEffect(document.body, 500); alert('Lost in the static...'); return false;" title="Random Horror">◆</a> |
+                <a href="#" onclick="triggerGlitchEffect(document.body, 200); return false;" title="Next Descent">►</a>
+            </div>
+
+            <!-- Countdown -->
+            <div class="sidebar-section countdown">
+                <div class="countdown-title">NEXT SHOWING</div>
+                <div class="countdown-value flicker-slow">18:45:03</div>
+            </div>
+
+            <!-- Fake Webcam -->
+            <div class="sidebar-section fake-webcam">
+                <div class="webcam-title">LIVE FEED: BACKSTAGE</div>
+                <img src="images/webcam_static.gif" alt="Static with occasional flashes of something horrific" title="Is something moving back there?">
+            </div>
+
+             <!-- Fake Ad: Geocities Grave Plot -->
+            <div class="sidebar-section fake-ad">
+                 <img src="images/skull_icon.gif" alt="Skull Icon" style="width: 30px; float: left; margin-right: 5px;">
+                 <p>FREE Geocities Grave Plot!</p>
+                 <a href="http://www.geocities.ws/404/" target="_blank">CLAIM YOURS!</a> <!-- Link to a real Geocities archive 404 -->
+            </div>
+
+            <!-- Morse Light -->
+            <div class="morse-light" title="... --- ... (SOS)"></div>
+
+            <!-- Secret Message -->
+            <div class="secret-message invisible-ink" title="Hover to reveal... if you dare.">Coordinates: 36.4°N 113.9°W</div>
+
+            <!-- Rate this Nightmare -->
+             <div class="sidebar-section rate-nightmare">
+                 <div>RATE THIS NIGHTMARE:</div>
+                 <span class="star" onclick="rateNightmare(1)">★</span>
+                 <span class="star" onclick="rateNightmare(2)">★</span>
+                 <span class="star" onclick="rateNightmare(3)">★</span>
+                 <span class="star" onclick="rateNightmare(4)">★</span>
+                 <span class="star" onclick="rateNightmare(5)">★</span>
+                 <div id="ratingResponse" class="hidden detail" style="font-size: 0.8em; padding: 5px;"></div>
+             </div>
+
+        </aside>
+
+        <main>
+            <h2>Step Right Up, Folks! Don't Be Shy!</h2>
+            <p style="font-size: 1.2em; text-align: center; color: var(--accent-gore);">
+                Tired of boring family entertainment? Crave something with a little more... <strong style="color: var(--accent-red); font-family: 'Creepster', cursive; font-size: 1.5em;">BITE?</strong>
+                Then you've stumbled into the right corner of the cursed internet!
+            </p>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <img src="images/family_portrait.jpg" alt="The happy, happy Barlow family of clowns" class="disturbing-image" style="max-width: 60%;">
+                <p class="caption">The Barlows - Purveyors of Pain and Popcorn Since 1959!</p>
+            </div>
+
+            <!-- Added mysterious broadcast -->
+            <div class="static-container">
+                <div class="static-overlay"></div>
+                <div style="padding: 15px; color: var(--accent-gore); font-family: 'Courier New', monospace; text-align: center;">
+                    <p style="font-size: 1.2em;">/// EMERGENCY BROADCAST ///</p>
+                    <p>Last confirmed sighting: <span class="interactive-text" onclick="showDetail('lastSighting')">REDACTED</span>, 1968</p>
+                    <p id="lastSighting" class="hidden detail">A family of four with white-painted faces was spotted near Chimera Lake, Utah. Three hikers went missing that weekend. Search parties found only a single red shoe and traces of carnival makeup on the trees.</p>
+                    <p>Status: <span style="color: var(--glitch-green);">ACTIVE?</span></p>
+                </div>
+            </div>
+
+            <p>
+                We're the digital ghost of the infamous <strong style="color: var(--primary-red);">Crimson Smile Carnival</strong>, run by the loving, laughing, and LETHAL Barlow family. They toured the forgotten highways of America in the 1960s, leaving behind a trail of sawdust, screams, and... well, let's just say the cleanup crews needed strong stomachs.
+            </p>
+            <p>
+                This here website? It's a monument! A museum! A mess! Dug up from corrupted hard drives and dusty evidence lockers. It tells their story... or what fragments remain.
+            </p>
+
+            <!-- New polaroid section -->
+            <div style="text-align: center; margin: 25px auto;">
+                <div class="polaroid" style="transform: rotate(-5deg);">
+                    <img src="images/ferris_wheel.jpg" alt="Abandoned Ferris wheel">
+                    <p class="polaroid-caption">Last setup site - Is that a face in the shadows?</p>
+                </div>
+                <div class="polaroid" style="transform: rotate(3deg);">
+                    <img src="images/bloody_tent.jpg" alt="Stained circus tent">
+                    <p class="polaroid-caption">Back of big top - stain wouldn't wash out</p>
+                </div>
+            </div>
+
+            <h3>What horrors await within?</h3>
+            <ul>
+                <li><strong style="color: var(--accent-gore);">Twisted History:</strong> Learn how Ma and Pa Barlow found love, raised little monsters, and turned greasepaint into a mask for madness. <a href="history.html" class="interactive-text">(Click if you dare!)</a></li>
+                <li><strong style="color: var(--accent-gore);">The Crimson Trail:</strong> Pore over the gruesome evidence! Newspaper clippings, police reports, whispers from those who saw too much... <a href="murder.html" class="interactive-text">(Not for the faint of heart!)</a></li>
+                <li><strong style="color: var(--accent-gore);">///CLASSIFIED///:</strong> Some secrets run deeper than bloodstains. What did Uncle Sam know? What experiments went wrong? <a href="classified.html" class="interactive-text" onclick="playAudio('staticSound', 0.8)">(ACCESS RESTRICTED - PROCEED WITH EXTREME CAUTION)</a></li>
+            </ul>
+
+            <!-- New cryptic message -->
+            <div class="cryptic-note">
+                <p style="text-align: center; text-transform: uppercase; letter-spacing: 2px;">FROM THE JOURNAL OF AGENT D. CARROLL</p>
+                <p>Day 41 of surveillance: The paint is the key. Chemical analysis shows compounds unknown to science. The children's blood work is... impossible. Cellular mutation beyond anything we've seen. The "games" they play with their "volunteers" seem to accelerate the process. I believe the "performances" are actually a form of ritual, possibly designed to <span class="interactive-text" onclick="showDetail('ritualPurpose')">stabilize their condition</span>.</p>
+                <p id="ritualPurpose" class="hidden detail">Without regular "feedings," their physical forms begin to destabilize. Screams seem to provide energy of some kind. Dr. Finch theorizes interdimensional properties.</p>
+                <p>Tomorrow I approach as a potential roustabout. If I don't report back in 72 hours, implement Protocol Echo-7.</p>
+                <p style="text-align: right; font-style: italic;">Agent Carroll was never heard from again.</p>
+            </div>
+
+            <p class="interactive-text" style="text-align:center; font-size: 1.3em; margin-top: 40px;" onclick="revealHorror('homeSecret')">
+                Click here for a FREE sample of fun!
+            </p>
+            <p id="homeSecret" class="hidden detail" style="text-align:center; color: var(--accent-red); font-weight: bold;">
+                (The cotton candy sometimes had... fillings. Crunchy.)
+            </p>
+
+            <!-- Lost page hint -->
+            <p id="lostPageHint" class="hidden detail" style="text-align:center; color: var(--glitch-green); font-style: italic; margin-top: 30px;">
+                Look for "remnants.html" - Some pages were never meant to be found. The truth lies in code.
+            </p>
+
+            <hr class="section-divider">
+
+            <section id="warning" class="hidden blood-warning">
+                <h2>STOP.</h2>
+                <p>You saw the pictures. You clicked the links.</p>
+                <p>This isn't entertainment. It's an OPEN WOUND.</p>
+                <p>Turn back before the laughter gets inside you.</p>
+                <button onclick="hideWarning()">I LIKE THE LAUGHTER</button>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <p>~*~ Barlow & Sons Digital Nightmare Emporium - Coded in Blood & Bad Dreams ~*~</p>
+            <p>Last Updated: When the Screaming Stopped? // Compatibility: Netscape Navigator 4.0 (Maybe)</p>
+            <p id="consoleHint" class="subtle-text flicker-slow">Check console. Sometimes the static speaks.</p>
+            <!-- Hidden message in HTML comment for curious viewers -->
+            <!-- GAMMA7-PROTOCOL-SUBJECTS STILL ACTIVE. CHIMERA PARADOX CONFIRMED. CONTAINMENT IMPOSSIBLE. -->
+        </footer>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="staticSound" src="audio/static_burst.mp3" preload="auto"></audio>
+    <audio id="laughSound" src="audio/creepy_laugh.mp3" preload="auto"></audio>
+    <audio id="scream" src="audio/scream.mp3" preload="auto"></audio> <!-- Added Scream -->
+    <audio id="leverSound" src="audio/lever_sound.mp3" preload="auto"></audio> <!-- Added Lever Sound -->
+
+
+    <script src="script.js"></script>
+    <script>
+        // Additional script for index page
+        console.log("%cYOU SHOULDN'T BE LOOKING HERE", "color: red; font-size: 20px;");
+        console.log("%cThe Chimera subjects were never fully neutralized.", "color: #00ff00; font-size: 12px;");
+        console.log("%cSearch for: OPERATION STITCH-FACE AFTERMATH", "color: #00ff00; font-size: 12px;");
+        setTimeout(() => {
+            // Random chance to trigger laughter
+            if (Math.random() > 0.7) {
+                playAudio('laughSound', 0.1);
+            }
+        }, 45000); // After 45 seconds
+    </script>
+</body>
+</html>

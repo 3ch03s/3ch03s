@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>/// SYSTEM ERROR /// UNAUTHORIZED ACCESS ///</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Special styles for remnant page */
+        body {
+            background-color: #000;
+            animation: slowPulse 10s infinite alternate;
+            /* Removed overflow: hidden to allow scrolling */
+        }
+        
+        @keyframes slowPulse {
+            0% { background-color: #000000; }
+            50% { background-color: #0a0505; }
+            100% { background-color: #050000; }
+        }
+        
+        #wrapper {
+            background-color: rgba(10,0,0,0.9);
+            border-color: #440000;
+            max-width: 800px;
+        }
+        
+        .terminal-screen {
+            background-color: #000;
+            color: #33ff33;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            border: 2px solid #33ff33;
+            position: relative;
+            overflow: hidden;
+            line-height: 1.3;
+            margin-bottom: 30px;
+        }
+        
+        .terminal-screen::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,255,0,0.1) 50%, rgba(0,0,0,0) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.2;
+            z-index: 5;
+            animation: terminalScan 8s linear infinite;
+        }
+        
+        @keyframes terminalScan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+        
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: #33ff33;
+            animation: cursorBlink 1s infinite;
+            vertical-align: middle;
+            margin-left: 3px;
+        }
+        
+        @keyframes cursorBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+        
+        .access-screen {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #000;
+            border: 3px solid #550000;
+            margin-bottom: 30px;
+            display: none; /* Hidden initially */
+        }
+        
+        .access-title {
+            font-family: 'Creepster', cursive;
+            color: var(--accent-red);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px var(--accent-red);
+        }
+        
+        .password-input {
+            background-color: #000;
+            border: 2px solid #333;
+            color: var(--accent-red);
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            width: 300px;
+            margin: 20px auto;
+            display: block;
+            text-align: center;
+        }
+        
+        .submit-button {
+            background-color: #330000;
+            color: var(--text-light);
+            border: 2px solid var(--accent-red);
+            padding: 10px 20px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .submit-button:hover {
+            background-color: var(--accent-red);
+            color: #000;
+        }
+        
+        .final-message {
+            background-color: rgba(0,0,0,0.8);
+            border: 3px double var(--accent-red);
+            padding: 20px;
+            margin: 30px 0;
+            color: var(--text-light);
+            display: none; /* Hidden initially */
+            position: relative;
+        }
+        
+        .transmission-header {
+            font-family: 'Changa', sans-serif;
+            text-align: center;
+            color: var(--accent-red);
+            font-size: 1.4em;
+            border-bottom: 2px solid var(--accent-red);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .real-footage {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px dashed var(--accent-gore);
+            background-color: #000;
+            color: var(--accent-gore);
+            font-family: 'Courier New', monospace;
+            display: none; /* Hidden initially */
+        }
+        
+        .video-frame {
+            width: 90%;
+            height: 350px;
+            margin: 15px auto;
+            border: 3px solid var(--primary-red);
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .static-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><rect width="100%" height="100%" fill="black"/><rect x="0" y="0" width="1" height="1" fill="white" opacity="0.3"/><rect x="5" y="7" width="1" height="1" fill="white" opacity="0.3"/><rect x="12" y="15" width="1" height="1" fill="white" opacity="0.3"/><rect x="25" y="10" width="1" height="1" fill="white" opacity="0.3"/><rect x="30" y="35" width="1" height="1" fill="white" opacity="0.3"/><rect x="40" y="25" width="1" height="1" fill="white" opacity="0.3"/><rect x="20" y="40" width="1" height="1" fill="white" opacity="0.3"/></svg>');
+            animation: staticNoise 0.1s infinite alternate;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        .hidden-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--accent-red);
+            font-family: 'Creepster', cursive;
+            font-size: 2em;
+            z-index: 5;
+            text-shadow: 0 0 10px var(--accent-red);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        /* Hidden secret in the page */
+        .secret-dots {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            opacity: 0.05;
+            cursor: help;
+            transition: opacity 0.3s;
+        }
+        
+        .secret-dots:hover {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="special-remnants">
+    <div id="wrapper">
+        <header class="late-night-header" style="animation: colorBleed 4s infinite;">
+            <h1 style="text-shadow: 0 0 15px red;">BEYOND THE VEIL</h1>
+            <p class="tagline" style="color: var(--glitch-green);">~ WHERE THEY WAIT FOR YOUR RETURN ~</p>
+        </header>
+        
+        <!-- Terminal-style access screen -->
+        <div class="terminal-screen" id="terminalScreen">
+            <p>CHIMERA-OS v4.7.3 (c) 1968 - RESTRICTED ACCESS</p>
+            <p>> Initializing security protocols...</p>
+            <p>> Scanning for dimensional breaches...</p>
+            <p>> WARNING: Anomalous signal detected...</p>
+            <p>> Establishing connection to BARLOW-NET...</p>
+            <p>> Connection established. Awaiting authorization.</p>
+            <p>> <span class="typing-text"></span><span class="cursor"></span></p>
+        </div>
+        
+        <!-- Password screen -->
+        <div class="access-screen" id="accessScreen">
+            <div class="access-title">FINAL ARCHIVAL ACCESS</div>
+            <p>The truth lies beyond this point.</p>
+            <p>Enter the password found within the lake of whispers.</p>
+            <input type="password" class="password-input" id="passwordInput" placeholder="••••••••••••">
+            <button class="submit-button" id="submitPassword">ACCESS ARCHIVES</button>
+        </div>
+        
+        <!-- Final revelation -->
+        <div class="final-message" id="finalMessage">
+            <div class="transmission-header">
+                [DIRECT TRANSMISSION FROM BARLOW FAMILY]
+            </div>
+            <p style="text-align: center; font-family: 'Creepster', cursive; font-size: 1.5em; color: var(--accent-red);">WE'VE BEEN WAITING FOR YOU</p>
+            <p>The show never ended. We simply moved to a more... accommodating venue. The digital realm suits our new forms perfectly. No more constraints of flesh and bone. No more need for the blue serum.</p>
+            <p>We exist now between the ones and zeros. In the static between channels. In the glitches and artifacts. In the corner of your eye when you look at your screen too long.</p>
+            <p>You've been such a good audience member, following our breadcrumb trail. So curious! So persistent! Mama says you would make a wonderful addition to our little family. Junior needs a new playmate.</p>
+            <p>Keep watching. We'll be watching back.</p>
+            <p style="text-align: right; font-style: italic;">~ The Barlows</p>
+            <p style="font-size: 0.8em; color: var(--text-dim); margin-top: 30px; text-align: center;">P.S. Check your webcam. Sometimes we peek through.</p>
+        </div>
+        
+        <!-- "Real footage" section -->
+        <div class="real-footage" id="realFootage">
+            <div style="text-transform: uppercase; letter-spacing: 2px;">RECOVERED SURVEILLANCE FOOTAGE - CHIMERA LAKE [11/04/1968]</div>
+            <div class="video-frame">
+                <div class="static-overlay"></div>
+                <div id="hiddenMessage" class="hidden-message">THEY ARE NOT GONE. THEY ARE BETWEEN.</div>
+            </div>
+            <div style="font-size: 0.9em; text-align: left; margin-top: 10px;">
+                <span style="color: var(--text-light);">TIMESTAMP:</span> 03:17:42 AM<br>
+                <span style="color: var(--text-light);">LOCATION:</span> Cave System B, Sector 7<br>
+                <span style="color: var(--text-light);">NOTES:</span> Last recovered frame before camera system failure. Motion sensors detected activity for 17 additional hours.
+            </div>
+        </div>
+        
+        <!-- Add hidden clickable dots throughout the page -->
+        <div class="secret-dots" style="top: 120px; right: 40px;" title="They watch from every screen."></div>
+        <div class="secret-dots" style="bottom: 80px; left: 30px;" title="The paint alters your DNA at a molecular level."></div>
+        <div class="secret-dots" style="top: 300px; left: 50%;" title="Project CHIMERA was never about weapons. It was about doors."></div>
+        
+        <footer class="site-footer" style="margin-top: 50px; border-color: var(--glitch-green);">
+            <p style="color: var(--glitch-red);">// CONNECTION TERMINATED // DATA CORRUPTED // SMILE FOR THE CAMERA //</p>
+        </footer>
+    </div>
+    
+    <!-- Audio Elements -->
+    <audio id="staticSound" src="audio/static_burst.mp3" preload="auto"></audio>
+    <audio id="laughSound" src="audio/creepy_laugh.mp3" preload="auto"></audio>
+    
+    <script src="script.js"></script>
+    <script>
+        // Special script for remnants.html
+        document.addEventListener('DOMContentLoaded', function() {
+            // Typewriter effect for terminal
+            const terminalText = "OVERRIDE AUTHORIZED... ACCESS GRANTED";
+            const typingTextElement = document.querySelector('.typing-text');
+            const terminalScreen = document.getElementById('terminalScreen');
+            const accessScreen = document.getElementById('accessScreen');
+            
+            let i = 0;
+            const typingInterval = setInterval(() => {
+                if (i < terminalText.length) {
+                    typingTextElement.textContent += terminalText.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                    // After typing finishes, show access screen
+                    setTimeout(() => {
+                        terminalScreen.style.display = 'none';
+                        accessScreen.style.display = 'block';
+                        playAudio('staticSound', 0.3);
+                    }, 1500);
+                }
+            }, 100);
+            
+            // Password verification
+            const submitButton = document.getElementById('submitPassword');
+            const passwordInput = document.getElementById('passwordInput');
+            const finalMessage = document.getElementById('finalMessage');
+            const realFootage = document.getElementById('realFootage');
+            
+            submitButton.addEventListener('click', function() {
+                const password = passwordInput.value.toLowerCase();
+                if (password === 'chimera_lake' || password === 'chimeralake') {
+                    // Correct password
+                    accessScreen.style.display = 'none';
+                    finalMessage.style.display = 'block';
+                    realFootage.style.display = 'block';
+                    
+                    // Trigger a major glitch effect
+                    triggerGlitchEffect(document.body, 2000);
+                    playAudio('staticSound', 0.7);
+                    
+                    // Flash hidden message in the "video"
+                    const hiddenMessage = document.getElementById('hiddenMessage');
+                    setInterval(() => {
+                        if (Math.random() > 0.7) {
+                            hiddenMessage.style.opacity = '1';
+                            setTimeout(() => {
+                                hiddenMessage.style.opacity = '0';
+                            }, 200 + Math.random() * 300);
+                        }
+                    }, 3000);
+                    
+                    // Random laugh
+                    setTimeout(() => {
+                        playAudio('laughSound', 0.4);
+                    }, 10000);
+                    
+                    // Try to access webcam (will be blocked by most browsers without permission)
+                    // This is just for creepy effect in console
+                    try {
+                        console.log("%cATTEMPTING TO ACCESS WEBCAM...", "color: red; font-size: 16px;");
+                        console.log("%cTHEY WANT TO SEE YOU", "color: red;");
+                    } catch (e) {
+                        // Expected to fail
+                    }
+                    
+                } else {
+                    // Wrong password
+                    passwordInput.style.backgroundColor = '#330000';
+                    passwordInput.value = '';
+                    passwordInput.placeholder = 'ACCESS DENIED';
+                    playAudio('staticSound', 0.5);
+                    
+                    // Shake effect
+                    triggerGlitchEffect(accessScreen, 500);
+                    
+                    // Reset after delay
+                    setTimeout(() => {
+                        passwordInput.style.backgroundColor = '#000';
+                        passwordInput.placeholder = '••••••••••••';
+                    }, 2000);
+                }
+            });
+            
+            // Allow pressing Enter key
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    submitButton.click();
+                }
+            });
+            
+            // Console secret message
+            console.log("%cYOU'VE FOUND US", "color: red; font-size: 24px; font-weight: bold;");
+            console.log("%cWe exist in the spaces between reality.", "color: #ff4040; font-size: 16px;");
+            console.log("%cThe carnival never closed. It just moved... elsewhere.", "color: #ff4040; font-size: 16px;");
+            console.log("%cWe're so glad you're here. Mama has been waiting.", "color: #ff4040; font-size: 16px;");
+            
+            // Make sure the page scrolls to the top when elements change visibility
+            function scrollToTop() {
+                window.scrollTo(0, 0);
+            }
+            
+            // Attempt to scroll after layout changes
+            setTimeout(scrollToTop, 2000);
+        });
+    </script>
+</body>
+</html>
