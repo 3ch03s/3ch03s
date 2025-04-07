@@ -219,11 +219,88 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("%c/// SYSTEM BOOTING... CORRUPTION DETECTED: ██████% ///", "color: red; font-weight: bold; font-size: 1.2em;");
     console.warn("~*~ Welcome to the show! Don't lose your head... ~*~");
 
-    // Start playing background music if available
+    // Setup a simple click-to-play system for background music
     const bgMusic = document.getElementById('bgMusic');
     if (bgMusic) {
         bgMusic.volume = 0.4; // Lower volume for background music
-        bgMusic.play().catch(error => console.warn(`Background music playback failed:`, error));
+        
+        // Create a simple popup overlay
+        const musicPrompt = document.createElement('div');
+        musicPrompt.style.position = 'fixed';
+        musicPrompt.style.top = '50%';
+        musicPrompt.style.left = '50%';
+        musicPrompt.style.transform = 'translate(-50%, -50%)';
+        musicPrompt.style.backgroundColor = '#000000';
+        musicPrompt.style.color = '#ff0000';
+        musicPrompt.style.padding = '30px';
+        musicPrompt.style.width = '600px';
+        musicPrompt.style.height = '400px';
+        musicPrompt.style.display = 'flex';
+        musicPrompt.style.alignItems = 'center';
+        musicPrompt.style.justifyContent = 'center';
+        musicPrompt.style.borderRadius = '5px';
+        musicPrompt.style.fontFamily = 'Creepster, cursive';
+        musicPrompt.style.fontSize = '3em';
+        musicPrompt.style.zIndex = '9999';
+        musicPrompt.style.cursor = 'pointer';
+        musicPrompt.style.border = '4px solid #ff0000';
+        musicPrompt.style.boxShadow = '0 0 30px rgba(255, 0, 0, 0.5)';
+        musicPrompt.style.textAlign = 'center';
+        musicPrompt.style.backgroundImage = 'url("images/popup_background.png")';
+        musicPrompt.style.backgroundSize = 'cover';
+        musicPrompt.style.backgroundPosition = 'center';
+        musicPrompt.innerHTML = 'Click anywhere<br>to start the show!';
+        musicPrompt.style.overflow = 'hidden';
+        
+        // No blood drip effects
+        
+        // Create a text container with higher z-index
+        const promptText = document.createElement('div');
+        promptText.innerHTML = musicPrompt.innerHTML;
+        promptText.style.position = 'relative';
+        promptText.style.zIndex = '2';
+        promptText.style.textShadow = '2px 2px 4px rgba(0, 0, 0, 0.8), -2px -2px 4px rgba(0, 0, 0, 0.8), 2px -2px 4px rgba(0, 0, 0, 0.8), -2px 2px 4px rgba(0, 0, 0, 0.8)';
+        
+        // Clear the original innerHTML and append the text element
+        musicPrompt.innerHTML = '';
+        musicPrompt.appendChild(promptText);
+        
+        document.body.appendChild(musicPrompt);
+        
+        // Handle click to start music
+        musicPrompt.addEventListener('click', function() {
+            // Play music
+            bgMusic.play().catch(e => console.warn('Failed to play audio:', e));
+            
+            // Remove prompt
+            if (document.body.contains(musicPrompt)) {
+                document.body.removeChild(musicPrompt);
+            }
+            
+            // Show confirmation
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '10px';
+            notification.style.right = '10px';
+            notification.style.backgroundColor = 'rgba(0,0,0,0.7)';
+            notification.style.color = '#ff0000';
+            notification.style.padding = '5px 10px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '999';
+            notification.innerHTML = '♫ Music started...';
+            document.body.appendChild(notification);
+            
+            // Fade out notification
+            setTimeout(() => {
+                notification.style.transition = 'opacity 1s';
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 1000);
+            }, 2000);
+        });
     }
     
     // Add listener for interactive redacted text
@@ -338,10 +415,10 @@ document.addEventListener('DOMContentLoaded', () => {
 function setupCountdown() {
     const countdownElements = document.querySelectorAll('.countdown-value');
     if (countdownElements.length) {
-        // Random start time
-        let hours = Math.floor(Math.random() * 24);
-        let minutes = Math.floor(Math.random() * 60);
-        let seconds = Math.floor(Math.random() * 60);
+        // Fixed start time: 01:02:03
+        let hours = 1;
+        let minutes = 2;
+        let seconds = 3;
         
         // Update every second
         setInterval(() => {
@@ -354,10 +431,8 @@ function setupCountdown() {
                     minutes = 59;
                     hours--;
                     if (hours < 0) {
-                        // Reset to a new random time when it hits zero
-                        hours = Math.floor(Math.random() * 24);
-                        minutes = Math.floor(Math.random() * 60);
-                        seconds = Math.floor(Math.random() * 60);
+                        // When countdown hits zero, redirect to remnants.html
+                        window.location.href = 'remnants.html';
                         
                         // Special effect when countdown hits zero
                         triggerGlitchEffect(document.body, 1000);
@@ -415,6 +490,74 @@ function activateEasterEgg() {
 function injectHiddenMessage() {
     const comment = document.createComment(' THE CHIMERA PARADOX: When the barrier between realities dissolves. Find the hidden page. 36.4°N 113.9°W THEY WAIT STILL. PASSWORD: chimera_lake ');
     document.body.appendChild(comment);
+}
+
+// Function to handle lever pull in sidebar
+function pullTheLever(element) {
+    playAudio('leverSound', 0.7);
+    triggerGlitchEffect(element, 300);
+    element.classList.add('lever-pulled');
+    
+    // Reset lever after a moment
+    setTimeout(() => {
+        if (element.classList.contains('lever-pulled')) {
+            element.classList.remove('lever-pulled');
+        }
+    }, 2000);
+}
+
+// Function to handle tamagotchi feeding
+function feedTamagotchi() {
+    const tamagotchiImg = document.querySelector('.tamagotchi-ad img');
+    if (tamagotchiImg) {
+        // Change to tamagotchi_2 image
+        tamagotchiImg.src = "images/tamagotchi_2.png";
+        
+        // Play scream sound
+        playAudio('scream', 0.6);
+        
+        // Get the scream audio element to listen for when it ends
+        const screamAudio = document.getElementById('scream');
+        if (screamAudio) {
+            screamAudio.onended = function() {
+                // Change back to original image when scream ends
+                tamagotchiImg.src = "images/tamagotchi_1.png";
+            };
+        } else {
+            // Fallback if audio element can't be found
+            setTimeout(() => {
+                tamagotchiImg.src = "images/tamagotchi_1.png";
+            }, 3000); // Assume scream is about 3 seconds
+        }
+    }
+}
+
+// Function to flash white and play gunshot
+function flashAndShoot() {
+    // Play gunshot sound
+    playAudio('gunshot', 0.8);
+    
+    // Create white flash overlay
+    const flashOverlay = document.createElement('div');
+    flashOverlay.style.position = 'fixed';
+    flashOverlay.style.top = '0';
+    flashOverlay.style.left = '0';
+    flashOverlay.style.width = '100%';
+    flashOverlay.style.height = '100%';
+    flashOverlay.style.backgroundColor = '#ffffff';
+    flashOverlay.style.zIndex = '9999';
+    flashOverlay.style.pointerEvents = 'none';
+    document.body.appendChild(flashOverlay);
+    
+    // Remove flash after 1 seconds
+    setTimeout(() => {
+        if (document.body.contains(flashOverlay)) {
+            document.body.removeChild(flashOverlay);
+        }
+    }, 800);
+    
+    // Trigger page glitch
+    triggerGlitchEffect(document.body, 500);
 }
 
 // Function to handle dripping blood effect

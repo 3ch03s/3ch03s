@@ -678,7 +678,7 @@ main {
     display: block;
 }
 .pixel-art-clickable:hover {
-    background-color: rgba(255, 0, 0, 0.1);
+    background-color: rgba(252, 252, 252, 0.1);
 }
 
 .fake-ad {
@@ -717,8 +717,8 @@ main {
     color: #000;
 }
 .tamagotchi-ad img {
-    width: 40px;
-    height: 40px;
+    width: 150px;
+    height: 150px;
     margin-bottom: 5px;
     image-rendering: pixelated;
 }
@@ -730,14 +730,14 @@ main {
     width: 80px;
     height: 80px;
     margin-bottom: 5px;
-    border: 2px solid #555;
+    border: 0px solid #00000000;
 }
 .hypno-wheel span {
     display: block;
     color: var(--accent-red);
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.9em;
+    font-size: 2.0em;
     animation: pulse 1.5s infinite alternate;
 }
 
@@ -754,7 +754,7 @@ main {
     transition: background-color 0.3s;
 }
 .pull-lever img {
-    width: 60px; /* Adjust size as needed */
+    width: 200px;
     display: block;
     margin: 0 auto 5px auto;
     transition: transform 0.1s ease-in-out;

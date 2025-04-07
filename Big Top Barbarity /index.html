@@ -45,7 +45,7 @@
             <!-- Fake Ad: Chainsaw Oil -->
             <div class="sidebar-section fake-ad">
                 <div class="ad-title">Barlow's Best©</div>
-                <img src="images/blood_drip.gif" alt="Dripping blood" style="float:right; width: 20px; margin-left: 5px;">
+                <img src="images/blood_drip.gif" alt="Dripping blood" style="float:right; width: 200px; height: 200px; margin-left: 5px;">
                 <p>Chainsaw Oil! EXTRA Viscosity!</p>
                 <a href="#" onclick="alert('ERROR 404: Soul not found. Required for purchase.'); return false;">ORDER NOW!</a>
             </div>
@@ -62,7 +62,7 @@
 
              <!-- Hypno Wheel -->
             <div class="sidebar-section hypno-wheel">
-                 <img src="images/hypno_wheel.gif" alt="Hypnotic wheel" title="Look deep into the void...">
+                 <img src="images/hypno_wheel.gif" alt="Hypnotic wheel" style="float:right; width: 200px; height: 200px; margin-left: 5px;">
                  <span>OBEY BARLOW</span>
             </div>
 
@@ -73,9 +73,9 @@
 
             <!-- Fake Ad: Haunted Tamagotchi -->
             <div class="sidebar-section fake-ad tamagotchi-ad">
-                 <img src="images/tamagotchi.gif" alt="Haunted Tamagotchi">
+                 <img src="images/tamagotchi_1.png" alt="Haunted Tamagotchi">
                  <p>Feed it SCREAMS!</p>
-                 <a href="#" onclick="playAudio('scream', 0.6); return false;">TRY FEEDING!</a>
+                 <a href="#" onclick="feedTamagotchi(); return false;">TRY FEEDING!</a>
             </div>
 
             <!-- Guestbook -->
@@ -115,7 +115,7 @@
             <div class="sidebar-section fake-ad">
                  <img src="images/skull_icon.gif" alt="Skull Icon" style="width: 30px; float: left; margin-right: 5px;">
                  <p>FREE Geocities Grave Plot!</p>
-                 <a href="http://www.geocities.ws/404/" target="_blank">CLAIM YOURS!</a> <!-- Link to a real Geocities archive 404 -->
+                 <a href="#" onclick="flashAndShoot(); return false;">CLAIM YOURS!</a>
             </div>
 
             <!-- Morse Light -->
@@ -162,7 +162,7 @@
             </div>
 
             <p>
-                We're the digital ghost of the infamous <strong style="color: var(--primary-red);">Crimson Smile Carnival</strong>, run by the loving, laughing, and LETHAL Barlow family. They toured the forgotten highways of America in the 1960s, leaving behind a trail of sawdust, screams, and... well, let's just say the cleanup crews needed strong stomachs.
+                INTRODUCING, the one and only, <strong style="color: var(--primary-red);">Crimson Carnival</strong>, run by the loving, laughing, and LETHAL Barlow family. They toured the forgotten highways of America in the 1960s, leaving behind a trail of sawdust, screams, and... well, let's just say the cleanup crews needed strong stomachs.
             </p>
             <p>
                 This here website? It's a monument! A museum! A mess! Dug up from corrupted hard drives and dusty evidence lockers. It tells their story... or what fragments remain.
@@ -171,11 +171,11 @@
             <!-- New polaroid section -->
             <div style="text-align: center; margin: 25px auto;">
                 <div class="polaroid" style="transform: rotate(-5deg);">
-                    <img src="images/ferris_wheel.jpg" alt="Abandoned Ferris wheel">
+                    <img src="images/fun_house.png" alt="Abandoned Fun House">
                     <p class="polaroid-caption">Last setup site - Is that a face in the shadows?</p>
                 </div>
                 <div class="polaroid" style="transform: rotate(3deg);">
-                    <img src="images/bloody_tent.jpg" alt="Stained circus tent">
+                    <img src="images/bloody_tent.png" alt="Stained circus tent">
                     <p class="polaroid-caption">Back of big top - stain wouldn't wash out</p>
                 </div>
             </div>
@@ -235,6 +235,7 @@
     <audio id="laughSound" src="audio/creepy_laugh.mp3" preload="auto"></audio>
     <audio id="scream" src="audio/scream.mp3" preload="auto"></audio>
     <audio id="leverSound" src="audio/lever_sound.mp3" preload="auto"></audio>
+    <audio id="gunshot" src="audio/gunshot.mp3" preload="auto"></audio>
 
 
     <script src="script.js"></script>
