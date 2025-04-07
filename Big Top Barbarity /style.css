@@ -665,8 +665,8 @@ main {
     transition: background-color 0.2s;
 }
 .pixel-art-clickable img {
-    width: 50px;
-    height: 50px;
+    width: 120px;
+    height: 120px;
     display: block;
     margin: 0 auto 5px auto;
     image-rendering: pixelated; /* Keep it blocky */
