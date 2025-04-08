@@ -8,6 +8,8 @@
     <!-- Some roots grow best in poisoned soil -->
     <meta name="keywords" content="barlow family, carnival history, clown murders, chimera project, circus killers">
     <meta name="description" content="The dark and bloody history of America's most infamous carnival family">
+    <!-- Add Creepster font for the guestbook -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body class="page-history"> <!-- Add body class for specific styling if needed -->
     <div id="wrapper">
@@ -46,7 +48,7 @@
             <!-- Fake Ad: Chainsaw Oil -->
             <div class="sidebar-section fake-ad">
                 <div class="ad-title">Barlow's Best©</div>
-                <img src="images/blood_drip.gif" alt="Dripping blood" style="float:right; width: 20px; margin-left: 5px;">
+                <img src="images/blood_drip.gif" alt="Dripping blood" style="float:right; width: 160px; height: 160px; margin-left: 5px;">
                 <p>Chainsaw Oil! EXTRA Viscosity!</p>
                 <a href="#" onclick="alert('ERROR 404: Soul not found. Required for purchase.'); return false;">ORDER NOW!</a>
             </div>
@@ -63,7 +65,7 @@
 
              <!-- Hypno Wheel -->
             <div class="sidebar-section hypno-wheel">
-                 <img src="images/hypno_wheel.gif" alt="Hypnotic wheel" title="Look deep into the void...">
+                 <img src="images/hypno_wheel.gif" alt="Hypnotic wheel" style="float:right; width: 200px; height: 200px; margin-left: 5px;" title="Look deep into the void...">
                  <span>OBEY BARLOW</span>
             </div>
 
@@ -74,9 +76,9 @@
 
             <!-- Fake Ad: Haunted Tamagotchi -->
             <div class="sidebar-section fake-ad tamagotchi-ad">
-                 <img src="images/tamagotchi.gif" alt="Haunted Tamagotchi">
+                 <img src="images/tamagotchi_1.png" alt="Haunted Tamagotchi">
                  <p>Feed it SCREAMS!</p>
-                 <a href="#" onclick="playAudio('scream', 0.6); return false;">TRY FEEDING!</a>
+                 <a href="#" onclick="feedTamagotchi(); return false;">TRY FEEDING!</a>
             </div>
 
             <!-- Guestbook -->
@@ -114,9 +116,9 @@
 
              <!-- Fake Ad: Geocities Grave Plot -->
             <div class="sidebar-section fake-ad">
-                 <img src="images/skull_icon.gif" alt="Skull Icon" style="width: 30px; float: left; margin-right: 5px;">
-                 <p>FREE Geocities Grave Plot!</p>
-                 <a href="http://www.geocities.ws/404/" target="_blank">CLAIM YOURS!</a> <!-- Link to a real Geocities archive 404 -->
+                 <img src="images/grave.png" alt="Skull Icon" style="width: 120px; height: 120px; float: left; margin-right: 5px;">
+                 <p>FREE Grave Plot! Claim Yours Today!</p>
+                 <a href="#" onclick="flashAndShoot(); return false;">CLAIM YOURS!</a>
             </div>
 
             <!-- Morse Light -->
@@ -297,7 +299,31 @@ I'm scared. Not of what we've done. Of what we're <span class="interactive-text"
     <audio id="laughSound" src="audio/creepy_laugh.mp3" preload="auto"></audio>
     <audio id="scream" src="audio/scream.mp3" preload="auto"></audio> <!-- Added Scream -->
     <audio id="leverSound" src="audio/lever_sound.mp3" preload="auto"></audio> <!-- Added Lever Sound -->
+    <audio id="gunshot" src="audio/gunshot.mp3" preload="auto"></audio> <!-- Added Gunshot Sound -->
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- Firebase configuration -->
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAp4NwFh8ZOjz7Vsf04f1Itpc1-ldlfJQs",
+            authDomain: "my-echoes-comments.firebaseapp.com",
+            databaseURL: "https://my-echoes-comments-default-rtdb.firebaseio.com",
+            projectId: "my-echoes-comments",
+            storageBucket: "my-echoes-comments.appspot.com",
+            messagingSenderId: "982885374483",
+            appId: "1:982885374483:web:bb32d7ff664257bce1fde6"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    
     <script src="script.js"></script>
+    <script src="guestbook.js"></script>
     <script>
         // Additional script for history page
         console.log("%cPSYCHOMETRIC EVALUATION: BARLOW FAMILY", "color: #00ff00; font-weight: bold;");

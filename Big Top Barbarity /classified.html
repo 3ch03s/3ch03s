@@ -8,6 +8,8 @@
     <!-- // TRANSMISSION INTERFERENCE DETECTED // DATA CORRUPTION IMMINENT // -->
     <meta name="keywords" content="classified, chimera project, government conspiracy, eyes only">
     <meta name="robots" content="noindex,nofollow">
+    <!-- Add Creepster font for the guestbook -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
 </head>
 <body class="page-classified shake-effect"> <!-- Constant subtle shake -->
     <div id="wrapper" style="border-color: var(--glitch-green);"> <!-- Different border color -->
@@ -28,13 +30,12 @@
             </ul>
         </nav>
 
-        <!-- Moved sidebar BEFORE main content for proper left positioning -->
-        <!-- *** ENHANCED Quirky 90s Sidebar - Classified Override Style *** -->
+        <!-- Keeping the modified sidebar for the classified page since it's supposed to look different -->
         <aside class="sidebar" style="border-color: var(--glitch-green); background-color: rgba(0,30,0,0.7);">
             <div class="sidebar-header" style="color: var(--glitch-green);">Terminal Access Feed</div> <!-- Adjusted Header -->
 
             <!-- Pixel Clown -->
-            <div class="sidebar-section pixel-art-clickable" onclick="playAudio('laughSound', 0.8); triggerGlitchEffect(this, 200);" title="Unauthorized Interaction!">
+            <div class="sidebar-section pixel-art-clickable" onclick="playAudio('staticSound', 0.7); triggerGlitchEffect(this, 400);" title="Unauthorized Interaction!">
                  <img src="images/pixel_clown.gif" alt="Glitching pixelated clown head" style="filter: hue-rotate(90deg);"> <!-- Green tint -->
                  <span>DATA CORRUPTION</span>
             </div>
@@ -81,10 +82,10 @@
                  <a href="#" onclick="playAudio('staticSound', 0.9); alert('Data Packet Consumed.'); return false;" style="background-color: var(--glitch-blue); color: white; border: 1px solid white;">UPLOAD DATA</a>
             </div>
 
-            <!-- Guestbook - Disabled/Corrupted -->
+            <!-- Guestbook - Modified to open the guestbook -->
             <div class="sidebar-section guestbook">
                 <div style="color: var(--glitch-green); text-decoration: line-through;">SIGN LOG</div>
-                <a href="#" class="interactive-text" style="background-color: #333; color: #777; cursor: not-allowed; border-color: #555;" onclick="return false;">LOG ACCESS REVOKED</a>
+                <a href="#" class="interactive-text" style="background-color: #333; color: #777; border-color: #555;" onclick="openGuestBook(); return false;">LOG ACCESS REVOKED</a>
                 <p id="guestbookSecret" class="hidden detail">Log corrupted. Identity compromised.</p> <!-- Keep hidden p tag -->
             </div>
 
@@ -273,15 +274,40 @@
             <!-- HTML comment: 36.4°N 113.9°W - CHIMERA LAKE - DO NOT APPROACH - ACTIVE ZONE - THEY WAIT STILL -->
         </footer>
     </div>
+    
     <!-- Audio Elements -->
     <audio id="bgMusic" src="audio/murder_music.mp3" preload="auto" loop></audio>
     <audio id="staticSound" src="audio/static_burst.mp3" preload="auto"></audio>
     <audio id="laughSound" src="audio/creepy_laugh.mp3" preload="auto"></audio>
     <audio id="scream" src="audio/scream.mp3" preload="auto"></audio> <!-- Scream needed for countdown -->
     <audio id="leverSound" src="audio/lever_sound.mp3" preload="auto"></audio> <!-- Lever sound needed -->
-    <script src="script.js"></script>
+    <audio id="gunshot" src="audio/gunshot.mp3" preload="auto"></audio> <!-- Added Gunshot Sound -->
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- Firebase configuration -->
     <script>
-        // Special functionality for classified page (Keep existing script block)
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAp4NwFh8ZOjz7Vsf04f1Itpc1-ldlfJQs",
+            authDomain: "my-echoes-comments.firebaseapp.com",
+            databaseURL: "https://my-echoes-comments-default-rtdb.firebaseio.com",
+            projectId: "my-echoes-comments",
+            storageBucket: "my-echoes-comments.appspot.com",
+            messagingSenderId: "982885374483",
+            appId: "1:982885374483:web:bb32d7ff664257bce1fde6"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    
+    <script src="script.js"></script>
+    <script src="guestbook.js"></script>
+    <script>
+        // Special functionality for classified page
         document.addEventListener('DOMContentLoaded', function() {
             // Secret login flow
             document.querySelectorAll('#loginSecret').forEach(element => {
@@ -308,33 +334,9 @@
             console.log("%cPROJECT CHIMERA FAILSAFE: 76 61 6d 70 69 72 65", "color: #00ff00;"); // Hex for 'vampire'
             console.log("%cAccess archive: 63 68 69 6d 65 72 61 5f 61 64 6d 69 6e", "color: #00ff00;"); // Hex for 'chimera_admin'
             console.log("%cPassword hint: The lake where they disappeared", "color: #ff0000;");
-
-            // Make the classified page sidebar elements less interactive or corrupted
-            const classifiedSidebar = document.querySelector('.sidebar');
-            if (classifiedSidebar) {
-                // Disable rating stars
-                classifiedSidebar.querySelectorAll('.rate-nightmare .star').forEach(star => {
-                    star.onclick = null; // Remove onclick handler
-                    star.style.cursor = 'default';
-                });
-                // Disable pull lever visually (already done via style, but ensure no JS action)
-                const lever = classifiedSidebar.querySelector('.pull-lever');
-                if(lever) lever.onclick = null;
-                 // Make tamagotchi 'feed' different
-                const tamagotchiLink = classifiedSidebar.querySelector('.tamagotchi-ad a');
-                if(tamagotchiLink) tamagotchiLink.onclick = function() { playAudio('staticSound', 0.9); alert('Data Packet Consumed.'); return false; };
-                // Change pixel clown interaction
-                const pixelClown = classifiedSidebar.querySelector('.pixel-art-clickable');
-                if(pixelClown) pixelClown.onclick = function() { playAudio('staticSound', 0.7); triggerGlitchEffect(this, 400); };
-            }
         });
 
-        // Ensure revealFinalSecret function is defined (it might be defined in script.js)
-        // If not defined in script.js or loaded after this script, define it here.
-        // Assuming it's defined globally by script.js load.
-
-        // If revealFinalSecret *isn't* in the main script.js, uncomment and use this:
-        /*
+        // Ensure revealFinalSecret function is defined
         function revealFinalSecret() {
             const finalSecret = document.getElementById('finalSecret');
             const hiddenTerminal = document.getElementById('hiddenTerminal');
@@ -374,7 +376,7 @@
 
 
             // Disable the button after click
-            const button = event ? event.target : document.querySelector('button[onclick^="revealFinalSecret"]'); // Find button if event is not passed
+            const button = event.target;
             if(button) {
                  button.disabled = true;
                  button.textContent = "TRUTH REVEALED";
@@ -382,13 +384,6 @@
                  button.style.cursor = 'not-allowed';
             }
         }
-        */
-
-         // If triggerGlitchEffect or playAudio aren't global, define basic versions:
-         /*
-         function triggerGlitchEffect(el, dur) { console.log('Glitch effect triggered'); }
-         function playAudio(id, vol) { console.log('Audio play attempted:', id); }
-         */
     </script>
 </body>
 </html>

@@ -593,6 +593,56 @@ function createBloodDrip(element) {
     }, 50);
 }
 
+// Function to rate nightmare
+function rateNightmare(stars) {
+    const ratingResponse = document.getElementById('ratingResponse');
+    if (ratingResponse) {
+        ratingResponse.classList.remove('hidden');
+        
+        // Highlight the stars
+        for (let i = 1; i <= 5; i++) {
+            const star = document.querySelector(`.star:nth-child(${i + 1})`);
+            if (star) {
+                if (i <= stars) {
+                    star.style.color = '#ffcc00'; // Gold for selected stars
+                    star.style.textShadow = '0 0 5px #ffcc00';
+                } else {
+                    star.style.color = '#555'; // Dim for unselected stars
+                    star.style.textShadow = 'none';
+                }
+            }
+        }
+        
+        // Set response message based on rating
+        let message = '';
+        switch (stars) {
+            case 1:
+                message = "Only one star? You'll learn to appreciate true horror...";
+                break;
+            case 2:
+                message = "Just warming up. The nightmare intensifies...";
+                break;
+            case 3:
+                message = "The Barlows appreciate your feedback. They'll visit soon.";
+                break;
+            case 4:
+                message = "Excellent! You're almost one of the family now.";
+                break;
+            case 5:
+                message = "PERFECT! You've been added to the special guest list!";
+                break;
+        }
+        
+        ratingResponse.innerHTML = message;
+        
+        // Play spooky sound
+        playAudio('laughSound', 0.3);
+        
+        // Trigger glitch effect
+        triggerGlitchEffect(document.querySelector('.rate-nightmare'), 300);
+    }
+}
+
 // Maybe occasional blood drips on horror elements
 setInterval(() => {
     if (Math.random() > 0.9) { // 10% chance

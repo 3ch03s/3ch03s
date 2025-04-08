@@ -11,6 +11,7 @@
     --text-dim: #777; /* Dim grey */
     --glitch-green: #00ff00;
     --glitch-blue: #0000ff;
+    --glitch-red: #ff0000;
 }
 
 body {
@@ -1341,4 +1342,11 @@ button:active {
     0%, 100% { transform: translate(0, 0) rotate(0); }
     10% { transform: translate(-5px, -5px) rotate(-2deg); }
     20% { transform: translate(5px, 3px) rotate(2deg); }
-    30% { transform: translate(-5px, 5px) rotate(-1d
+    30% { transform: translate(-5px, 5px) rotate(-1deg); }
+    40% { transform: translate(5px, -3px) rotate(1deg); }
+    50% { transform: translate(-5px, 2px) rotate(-1deg); }
+    60% { transform: translate(3px, 5px) rotate(0deg); }
+    70% { transform: translate(-3px, -5px) rotate(2deg); }
+    80% { transform: translate(5px, 2px) rotate(-2deg); }
+    90% { transform: translate(-5px, -2px) rotate(2deg); }
+}
