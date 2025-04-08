@@ -10,6 +10,161 @@
     <meta name="description" content="Evidence and case files from the infamous Barlow family killing spree">
     <!-- Add Creepster font for the guestbook -->
     <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        /* Retain some of the new murder page styling while keeping original structure */
+        .case-file {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-left: 5px solid #800000;
+            margin-bottom: 30px;
+            padding: 20px;
+            transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .case-file:hover {
+            transform: translateX(5px);
+        }
+        
+        .case-location {
+            font-family: 'Special Elite', cursive;
+            color: #ff0000;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #800000;
+            padding-bottom: 5px;
+        }
+        
+        .usa-map {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background-color: #000;
+            margin: 40px 0;
+            overflow: hidden;
+            border: 3px solid #800000;
+        }
+        
+        .map-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff0000;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+        
+        .map-marker:hover {
+            width: 25px;
+            height: 25px;
+            box-shadow: 0 0 15px #ff0000, 0 0 30px #ff0000;
+        }
+        
+        .map-marker::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            width: 2px;
+            height: 0;
+            background-color: #ff0000;
+            transform: translateX(-50%);
+            transition: height 0.5s;
+        }
+        
+        .map-marker:hover::after {
+            height: 100px;
+        }
+        
+        .marker-info {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.95);
+            color: #fff;
+            padding: 20px;
+            font-family: monospace;
+            border: 2px solid #800000;
+            display: none;
+            z-index: 100;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(128, 0, 0, 0.7);
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: #800000;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+        
+        .close-btn:hover {
+            background-color: #ff0000;
+            transform: scale(1.1);
+        }
+        
+        .victim-counter {
+            font-family: monospace;
+            font-size: 1.5em;
+            color: #ff0000;
+            text-align: center;
+            margin: 30px 0;
+            text-shadow: 0 0 5px #800000;
+        }
+        
+        .blood-trail {
+            position: absolute;
+            height: 5px;
+            background-color: #800000;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+        
+        .folder-tab {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background-color: #800000;
+            color: #fff;
+            padding: 5px 15px;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        
+        /* Fix layout with proper float and margin */
+        .sidebar {
+            float: left;
+            width: 190px;
+            margin-right: 25px;
+            min-height: 600px;
+        }
+        
+        main {
+            margin-left: 230px;
+            overflow: hidden;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
 </head>
 <body class="page-murders">
     <div id="wrapper">
@@ -142,30 +297,71 @@
 
         <main>
             <!-- Added interactive map -->
-            <div class="map-container" style="height: 180px; background-image: url('images/usa_map.jpg'); background-size: contain; background-position: center; background-repeat: no-repeat;">
-                <div class="map-title">TRAIL OF TERROR - 1962-1968</div>
-                <!-- Map pins for different crime locations -->
-                <div class="map-pin" style="top: 120px; left: 180px;" title="Arizona, 1964" onclick="showDetail('caseAZ')"></div>
-                <div class="map-pin" style="top: 90px; left: 280px;" title="Kansas, 1967" onclick="showDetail('caseKS')"></div>
-                <div class="map-pin" style="top: 60px; left: 100px;" title="Nevada, 1963" onclick="showDetail('caseNV')"></div>
-                <div class="map-pin" style="top: 110px; left: 330px;" title="Kentucky, 1965" onclick="showDetail('caseKY')"></div>
-                <div class="map-pin" style="top: 75px; left: 130px;" title="Utah, 1968" onclick="showDetail('caseUT')"></div>
-                <div class="blood-drop" style="top: 125px; left: 185px;"></div>
-                <div class="blood-drop" style="top: 95px; left: 285px;"></div>
-                <div class="blood-drop" style="top: 65px; left: 105px;"></div>
+            <div class="usa-map">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Map_of_USA_with_state_names.svg" alt="USA Map" style="width: 100%; height: 100%; object-fit: contain; filter: invert(1) sepia(1) hue-rotate(320deg) saturate(3) brightness(0.7);">
+                
+                <!-- Arizona -->
+                <div class="map-marker" id="arizona-marker" style="top: 65%; left: 28%;"></div>
+                
+                <!-- Kansas -->
+                <div class="map-marker" id="kansas-marker" style="top: 48%; left: 45%;"></div>
+                
+                <!-- Nevada -->
+                <div class="map-marker" id="nevada-marker" style="top: 52%; left: 26%;"></div>
+                
+                <!-- Kentucky -->
+                <div class="map-marker" id="kentucky-marker" style="top: 53%; left: 62%;"></div>
+                
+                <!-- Utah -->
+                <div class="map-marker" id="utah-marker" style="top: 48%; left: 32%;"></div>
+                
+                <div id="arizona-info" class="marker-info">
+                    <span class="close-btn" onclick="hideMarkerInfo(this)">X</span>
+                    <h3>ARIZONA, 1964: THE "PAINTED GRIN" KILLINGS</h3>
+                    <p>Two hikers murdered near Benson. Bodies displayed with theatrical makeup. First confirmed Barlow signature killings.</p>
+                </div>
+                
+                <div id="kansas-info" class="marker-info">
+                    <span class="close-btn" onclick="hideMarkerInfo(this)">X</span>
+                    <h3>KANSAS, 1967: THE "SILENT AUDIENCE" INCIDENT</h3>
+                    <p>State Trooper Unit 4 disappeared while investigating carnival. Final transmission mentioned "smiling entities" before screams and silence.</p>
+                </div>
+                
+                <div id="nevada-info" class="marker-info">
+                    <span class="close-btn" onclick="hideMarkerInfo(this)">X</span>
+                    <h3>NEVADA, 1963: THE "SEARCHLIGHT INCIDENT"</h3>
+                    <p>Three locals vanished after carnival visit. Military personnel observed on site the following day. Area "sanitized."</p>
+                </div>
+                
+                <div id="kentucky-info" class="marker-info">
+                    <span class="close-btn" onclick="hideMarkerInfo(this)">X</span>
+                    <h3>KENTUCKY, 1965: THE "HARVEST MOON MASSACRE"</h3>
+                    <p>Family of five found arranged in carnival seating formation. Bodies showed signs of "theatrical modification." Youngest child missing.</p>
+                </div>
+                
+                <div id="utah-info" class="marker-info">
+                    <span class="close-btn" onclick="hideMarkerInfo(this)">X</span>
+                    <h3>UTAH, 1968: THE "CHIMERA LAKE INCIDENT"</h3>
+                    <p>Final known location. Three search parties went missing. Military quarantine under guise of "chemical spill." Site remains restricted.</p>
+                </div>
+                
+                <div class="blood-trail" style="top: 30px;"></div>
+                <div class="blood-trail" style="bottom: 30px;"></div>
             </div>
-            <p id="caseAZ" class="hidden detail">Arizona, 1964: The "Painted Grin" killings. Two hikers murdered and "decorated" near Benson.</p>
-            <p id="caseKS" class="hidden detail">Kansas, 1967: The "Silent Audience" incident. State Trooper Unit 4 disappeared investigating carnival. Recording of final transmission mentions "smiling" entities.</p>
-            <p id="caseNV" class="hidden detail">Nevada, 1963: The "Searchlight Incident" - Three locals went missing after attending the carnival. Military personnel observed on site the following day.</p>
-            <p id="caseKY" class="hidden detail">Kentucky, 1965: The "Harvest Moon Massacre" - Family of five found arranged in carnival seating formation. Bodies showed signs of "theatrical modification."</p>
-            <p id="caseUT" class="hidden detail">Utah, 1968: The "Chimera Lake Incident" - Final known location. Three search parties went missing. Area remains quarantined under guise of "chemical spill."</p>
 
-            <h2>Case Files: The Barlow Bloodbath</h2>
+            <div class="victim-counter">
+                <span style="font-size: 2.0em; animation: flicker 2s infinite;">CONFIRMED VICTIMS: </span><span style="font-size: 2.0em; animation: flicker 2s infinite;">47</span>
+                <span style="font-size: 1.5em; color: #aaa; display: block;">ESTIMATED TOTAL: 100+</span>
+            </div>
+
+            <h2 <span style="text-align: center;"></span>Case Files: The Barlow Bloodbath</h2>
             <p>Authorities across a dozen states linked the Barlow family's carnival to disappearances and grotesque discoveries between 1962 and 1968. Here are just a few recovered fragments...</p>
 
             <!-- CASE FILE 1 -->
             <section class="case-file">
+                <div class="folder-tab">CASE #AZ-07B-64</div>
                 <h3>Case #AZ-07B-64 - "The Painted Grin" - Sonora Desert, AZ</h3>
+                <div class="case-location">SONORA DESERT, ARIZONA - OCTOBER 1964</div>
                 <span class="evidence-tag">Newspaper</span><span class="evidence-tag">Police Report</span>
 
                 <article class="newspaper-clipping">
@@ -202,7 +398,9 @@
 
             <!-- CASE FILE 2 -->
             <section class="case-file">
+                <div class="folder-tab">CASE #KS-11A-67</div>
                 <h3>Case #KS-11A-67 - "The Silent Audience" - Rural Kansas</h3>
+                <div class="case-location">WASHBURN COUNTY, KANSAS - NOVEMBER 1967</div>
                 <span class="evidence-tag">Witness Testimony</span><span class="evidence-tag">Lost Media (Audio)</span>
 
                 <article class="witness-testimony">
@@ -222,25 +420,27 @@
                 <div class="evidence-container">
                     <div class="evidence-label">PARTIAL TRANSCRIPT - UNIT 4 FINAL TRANSMISSION</div>
                     <div style="background-color: #000; padding: 15px; font-family: monospace; color: #33ff33; font-size: 0.9em; line-height: 1.4;">
-                        <p><static></p>
+                        <p>&lt;static&gt;</p>
                         <p>DISPATCH: Unit 4, please report status.</p>
-                        <p>UNIT 4: ...found the carnival trailers abandoned about two miles off Route 40. No personnel visible but <static> still warm. Smells like cotton candy and something... metallic.</p>
+                        <p>UNIT 4: ...found the carnival trailers abandoned about two miles off Route 40. No personnel visible but &lt;static&gt; still warm. Smells like cotton candy and something... metallic.</p>
                         <p>DISPATCH: Roger, Unit 4. Any sign of the missing persons?</p>
                         <p>UNIT 4: Negative, but there's... wait. There's movement in the big tent. Going to investigate.</p>
-                        <p><footsteps, radio crackle></p>
-                        <p>UNIT 4: <whispering> Dispatch, there's... there's some kind of performance happening. I can see... four figures on a small stage. They're not moving right. Something's wrong with their <static></p>
+                        <p>&lt;footsteps, radio crackle&gt;</p>
+                        <p>UNIT 4: &lt;whispering&gt; Dispatch, there's... there's some kind of performance happening. I can see... four figures on a small stage. They're not moving right. Something's wrong with their &lt;static&gt;</p>
                         <p>DISPATCH: Unit 4, please repeat. Are you in danger?</p>
                         <p>UNIT 4: They're wearing clown makeup but it's... Jesus Christ, it's moving on its own. The little girl just saw me. Her face is... oh God, it's coming off. There's something underneath, it's...</p>
-                        <p><wet clicking sounds></p>
-                        <p>UNIT 4: <struggling> It's smiling at me...</p>
-                        <p><scream, static, transmission ends></p>
+                        <p>&lt;wet clicking sounds&gt;</p>
+                        <p>UNIT 4: &lt;struggling&gt; It's smiling at me...</p>
+                        <p>&lt;scream, static, transmission ends&gt;</p>
                     </div>
                 </div>
             </section>
 
             <!-- NEW CASE FILE -->
             <section class="case-file">
+                <div class="folder-tab">CASE #KY-23C-65</div>
                 <h3>Case #KY-23C-65 - "The Harvest Show" - Millfield, KY</h3>
+                <div class="case-location">MILLFIELD, KENTUCKY - SEPTEMBER 1965</div>
                 <span class="evidence-tag">Newspaper</span><span class="evidence-tag">FBI Notes</span>
 
                 <article class="newspaper-clipping">
@@ -268,7 +468,9 @@
 
             <!-- FINAL CASE FILE -->
             <section class="case-file">
+                <div class="folder-tab">CASE #UT-19F-68</div>
                 <h3>Case #UT-19F-68 - "The Chimera Lake Incident" - FINAL SIGHTING</h3>
+                <div class="case-location">CHIMERA LAKE, UTAH - NOVEMBER 1968</div>
                 <span class="evidence-tag">Search Report</span><span class="evidence-tag">Military Action</span>
 
                 <div class="cryptic-journal">
@@ -365,7 +567,73 @@
                     drop.style.animation = "drip 3s forwards";
                 });
             }, 2000);
+            
+            // Play background music
+            document.getElementById('bgMusic').volume = 0.3;
+            document.getElementById('bgMusic').play();
+            
+            // Animate blood trails
+            animateBloodTrails();
         });
+        
+        // Initialize the map marker click events
+        window.addEventListener('load', function() {
+            // Set up each marker to show its associated info box
+            document.getElementById('arizona-marker').addEventListener('click', function() {
+                showMarkerInfo('arizona-info');
+            });
+            
+            document.getElementById('kansas-marker').addEventListener('click', function() {
+                showMarkerInfo('kansas-info');
+            });
+            
+            document.getElementById('nevada-marker').addEventListener('click', function() {
+                showMarkerInfo('nevada-info');
+            });
+            
+            document.getElementById('kentucky-marker').addEventListener('click', function() {
+                showMarkerInfo('kentucky-info');
+            });
+            
+            document.getElementById('utah-marker').addEventListener('click', function() {
+                showMarkerInfo('utah-info');
+            });
+        });
+        
+        // Show marker info function
+        function showMarkerInfo(infoId) {
+            // Hide all marker infos first
+            document.querySelectorAll('.marker-info').forEach(info => {
+                info.style.display = 'none';
+            });
+            
+            // Show the selected one
+            document.getElementById(infoId).style.display = 'block';
+        }
+        
+        // Hide marker info function
+        function hideMarkerInfo(closeBtn) {
+            // Find the parent marker-info and hide it
+            const markerInfo = closeBtn.parentElement;
+            markerInfo.style.display = 'none';
+        }
+        
+        // Animate blood trails
+        function animateBloodTrails() {
+            const bloodTrails = document.querySelectorAll('.blood-trail');
+            
+            bloodTrails.forEach(trail => {
+                let width = 0;
+                const interval = setInterval(() => {
+                    width += 1;
+                    trail.style.width = width + '%';
+                    
+                    if (width >= 100) {
+                        clearInterval(interval);
+                    }
+                }, 50);
+            });
+        }
     </script>
 </body>
 </html>

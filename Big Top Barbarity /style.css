@@ -67,6 +67,37 @@ hr.section-divider {
     padding: 15px;
     margin-bottom: 20px;
 }
+
+/* Security cam styling - ensure it has higher z-index */
+.security-cam {
+    position: relative;
+    z-index: 10; /* Increased z-index to make it appear on top */
+    float: right;
+    width: 200px;
+    margin-left: 15px;
+    background-color: #000;
+    border: 3px solid #333;
+    padding: 10px;
+}
+
+/* Military record - ensure it has lower z-index than security cam */
+.evidence-container {
+    position: relative;
+    margin: 30px 0;
+    z-index: 5; /* Lower z-index than the security cam */
+}
+
+/* For the specific case on the history page */
+.family-bio .security-cam {
+    z-index: 20; /* Even higher z-index for this specific case */
+}
+
+/* Ensure that the military record in Papa Mordecai's section stays behind */
+.family-bio .evidence-container {
+    z-index: 1; /* Very low z-index to ensure it stays behind */
+    position: relative;
+}
+
 .family-bio strong { color: var(--accent-gore); }
 .diary-entry {
     font-family: 'Courier New', Courier, monospace; /* Change if using a cursive font file */
@@ -721,7 +752,7 @@ main {
 }
 .fake-webcam img {
     width: 100%;
-    height: 80px; /* Adjust height */
+    height: 165px; 
     object-fit: cover;
     display: block;
     background-color: #111; /* Fallback */
@@ -1054,6 +1085,155 @@ main {
     transform-origin: top;
 }
 
+/* Timeline container styles */
+.timeline-container {
+    height: auto;
+    margin: 60px 0 40px 0;
+    position: relative;
+    padding-bottom: 40px;
+    background-color: rgba(0,0,0,0.3);
+    border: 2px solid var(--primary-red);
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+.timeline-title {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000;
+    color: var(--accent-gore);
+    padding: 5px 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border: 1px solid var(--primary-red);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    z-index: 2;
+}
+
+.timeline-track {
+    width: 90%;
+    height: 4px;
+    background: linear-gradient(to right, #990000, #ff0000, #660000);
+    margin: 100px auto 50px auto;
+    position: relative;
+    box-shadow: 0 0 10px rgba(255,0,0,0.3);
+}
+
+.timeline-event {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.3s, filter 0.3s;
+    z-index: 3;
+}
+
+.timeline-event:hover {
+    transform: scale(1.2);
+    filter: brightness(1.3);
+    z-index: 5;
+}
+
+.timeline-icon {
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 5px rgba(255,0,0,0.7));
+}
+
+.timeline-year {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent-gore);
+    font-weight: bold;
+    font-size: 1.2em;
+    text-shadow: 0 0 5px #000;
+    white-space: nowrap;
+}
+
+.timeline-connector {
+    position: absolute;
+    bottom: 38px;
+    left: 50%;
+    width: 2px;
+    height: 30px;
+    background-color: var(--accent-red);
+    z-index: 1;
+}
+
+.timeline-detail {
+    position: relative;
+    max-width: 80%;
+    margin: 30px auto;
+    padding: 15px;
+    background-color: rgba(10,0,0,0.7);
+    border: 1px solid var(--primary-red);
+    color: var(--text-light);
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+.detail-year {
+    position: absolute;
+    top: -12px;
+    left: 15px;
+    background-color: var(--primary-dark);
+    padding: 2px 10px;
+    font-weight: bold;
+    color: var(--accent-gore);
+    border: 1px solid var(--accent-red);
+}
+
+.timeline-blood-drip {
+    position: absolute;
+    width: 2px;
+    background-color: var(--accent-red);
+    top: 0;
+    animation: bloodDrip 10s infinite;
+    z-index: 1;
+    box-shadow: 0 0 3px rgba(255,0,0,0.5);
+}
+
+/* Veins connecting timeline events */
+.timeline-vein {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(to right, var(--accent-red), var(--primary-red));
+    top: 50%;
+    z-index: 1;
+}
+
+/* Pulse animation for active timeline element */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.timeline-active {
+    animation: pulse 2s infinite;
+    filter: brightness(1.5);
+    z-index: 5;
+}
+
+/* Blood drip animation */
+@keyframes bloodDrip {
+    0% { height: 0; opacity: 0.9; }
+    70% { height: 30px; opacity: 0.9; }
+    100% { height: 30px; opacity: 0; }
+}
+
+/* Fade in animation for details */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .late-night-header h1 {
@@ -1082,6 +1262,26 @@ main {
     .main-nav a {
         font-size: 1.1em;
         padding: 3px 8px;
+    }
+    
+    .timeline-track {
+        width: 95%;
+        margin: 80px auto 40px auto;
+    }
+    
+    .timeline-year {
+        font-size: 0.9em;
+        top: -30px;
+    }
+    
+    .timeline-icon {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .timeline-detail {
+        max-width: 95%;
+        padding: 10px;
     }
 }
 
@@ -1114,6 +1314,46 @@ main {
 
     .sidebar {
         width: calc(100% - 30px); /* Adjust for padding */
+    }
+    
+    /* For very small screens, switch to vertical timeline */
+    .timeline-container {
+        padding-bottom: 20px;
+    }
+    
+    .timeline-track {
+        width: 4px;
+        height: 400px;
+        margin: 40px auto;
+        background: linear-gradient(to bottom, #990000, #ff0000, #660000);
+    }
+    
+    .timeline-event {
+        left: 50% !important;
+        top: auto !important;
+        transform: translateX(-50%);
+    }
+    
+    .timeline-year {
+        top: auto;
+        left: 30px;
+        transform: none;
+    }
+    
+    .timeline-connector {
+        bottom: auto;
+        left: -20px;
+        width: 20px;
+        height: 2px;
+        top: 50%;
+    }
+    
+    .timeline-vein {
+        width: 2px !important;
+        height: auto !important;
+        left: 50% !important;
+        top: auto !important;
+        bottom: auto !important;
     }
 }
 
@@ -1192,11 +1432,6 @@ button:active {
 /* Special transition effects */
 .fade-in {
     animation: fadeIn 1s forwards;
-}
-
-@keyframes fadeIn {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
 }
 
 .fade-out {

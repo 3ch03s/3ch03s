@@ -409,6 +409,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Hidden message in HTML comment
     injectHiddenMessage();
+    
+    // Timeline initialization if we're on the history page
+    if (document.querySelector('.timeline-container')) {
+        // Initialize with 1948 event visible
+        setTimeout(() => {
+            showTimelineDetail('1948');
+        }, 500);
+        
+        // Initialize occasional glitch effects for timeline
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                const events = document.querySelectorAll('.timeline-event');
+                if (events.length) {
+                    const randomEvent = events[Math.floor(Math.random() * events.length)];
+                    triggerGlitchEffect(randomEvent, 300);
+                }
+            }
+        }, 8000);
+        
+        // Create occasional blood drips for timeline
+        setInterval(createTimelineBloodDrip, 15000);
+    }
 });
 
 // Countdown setup
@@ -640,6 +662,65 @@ function rateNightmare(stars) {
         
         // Trigger glitch effect
         triggerGlitchEffect(document.querySelector('.rate-nightmare'), 300);
+    }
+}
+
+// Timeline functions
+function showTimelineDetail(year) {
+    // Hide all details first
+    const allDetails = document.querySelectorAll('.timeline-detail');
+    allDetails.forEach(detail => {
+        detail.style.display = 'none';
+    });
+    
+    // Remove active class from all events
+    const allEvents = document.querySelectorAll('.timeline-event');
+    allEvents.forEach(event => {
+        event.classList.remove('timeline-active');
+    });
+    
+    // Show the selected detail
+    const detailElement = document.getElementById('detail' + year);
+    if (detailElement) {
+        detailElement.style.display = 'block';
+        
+        // Add active class to the clicked event
+        const eventElement = document.getElementById('event' + year);
+        if (eventElement) {
+            eventElement.classList.add('timeline-active');
+        }
+        
+        // Scroll to make the detail visible if needed
+        detailElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        // Play a subtle sound effect
+        playAudio('staticSound', 0.2);
+        
+        // Add random blood drips
+        if (Math.random() > 0.7) {
+            const container = document.querySelector('.timeline-container');
+            if (container) {
+                createBloodDrip(container);
+            }
+        }
+    }
+}
+
+function createTimelineBloodDrip() {
+    const track = document.querySelector('.timeline-track');
+    if (track) {
+        const drip = document.createElement('div');
+        drip.classList.add('timeline-blood-drip');
+        drip.style.left = (Math.random() * 100) + '%';
+        drip.style.animationDelay = (Math.random() * 5) + 's';
+        track.appendChild(drip);
+        
+        // Remove after animation completes
+        setTimeout(() => {
+            if (track.contains(drip)) {
+                track.removeChild(drip);
+            }
+        }, 10000);
     }
 }
 
