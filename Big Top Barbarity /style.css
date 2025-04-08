@@ -14,119 +14,6 @@
     --glitch-red: #ff0000;
 }
 
-body {
-    background-color: var(--main-bg);
-    color: var(--text-light);
-    font-family: 'Courier New', Courier, monospace;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Essential for glitch effects */
-    /* VHS Scanlines Overlay */
-    position: relative; /* Needed for pseudo-element */
-}
-
-body::before {
-    content: "";
-    position: fixed; /* Fixed overlay */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(10, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.03));
-    background-size: 100% 3px, 5px 100%;
-    z-index: 1000; /* On top of everything */
-    pointer-events: none; /* Click through it */
-    animation: vhsFlicker 0.15s infinite alternate;
-    opacity: 0.5; /* Adjust opacity */
-}
-
-#wrapper {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 15px 25px;
-    background-color: var(--primary-dark);
-    border: 5px ridge var(--primary-red);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-    position: relative; /* For absolute positioned glitches */
-    overflow: hidden; /* Contain internal absolute elements */
-    z-index: 1; /* Below the body overlay */
-}
-
-/* --- Header - Late Night Commercial Style --- */
-.late-night-header {
-    text-align: center;
-    border-bottom: 5px double var(--accent-red);
-    margin-bottom: 30px;
-    padding: 20px 0;
-    background: repeating-linear-gradient(
-        45deg,
-        #111,
-        #111 10px,
-        #2a0000 10px,
-        #2a0000 20px /* Dark stripes */
-    );
-    text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
-    position: relative;
-}
-
-.late-night-header h1 {
-    font-family: 'Creepster', cursive; /* Spooky fun font */
-    color: var(--accent-red);
-    font-size: 4.5em; /* BIGGER */
-    margin: 0;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-shadow: 0 0 5px var(--accent-red), 0 0 15px var(--accent-red), 2px 2px 2px #000;
-    animation: neonFlicker 1.5s infinite alternate ease-in-out;
-}
-
-.late-night-header .tagline {
-    color: var(--text-light);
-    font-size: 1.1em;
-    margin-top: 5px;
-    letter-spacing: 2px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    text-transform: uppercase;
-    background-color: rgba(0,0,0,0.5);
-    display: inline-block;
-    padding: 0 10px;
-}
-
-/* --- Navigation - Tacked On & Glitchy --- */
-.main-nav {
-    text-align: center;
-    margin-bottom: 25px;
-    padding: 10px;
-    border: 2px dashed var(--primary-red);
-    background-color: rgba(0,0,0,0.3);
-}
-
-.main-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.main-nav li {
-    display: inline-block;
-    margin: 0 15px;
-}
-
-.main-nav a {
-    font-family: 'Changa', sans-serif; /* Bold, slightly condensed */
-    font-weight: 700;
-    color: var(--accent-gore);
-    text-decoration: none;
-    font-size: 1.3em;
-    text-transform: uppercase;
-    padding: 5px 10px;
-    transition: all 0.2s ease;
-    display: inline-block;
-    background-color: var(--primary-dark);
-    border: 1px solid var(--primary-red);
-}
-
 .main-nav a:hover, .main-nav a.active {
     color: var(--text-light);
     background-color: var(--accent-red);
@@ -192,6 +79,46 @@ hr.section-divider {
     font-size: 1.1em;
     white-space: pre-wrap; /* Preserve formatting */
     box-shadow: inset 3px 3px 10px rgba(0,0,0,0.7);
+}
+
+/* Lilybeth Section Styling */
+.lilybeth-section {
+    position: relative;
+    padding: 15px;
+    overflow: hidden;
+    min-height: 400px;
+}
+
+.lilybeth-content {
+    width: 55%;
+    position: relative;
+    z-index: 1;
+}
+
+.lilybeth-image {
+    max-width: 40%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    filter: grayscale(50%) contrast(1.5) brightness(0.8) sepia(30%);
+    border: 8px groove var(--primary-red);
+    padding: 5px;
+    background-color: #111;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
+    transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.lilybeth-image:hover {
+    filter: grayscale(20%) contrast(1.7) brightness(1.0) sepia(10%);
+    transform: scale(1.02) rotate(1deg);
+    cursor: pointer;
+}
+
+.lilybeth-record {
+    position: relative;
+    margin-top: 20px;
+    z-index: 2;
 }
 
 /* Murders Page */
@@ -1349,4 +1276,117 @@ button:active {
     70% { transform: translate(-3px, -5px) rotate(2deg); }
     80% { transform: translate(5px, 2px) rotate(-2deg); }
     90% { transform: translate(-5px, -2px) rotate(2deg); }
+}
+
+body {
+    background-color: var(--main-bg);
+    color: var(--text-light);
+    font-family: 'Courier New', Courier, monospace;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Essential for glitch effects */
+    /* VHS Scanlines Overlay */
+    position: relative; /* Needed for pseudo-element */
+}
+
+body::before {
+    content: "";
+    position: fixed; /* Fixed overlay */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(10, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.03));
+    background-size: 100% 3px, 5px 100%;
+    z-index: 1000; /* On top of everything */
+    pointer-events: none; /* Click through it */
+    animation: vhsFlicker 0.15s infinite alternate;
+    opacity: 0.5; /* Adjust opacity */
+}
+
+#wrapper {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 15px 25px;
+    background-color: var(--primary-dark);
+    border: 5px ridge var(--primary-red);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    position: relative; /* For absolute positioned glitches */
+    overflow: hidden; /* Contain internal absolute elements */
+    z-index: 1; /* Below the body overlay */
+}
+
+/* --- Header - Late Night Commercial Style --- */
+.late-night-header {
+    text-align: center;
+    border-bottom: 5px double var(--accent-red);
+    margin-bottom: 30px;
+    padding: 20px 0;
+    background: repeating-linear-gradient(
+        45deg,
+        #111,
+        #111 10px,
+        #2a0000 10px,
+        #2a0000 20px /* Dark stripes */
+    );
+    text-shadow: 3px 3px 8px rgba(0,0,0,0.8);
+    position: relative;
+}
+
+.late-night-header h1 {
+    font-family: 'Creepster', cursive; /* Spooky fun font */
+    color: var(--accent-red);
+    font-size: 4.5em; /* BIGGER */
+    margin: 0;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px var(--accent-red), 0 0 15px var(--accent-red), 2px 2px 2px #000;
+    animation: neonFlicker 1.5s infinite alternate ease-in-out;
+}
+
+.late-night-header .tagline {
+    color: var(--text-light);
+    font-size: 1.1em;
+    margin-top: 5px;
+    letter-spacing: 2px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-transform: uppercase;
+    background-color: rgba(0,0,0,0.5);
+    display: inline-block;
+    padding: 0 10px;
+}
+
+/* --- Navigation - Tacked On & Glitchy --- */
+.main-nav {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 10px;
+    border: 2px dashed var(--primary-red);
+    background-color: rgba(0,0,0,0.3);
+}
+
+.main-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.main-nav a {
+    font-family: 'Changa', sans-serif; /* Bold, slightly condensed */
+    font-weight: 700;
+    color: var(--accent-gore);
+    text-decoration: none;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--primary-red);
 }

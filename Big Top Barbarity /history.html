@@ -207,20 +207,20 @@
                 </div>
             </article>
 
-            <article class="family-bio">
-                <h3>Lilybeth Barlow (Daddy's Little Nightmare)</h3>
-                <img src="images/girl_playing.jpg" alt="Lilybeth Barlow at play" class="disturbing-image" style="max-width: 40%; float: right; margin-left: 15px;">
-                <p>The elder child, born '52. Quiet, watchful. Loved dolls, especially ones that looked disturbingly realistic. Developed a fascination with anatomy early on, helped Pa Barlow with 'show prep'. Her clown persona, "Giggles," was known for a high-pitched laugh that often coincided with someone backstage having an 'accident'. <span class="interactive-text" onclick="playAudio('laughSound', 0.7)">Listen closely</span>, maybe you can still hear it...</p>
+            <article class="family-bio lilybeth-section">
+                <h3>Lilybeth Barlow</br>(Daddy's Little Nightmare)</h3>
+                <div class="lilybeth-content">
+                    <p>The elder child, born '52. Quiet, watchful. Loved dolls, especially ones that looked disturbingly realistic. Developed a fascination with anatomy early on, helped Pa Barlow with 'show prep'. Her clown persona, "Giggles," was known for a high-pitched laugh that often coincided with someone backstage having an 'accident'. <span class="interactive-text" onclick="playAudio('laughinggirl', 0.2)">Listen closely</span>, maybe you can still hear it...</p>
+                </div>
+                <img src="images/girl_playing.jpg" alt="Lilybeth Barlow at play" class="lilybeth-image">
 
                 <!-- Added school record -->
-                <div class="evidence-container">
+                <div class="evidence-container lilybeth-record">
                     <div class="evidence-label">SCHOOL RECORD FRAGMENT</div>
                     <div style="background-color: #f4f4f4; padding: 15px; font-family: 'Times New Roman', serif; color: #333;">
-                        <p>Student: Lilybeth Barlow</p>
-                        <p>Grade: 3 (attended sporadically)</p>
-                        <p>Notes from teacher (Miss Winters):</p>
-                        <p style="font-style: italic;">Lilybeth is a quiet child with troubling tendencies. Her drawings are disturbing - human figures with their insides exposed. When questioned, she explained in alarming detail what each organ was. School pets disappeared whenever the carnival was in town. I've contacted the authorities regarding my concerns, but the family moved on before any investigation. The other children are afraid of her laugh.</p>
-                        <p style="color: #990000; text-align: right;">Miss Winters resigned shortly afterward. Her replacement found a small doll resembling Miss Winters in Lilybeth's desk - with pins in its eyes.</p>
+                        <p>Student: Lilybeth Barlow</br>Grade: 3 (attended sporadically)</br>Notes from teacher (Miss Winters):</p>
+                        <p style="font-style: italic;">Lilybeth is a quiet child with troubling tendencies. Her drawings are</br>disturbing - human figures with their insides exposed. When questioned, she explained in alarming detail what each organ was. School pets disappeared whenever the carnival was in town. I've contacted the authorities regarding my concerns, but the family moved on before any investigation. The other children are afraid of her laugh.</p>
+                        <p style="color: #990000; text-align: right;">Miss Winters resigned shortly afterward.</br>Her replacement found a small doll resembling</br>Miss Winters in Lilybeth's desk</br>- with pins in its eyes.</p>
                     </div>
                 </div>
             </article>
@@ -297,9 +297,10 @@ I'm scared. Not of what we've done. Of what we're <span class="interactive-text"
     <audio id="bgMusic" src="audio/carnival_music.mp3" preload="auto" loop></audio>
     <audio id="staticSound" src="audio/static_burst.mp3" preload="auto"></audio>
     <audio id="laughSound" src="audio/creepy_laugh.mp3" preload="auto"></audio>
-    <audio id="scream" src="audio/scream.mp3" preload="auto"></audio> <!-- Added Scream -->
-    <audio id="leverSound" src="audio/lever_sound.mp3" preload="auto"></audio> <!-- Added Lever Sound -->
-    <audio id="gunshot" src="audio/gunshot.mp3" preload="auto"></audio> <!-- Added Gunshot Sound -->
+    <audio id="scream" src="audio/scream.mp3" preload="auto"></audio> 
+    <audio id="leverSound" src="audio/lever_sound.mp3" preload="auto"></audio> 
+    <audio id="gunshot" src="audio/gunshot.mp3" preload="auto"></audio> 
+    <audio id="laughinggirl" src="audio/laughing_girl.mp3" preload="auto"></audio>
     
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
