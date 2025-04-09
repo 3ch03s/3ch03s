@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENTITY SIGHTINGS - THE ENDLESS NIGHT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="static-overlay"></div>
+    <div class="screen-flicker"></div>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-title">ENTITY DOCUMENTATION</div>
+            <div class="date-time" id="current-date">06-22-1993 02:17:00 AM</div>
+        </div>
+        
+        <div class="terminal-content sightings-content">
+            <div class="tabs">
+                <button class="tab-button active" data-tab="shadow-entities">SHADOW ENTITIES</button>
+                <button class="tab-button" data-tab="blue-lights">BLUE LIGHTS</button>
+                <button class="tab-button locked" data-tab="classified" id="classified-tab">CLASSIFIED</button>
+            </div>
+            
+            <div class="tab-content">
+                <div class="tab-panel active" id="shadow-entities">
+                    <div class="entity-header">
+                        <h2>SHADOW ENTITY SIGHTINGS</h2>
+                        <div class="entity-counter">DOCUMENTED ENCOUNTERS: <span id="shadow-count">7</span></div>
+                    </div>
+                    
+                    <div class="entity-grid">
+                        <div class="entity-card" data-entity="shadow-1">
+                            <div class="entity-image corrupted">
+                                <div class="image-placeholder">IMAGE CORRUPTED</div>
+                                <div class="hidden-image" id="shadow-img-1"></div>
+                            </div>
+                            <div class="entity-details">
+                                <h3>SIGHTING #1</h3>
+                                <p>LOCATION: NEIGHBOR'S YARD</p>
+                                <p>DATE: 06/24/1993</p>
+                                <p>HEIGHT: APPROX 7-8 FT</p>
+                                <p>BEHAVIOR: OBSERVING</p>
+                            </div>
+                        </div>
+                        
+                        <div class="entity-card" data-entity="shadow-2">
+                            <div class="entity-image corrupted">
+                                <div class="image-placeholder">IMAGE CORRUPTED</div>
+                                <div class="hidden-image" id="shadow-img-2"></div>
+                            </div>
+                            <div class="entity-details">
+                                <h3>SIGHTING #2</h3>
+                                <p>LOCATION: MILLFIELD HIGH</p>
+                                <p>DATE: 06/25/1993</p>
+                                <p>COUNT: 3 ENTITIES</p>
+                                <p>BEHAVIOR: FORMED TRIANGLE FORMATION</p>
+                                <p class="glitch-text">MATCHED SCHOOL PHOTO POSITIONS</p>
+                            </div>
+                        </div>
+                        
+                        <div class="entity-card" data-entity="shadow-3">
+                            <div class="entity-image corrupted">
+                                <div class="image-placeholder">IMAGE CORRUPTED</div>
+                                <div class="hidden-image" id="shadow-img-3"></div>
+                            </div>
+                            <div class="entity-details">
+                                <h3>SIGHTING #3</h3>
+                                <p>LOCATION: TRAIN TRACKS</p>
+                                <p>DATE: 06/27/1993</p>
+                                <p>COUNT: 12+ ENTITIES</p>
+                                <p>BEHAVIOR: BLOCKING PATH</p>
+                                <p>NOTE: WOULD NOT CROSS TRACKS</p>
+                            </div>
+                        </div>
+                        
+                        <div class="entity-card" data-entity="shadow-4">
+                            <div class="entity-image corrupted">
+                                <div class="image-placeholder">IMAGE CORRUPTED</div>
+                                <div class="hidden-image" id="shadow-img-4"></div>
+                            </div>
+                            <div class="entity-details">
+                                <h3>SIGHTING #4</h3>
+                                <p>LOCATION: BEDROOM WINDOW</p>
+                                <p>DATE: 06/29/1993</p>
+                                <p>HEIGHT: UNKNOWN</p>
+                                <p>BEHAVIOR: WRITING ON GLASS</p>
+                                <p class="hidden-message">MESSAGE: "STAY"</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="entity-notes">
+                        <h3>GENERAL OBSERVATIONS:</h3>
+                        <ul>
+                            <li>Entities only appear during "night" hours (which is constant now)</li>
+                            <li>They leave no footprints</li>
+                            <li>Cameras malfunction when pointed directly at them</li>
+                            <li>They seem to avoid direct contact</li>
+                            <li>Number of sightings increasing daily</li>
+                            <li class="redacted-text">They all wear the faces of [REDACTED]</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="tab-panel" id="blue-lights">
+                    <div class="entity-header">
+                        <h2>BLUE LIGHT PHENOMENA</h2>
+                        <div class="entity-counter">DOCUMENTED ENCOUNTERS: <span id="light-count">5</span></div>
+                    </div>
+                    
+                    <div class="entity-grid">
+                        <div class="entity-card" data-entity="light-1">
+                            <div class="entity-image light-image">
+                                <div class="blue-light-animation"></div>
+                            </div>
+                            <div class="entity-details">
+                                <h3>ENCOUNTER #1</h3>
+                                <p>LOCATION: LIVING ROOM WINDOW</p>
+                                <p>DATE: 06/30/1993</p>
+                                <p>COUNT: SINGLE LIGHT</p>
+                                <p>BEHAVIOR: PULSING, RESPONSIVE</p>
+                            </div>
+                        </div>
+                        
+                        <div class="entity-card" data-entity="light-2">
+                            <div class="entity-image light-image">
+                                <div class="blue-light-animation multiple"></div>
+                            </div>
+                            <div class="entity-details">
+                                <h3>ENCOUNTER #2</h3>
+                                <p>LOCATION: BACKYARD</p>
+                                <p>DATE: 07/01/1993</p>
+                                <p>COUNT: CLUSTER (7-10)</p>
+                                <p>BEHAVIOR: FORMED ARROW SHAPE</p>
+                                <p>DIRECTION: POINTING TO TRAIN TRACKS</p>
+                            </div>
+                        </div>
+                        
+                        <div class="entity-card" data-entity="light-3">
+                            <div class="entity-image light-image">
+                                <div class="blue-light-animation path"></div>
+                            </div>
+                            <div class="entity-details">
+                                <h3>ENCOUNTER #3</h3>
+                                <p>LOCATION: MAIN STREET</p>
+                                <p>DATE: 07/03/1993</p>
+                                <p>COUNT: 20+ LIGHTS</p>
+                                <p>BEHAVIOR: FORMED PATH</p>
+                                <p>NOTE: SHADOW ENTITIES AVOIDED THEM</p>
+                            </div>
+                        </div>
+                        
+                        <div class="entity-card locked" data-entity="light-4">
+                            <div class="entity-image locked-image">
+                                <div class="lock-icon">🔒</div>
+                                <div class="image-placeholder">ENCRYPTED</div>
+                            </div>
+                            <div class="entity-details">
+                                <h3>ENCOUNTER #4</h3>
+                                <p>LOCATION: [RESTRICTED]</p>
+                                <p>DATE: 07/05/1993</p>
+                                <p>BEHAVIOR: [RESTRICTED]</p>
+                                <p class="password-hint">PASSWORD HINT: FACILITY NAME</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="entity-notes">
+                        <h3>GENERAL OBSERVATIONS:</h3>
+                        <ul>
+                            <li>Lights emit no heat</li>
+                            <li>They appear to be intelligent or guided</li>
+                            <li>They consistently lead toward the train tracks</li>
+                            <li>Shadow entities avoid them</li>
+                            <li>They respond to human presence</li>
+                            <li>Camera can capture them but images are blurred</li>
+                            <li class="hidden-text" data-show-after="60">They seem to be trying to communicate numbers: "N-I-G-H-T-F-A-L-L"</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="tab-panel" id="classified">
+                    <div class="classified-content">
+                        <div class="access-denied-screen">
+                            <h2>ACCESS RESTRICTED</h2>
+                            <div class="keypad">
+                                <input type="password" id="classified-password" placeholder="ENTER CLEARANCE CODE">
+                                <button id="submit-password">SUBMIT</button>
+                            </div>
+                            <p class="attempts">ATTEMPTS REMAINING: <span id="attempts-left">3</span></p>
+                            <p class="hint">HINT: PROJECT NAME MENTIONED IN FINAL JOURNAL ENTRY</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="terminal-nav">
+            <div class="nav-item" data-page="index.html">MAIN TERMINAL</div>
+            <div class="nav-item" data-page="journal.html">JOURNAL ENTRIES</div>
+            <div class="nav-item" data-page="map.html">MILLFIELD MAP</div>
+            <div class="nav-item locked" data-page="facility.html" id="facility-nav">??? [LOCKED]</div>
+        </div>
+        
+        <div class="footer">
+            <div class="status">STATUS: DOCUMENTATION ACTIVE</div>
+            <div class="battery">BATTERY: <span id="battery-level">72</span>%</div>
+        </div>
+    </div>
+    
+    <audio id="ambient-sound" loop>
+        <source src="sounds/ambient.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="entity-sound">
+        <source src="sounds/entity.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="light-sound">
+        <source src="sounds/light.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="error-sound">
+        <source src="sounds/error.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="scripts/clock.js"></script>
+    
+    <script src="scripts/sightings.js"></script>
+</body>
+</html>

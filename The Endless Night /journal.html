@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOURNAL ENTRIES - THE ENDLESS NIGHT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="static-overlay"></div>
+    <div class="screen-flicker"></div>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-title">CHRISTOPHER'S JOURNAL</div>
+            <div class="date-time" id="current-date">06-22-1993 02:17:00 AM</div>
+        </div>
+        
+        <div class="terminal-content journal-content">
+            <div class="journal-header">
+                <h2>JOURNAL LOG ENTRIES</h2>
+                <p class="info-text">Select an entry to view details. New entries become available as time passes.</p>
+            </div>
+            
+            <div class="journal-entries-list">
+                <!-- Entry headers will be clicked to expand/collapse -->
+                <div class="entry-container" data-day="1">
+                    <div class="entry-header">
+                        <span class="entry-icon">►</span>
+                        <span class="entry-date">DAY 1 - 06/22/1993</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>I woke up at exactly 2:17 AM. Something felt wrong. The house was too quiet.</p>
+                        <p>Mom and Dad weren't in their room. Tommy wasn't in his. No one is answering their phones.</p>
+                        <p>I walked outside. The streetlights were on, but every house was dark. No one anywhere.</p>
+                        <p>It's been hours. The sun should have risen by now.</p>
+                        <p>I drove around town. The school, the mall, the police station - all empty.</p>
+                        <p>I'm back home now. I don't know what to do.</p>
+                        <p class="corrupted-text">WHY AM I THE ONLY ONE LEFT?</p>
+                    </div>
+                </div>
+                
+                <div class="entry-container" data-day="2">
+                    <div class="entry-header">
+                        <span class="entry-icon">►</span>
+                        <span class="entry-date">DAY 2 - 06/23/1993</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>Still no sunrise. My watch says it's been 24 hours, but it feels longer.</p>
+                        <p>I've been driving around with a flashlight. Found stores still stocked with food.</p> 
+                        <p>The power is on, but TV shows nothing but static. Radio too.</p>
+                        <p>I've been yelling, honking car horns. Nothing.</p>
+                        <p>I swear I saw something move at the edge of my flashlight beam.</p>
+                        <p>Probably just a cat or something.</p>
+                        <p>I'm going to sleep in the living room with all the lights on.</p>
+                    </div>
+                </div>
+                
+                <div class="entry-container" data-day="4">
+                    <div class="entry-header">
+                        <span class="entry-icon">►</span>
+                        <span class="entry-date">DAY 4 - 06/25/1993</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>I didn't write yesterday. Couldn't bring myself to.</p>
+                        <p>I'm not alone here.</p>
+                        <p>I saw it standing in my neighbor's yard. Tall. Too tall.</p>
+                        <p>It was just... watching me. I took a picture but it didn't come out right.</p>
+                        <p>Just a black smudge where it was standing.</p>
+                        <p>I'm staying inside now. I've boarded up the windows.</p>
+                        <p class="hidden-text" data-reveal-on-day="6">IT KNOWS MY NAME</p>
+                    </div>
+                </div>
+                
+                <div class="entry-container" data-day="7">
+                    <div class="entry-header">
+                        <span class="entry-icon">►</span>
+                        <span class="entry-date">DAY 7 - 06/28/1993</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>The town is changing. Streets don't go where they should.</p>
+                        <p>I tried to drive to the highway yesterday, but I kept ending up back at the train tracks.</p>
+                        <p>The old train tracks. No matter which direction I drove.</p>
+                        <p>There's fog now. Thick fog that seems to glow faintly.</p>
+                        <p>I've seen more of the shadow people. They stand at a distance, but there are more now.</p>
+                        <p>I found writing on my bathroom mirror this morning.</p>
+                        <p>It said "CROSS THE TRACKS"</p>
+                        <p>I didn't write it.</p>
+                    </div>
+                </div>
+                
+                <div class="entry-container" data-day="9">
+                    <div class="entry-header">
+                        <span class="entry-icon">►</span>
+                        <span class="entry-date">DAY 9 - 06/30/1993</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>I saw something new last night. Blue lights.</p>
+                        <p>They hover in the air, like fireflies but bigger and brighter.</p>
+                        <p>They don't seem threatening like the shadows.</p>
+                        <p>One floated right up to my window. When I put my hand near the glass, it pulsed brighter.</p>
+                        <p>It's hard to explain, but it felt like it was trying to communicate.</p>
+                        <p>The lights all seem to drift toward the train tracks before disappearing.</p>
+                        <p>I think they want me to follow them.</p>
+                        <p class="glitch-text">I FOUND A [REDACTED] ON THE KITCHEN TABLE</p>
+                    </div>
+                </div>
+                
+                <div class="entry-container" data-day="13">
+                    <div class="entry-header">
+                        <span class="entry-icon">►</span>
+                        <span class="entry-date">DAY 13 - 07/04/1993</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>Happy 4th of July. Not that it matters now.</p>
+                        <p>The shadow figures have gotten closer. They're at the edge of my yard now.</p> 
+                        <p>I can sometimes hear them whispering, but can't make out words.</p>
+                        <p>The blue lights came again. This time, they formed an arrow pointing toward the tracks.</p>
+                        <p>I've been looking at the stars. They're wrong. Constellations I don't recognize.</p>
+                        <p>I found an old map of Millfield in Dad's office. There's a facility marked beyond the tracks.</p>
+                        <p>It's not on any modern maps. Dad never mentioned it.</p>
+                        <p>I think I need to go there.</p>
+                    </div>
+                </div>
+                
+                <div class="entry-container" data-day="14">
+                    <div class="entry-header">
+                        <span class="entry-icon">►</span>
+                        <span class="entry-date">DAY 14 - 07/05/1993</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>This will be my last entry for now.</p>
+                        <p>The shadows are all around the house. I can see them through the gaps in the boards.</p>
+                        <p>But the blue lights have formed a path. A safe passage through them.</p>
+                        <p>I'm going to follow it to the train tracks.</p>
+                        <p>Whatever is beyond them, it has to be better than slowly waiting to die here.</p>
+                        <p>If anyone finds this journal, my name is Christopher Manly.</p>
+                        <p>I was 17 years old when the world ended.</p>
+                        <p>I'm going to the facility. I think it's called Project N</p>
+                        <p class="cut-off-text">Wait, there's someone at the door. They're wearing a lab coat. They look like</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="terminal-nav">
+            <div class="nav-item" data-page="index.html">MAIN TERMINAL</div>
+            <div class="nav-item" data-page="sightings.html">ENTITY SIGHTINGS</div>
+            <div class="nav-item" data-page="map.html">MILLFIELD MAP</div>
+            <div class="nav-item locked" data-page="facility.html" id="facility-nav">??? [LOCKED]</div>
+        </div>
+        
+        <div class="footer">
+            <div class="status">STATUS: JOURNAL SYSTEM ACTIVE</div>
+            <div class="battery">BATTERY: <span id="battery-level">78</span>%</div>
+        </div>
+    </div>
+    
+    <audio id="ambient-sound" loop>
+        <source src="sounds/ambient.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="page-turn">
+        <source src="sounds/page-turn.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="whisper-sound">
+        <source src="sounds/whisper.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div class="shadow-figure"></div>
+
+    <script src="scripts/clock.js"></script>
+    
+    <script src="scripts/journal.js"></script>
+</body>
+</html>

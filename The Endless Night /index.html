@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ENDLESS NIGHT - CHRISTOPHER MANLY'S JOURNAL</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="static-overlay"></div>
+    <div class="screen-flicker"></div>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-title">MILLFIELD TERMINAL</div>
+            <div class="date-time">06-22-1993 02:17:00 AM</div>
+        </div>
+        
+        <div class="terminal-content">
+            <div class="boot-sequence">
+                <p>BOOTING SYSTEM...</p>
+                <p>CHECKING MEMORY... OK</p>
+                <p>INITIALIZING DISPLAY... OK</p>
+                <p>CONNECTING TO NETWORK... FAILED</p>
+                <p>LOCAL MODE ACTIVATED</p>
+                <p>WELCOME TO EMERGENCY BROADCAST SYSTEM</p>
+                <p class="blinking">ALERT: ANOMALY DETECTED</p>
+                <p>...</p>
+                <p>...</p>
+                <p>I DON'T KNOW WHO WILL FIND THIS.</p>
+                <p>MY NAME IS CHRISTOPHER MANLY.</p>
+                <p>SOMETHING HAS HAPPENED TO MILLFIELD.</p>
+                <p>EVERYONE IS GONE.</p>
+                <p>THE SUN HASN'T RISEN IN <span class="counter" id="days-counter">0</span> DAYS.</p>
+                <p class="blinking">I AM NOT ALONE IN THE DARKNESS.</p>
+                <p>...</p>
+                <p>I'VE CREATED THIS JOURNAL TO DOCUMENT WHAT'S HAPPENING.</p>
+                <p>IF ANYONE IS OUT THERE, PLEASE HELP ME.</p>
+                <p>...</p>
+                <p class="warning">WARNING: POWER FLUCTUATIONS DETECTED</p>
+                <p>ACCESSING SYSTEM...</p>
+            </div>
+            
+            <div class="login-prompt hidden">
+                <p class="blinking-cursor">ENTER COMMAND: <span id="command-input"></span></p>
+            </div>
+        </div>
+        
+        <div class="terminal-nav hidden">
+            <div class="nav-item" data-page="journal.html">JOURNAL ENTRIES</div>
+            <div class="nav-item" data-page="sightings.html">ENTITY SIGHTINGS</div>
+            <div class="nav-item" data-page="map.html">MILLFIELD MAP</div>
+            <div class="nav-item locked" data-page="facility.html" id="facility-nav">??? [LOCKED]</div>
+        </div>
+        
+        <div class="error-messages hidden">
+            <p class="error" id="access-denied">ACCESS DENIED: INCORRECT PASSPHRASE</p>
+            <p class="error" id="system-error">SYSTEM ERROR: CORRUPTION DETECTED</p>
+        </div>
+        
+        <div class="footer">
+            <div class="status">STATUS: EMERGENCY POWER</div>
+            <div class="battery">BATTERY: 78%</div>
+        </div>
+    </div>
+    
+    <audio id="ambient-sound" loop>
+        <source src="sounds/ambient.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="key-sound">
+        <source src="sounds/key.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="error-sound">
+        <source src="sounds/error.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="success-sound">
+        <source src="sounds/success.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div class="hidden-message">THEY ARE WATCHING</div>
+
+    <script src="scripts/clock.js"></script>
+    
+    <script src="scripts/main.js"></script>
+</body>
+</html>

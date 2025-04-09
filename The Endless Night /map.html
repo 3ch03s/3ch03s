@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MILLFIELD MAP - THE ENDLESS NIGHT</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="static-overlay"></div>
+    <div class="screen-flicker"></div>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-title">MILLFIELD TOWN MAP</div>
+            <div class="date-time" id="current-date">06-22-1993 02:17:00 AM</div>
+        </div>
+        
+        <div class="terminal-content map-content">
+            <div class="map-controls">
+                <button id="toggle-grid">SHOW GRID</button>
+                <button id="toggle-entities">SHOW ENTITIES</button>
+                <button id="toggle-lights">SHOW LIGHTS</button>
+                <button id="toggle-anomalies">SHOW ANOMALIES</button>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-image">
+                    <svg viewBox="0 0 800 600" class="town-map">
+                        <!-- Base map elements -->
+                        <rect x="0" y="0" width="800" height="600" fill="#000" class="map-background"/>
+                        
+                        <!-- Roads -->
+                        <path d="M100,100 L700,100 L700,500 L100,500 Z" stroke="#3a3a3a" stroke-width="8" fill="none" class="main-roads"/>
+                        <path d="M200,100 L200,500" stroke="#3a3a3a" stroke-width="6" fill="none"/>
+                        <path d="M400,100 L400,500" stroke="#3a3a3a" stroke-width="6" fill="none"/>
+                        <path d="M600,100 L600,500" stroke="#3a3a3a" stroke-width="6" fill="none"/>
+                        <path d="M100,200 L700,200" stroke="#3a3a3a" stroke-width="6" fill="none"/>
+                        <path d="M100,300 L700,300" stroke="#3a3a3a" stroke-width="6" fill="none"/>
+                        <path d="M100,400 L700,400" stroke="#3a3a3a" stroke-width="6" fill="none"/>
+                        
+                        <!-- Train tracks -->
+                        <path d="M0,550 L800,550" stroke="#555" stroke-width="10" fill="none" class="train-tracks"/>
+                        <path d="M0,550 L800,550" stroke="#444" stroke-width="2" stroke-dasharray="15,15" fill="none" class="track-ties"/>
+                        
+                        <!-- Key locations -->
+                        <rect x="150" y="150" width="50" height="50" fill="#333" class="location" data-name="HOME"/>
+                        <rect x="350" y="250" width="100" height="100" fill="#333" class="location" data-name="SCHOOL"/>
+                        <rect x="500" y="150" width="150" height="50" fill="#333" class="location" data-name="MALL"/>
+                        <rect x="250" y="400" width="50" height="50" fill="#333" class="location" data-name="POLICE"/>
+                        <rect x="600" y="350" width="75" height="75" fill="#333" class="location" data-name="HOSPITAL"/>
+                        
+                        <!-- Hidden facility -->
+                        <rect x="400" y="570" width="100" height="30" fill="#222" class="facility hidden" data-name="FACILITY"/>
+                        
+                        <!-- Entity sightings layer (initially hidden) -->
+                        <g class="entity-layer hidden">
+                            <circle cx="175" cy="125" r="5" fill="#700" class="entity" data-day="2"/>
+                            <circle cx="250" cy="200" r="5" fill="#700" class="entity" data-day="3"/>
+                            <circle cx="400" cy="300" r="5" fill="#700" class="entity" data-day="4"/>
+                            <circle cx="500" cy="175" r="5" fill="#700" class="entity" data-day="5"/>
+                            <circle cx="150" cy="300" r="5" fill="#700" class="entity" data-day="5"/>
+                            <circle cx="625" cy="400" r="5" fill="#700" class="entity" data-day="6"/>
+                            <circle cx="300" cy="500" r="5" fill="#700" class="entity" data-day="7"/>
+                            
+                            <!-- Increasing density near train tracks -->
+                            <circle cx="100" cy="525" r="5" fill="#700" class="entity" data-day="8"/>
+                            <circle cx="200" cy="530" r="5" fill="#700" class="entity" data-day="8"/>
+                            <circle cx="300" cy="535" r="5" fill="#700" class="entity" data-day="9"/>
+                            <circle cx="400" cy="540" r="5" fill="#700" class="entity" data-day="10"/>
+                            <circle cx="500" cy="535" r="5" fill="#700" class="entity" data-day="11"/>
+                            <circle cx="600" cy="530" r="5" fill="#700" class="entity" data-day="12"/>
+                            <circle cx="700" cy="525" r="5" fill="#700" class="entity" data-day="13"/>
+                        </g>
+                        
+                        <!-- Blue lights layer (initially hidden) -->
+                        <g class="lights-layer hidden">
+                            <circle cx="380" cy="560" r="3" fill="#00f" class="light" data-day="9"/>
+                            <circle cx="400" cy="555" r="3" fill="#00f" class="light" data-day="10"/>
+                            <circle cx="420" cy="560" r="3" fill="#00f" class="light" data-day="10"/>
+                            <circle cx="450" cy="555" r="3" fill="#00f" class="light" data-day="11"/>
+                            <circle cx="470" cy="560" r="3" fill="#00f" class="light" data-day="12"/>
+                            <circle cx="430" cy="565" r="3" fill="#00f" class="light" data-day="12"/>
+                            <circle cx="450" cy="570" r="3" fill="#00f" class="light" data-day="13"/>
+                            
+                            <!-- Path leading across tracks -->
+                            <path d="M175,150 Q300,350 380,560" stroke="#0066aa" stroke-width="1" stroke-dasharray="2,2" fill="none" class="light-path hidden" data-day="13"/>
+                            <path d="M380,560 Q400,565 450,570" stroke="#0066aa" stroke-width="1" stroke-dasharray="1,1" fill="none" class="light-path hidden" data-day="14"/>
+                        </g>
+                        
+                        <!-- Anomalies layer (initially hidden) -->
+                        <g class="anomalies-layer hidden">
+                            <!-- Distorted areas -->
+                            <path d="M300,200 Q350,150 400,200 Q450,250 400,300 Q350,350 300,300 Q250,250 300,200" fill="rgba(255,0,0,0.1)" stroke="#ff0000" stroke-width="1" stroke-dasharray="5,5" class="anomaly" data-day="7"/>
+                            
+                            <path d="M500,400 Q550,350 600,400 Q650,450 600,500 Q550,550 500,500 Q450,450 500,400" fill="rgba(255,0,0,0.1)" stroke="#ff0000" stroke-width="1" stroke-dasharray="5,5" class="anomaly" data-day="10"/>
+                            
+                            <!-- Reality fractures -->
+                            <line x1="200" y1="350" x2="250" y2="300" stroke="#ff0000" stroke-width="2" class="fracture" data-day="8"/>
+                            <line x1="450" y1="250" x2="500" y2="200" stroke="#ff0000" stroke-width="2" class="fracture" data-day="9"/>
+                            <line x1="600" y1="450" x2="650" y2="400" stroke="#ff0000" stroke-width="2" class="fracture" data-day="11"/>
+                            
+                            <!-- Time anomaly -->
+                            <circle cx="175" cy="150" r="30" fill="none" stroke="#ff0000" stroke-width="1" stroke-dasharray="3,3" class="time-anomaly" data-day="13"/>
+                        </g>
+                        
+                        <!-- Grid overlay (initially hidden) -->
+                        <g class="grid-overlay hidden">
+                            <!-- Vertical lines -->
+                            <line x1="100" y1="100" x2="100" y2="500" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="200" y1="100" x2="200" y2="500" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="300" y1="100" x2="300" y2="500" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="400" y1="100" x2="400" y2="500" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="500" y1="100" x2="500" y2="500" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="600" y1="100" x2="600" y2="500" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="700" y1="100" x2="700" y2="500" stroke="#0f0" stroke-width="0.5"/>
+                            
+                            <!-- Horizontal lines -->
+                            <line x1="100" y1="100" x2="700" y2="100" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="100" y1="200" x2="700" y2="200" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="100" y1="300" x2="700" y2="300" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="100" y1="400" x2="700" y2="400" stroke="#0f0" stroke-width="0.5"/>
+                            <line x1="100" y1="500" x2="700" y2="500" stroke="#0f0" stroke-width="0.5"/>
+                            
+                            <!-- Coordinates -->
+                            <text x="105" y="115" fill="#0f0" font-family="monospace" font-size="8">A1</text>
+                            <text x="205" y="115" fill="#0f0" font-family="monospace" font-size="8">B1</text>
+                            <text x="305" y="115" fill="#0f0" font-family="monospace" font-size="8">C1</text>
+                            <text x="405" y="115" fill="#0f0" font-family="monospace" font-size="8">D1</text>
+                            <text x="505" y="115" fill="#0f0" font-family="monospace" font-size="8">E1</text>
+                            <text x="605" y="115" fill="#0f0" font-family="monospace" font-size="8">F1</text>
+                            
+                            <text x="105" y="215" fill="#0f0" font-family="monospace" font-size="8">A2</text>
+                            <text x="205" y="215" fill="#0f0" font-family="monospace" font-size="8">B2</text>
+                            <text x="305" y="215" fill="#0f0" font-family="monospace" font-size="8">C2</text>
+                            <text x="405" y="215" fill="#0f0" font-family="monospace" font-size="8">D2</text>
+                            <text x="505" y="215" fill="#0f0" font-family="monospace" font-size="8">E2</text>
+                            <text x="605" y="215" fill="#0f0" font-family="monospace" font-size="8">F2</text>
+                            
+                            <text x="105" y="315" fill="#0f0" font-family="monospace" font-size="8">A3</text>
+                            <text x="205" y="315" fill="#0f0" font-family="monospace" font-size="8">B3</text>
+                            <text x="305" y="315" fill="#0f0" font-family="monospace" font-size="8">C3</text>
+                            <text x="405" y="315" fill="#0f0" font-family="monospace" font-size="8">D3</text>
+                            <text x="505" y="315" fill="#0f0" font-family="monospace" font-size="8">E3</text>
+                            <text x="605" y="315" fill="#0f0" font-family="monospace" font-size="8">F3</text>
+                            
+                            <text x="105" y="415" fill="#0f0" font-family="monospace" font-size="8">A4</text>
+                            <text x="205" y="415" fill="#0f0" font-family="monospace" font-size="8">B4</text>
+                            <text x="305" y="415" fill="#0f0" font-family="monospace" font-size="8">C4</text>
+                            <text x="405" y="415" fill="#0f0" font-family="monospace" font-size="8">D4</text>
+                            <text x="505" y="415" fill="#0f0" font-family="monospace" font-size="8">E4</text>
+                            <text x="605" y="415" fill="#0f0" font-family="monospace" font-size="8">F4</text>
+                            
+                            <text x="105" y="515" fill="#0f0" font-family="monospace" font-size="8">A5</text>
+                            <text x="205" y="515" fill="#0f0" font-family="monospace" font-size="8">B5</text>
+                            <text x="305" y="515" fill="#0f0" font-family="monospace" font-size="8">C5</text>
+                            <text x="405" y="515" fill="#0f0" font-family="monospace" font-size="8">D5</text>
+                            <text x="505" y="515" fill="#0f0" font-family="monospace" font-size="8">E5</text>
+                            <text x="605" y="515" fill="#0f0" font-family="monospace" font-size="8">F5</text>
+                        </g>
+                        
+                        <!-- Mysterious markings -->
+                        <text x="400" y="570" font-family="monospace" fill="#222" class="hidden-text">PROJECT NIGHTFALL</text>
+                        
+                        <!-- Labels -->
+                        <text x="175" y="175" font-family="monospace" fill="#aaa" font-size="10" text-anchor="middle" class="location-label">HOME</text>
+                        <text x="400" y="300" font-family="monospace" fill="#aaa" font-size="12" text-anchor="middle" class="location-label">SCHOOL</text>
+                        <text x="575" y="175" font-family="monospace" fill="#aaa" font-size="12" text-anchor="middle" class="location-label">MALL</text>
+                        <text x="275" y="425" font-family="monospace" fill="#aaa" font-size="10" text-anchor="middle" class="location-label">POLICE</text>
+                        <text x="637" y="387" font-family="monospace" fill="#aaa" font-size="10" text-anchor="middle" class="location-label">HOSPITAL</text>
+                    </svg>
+                </div>
+                
+                <div class="map-legend">
+                    <h3>MAP LEGEND</h3>
+                    <ul>
+                        <li><span class="legend-color" style="background-color: #3a3a3a;"></span> Roads</li>
+                        <li><span class="legend-color" style="background-color: #555;"></span> Train Tracks</li>
+                        <li><span class="legend-color" style="background-color: #333;"></span> Buildings</li>
+                        <li><span class="legend-color" style="background-color: #700;"></span> Entity Sighting</li>
+                        <li><span class="legend-color" style="background-color: #00f;"></span> Blue Light</li>
+                        <li><span class="legend-color" style="background-color: #f00;"></span> Anomaly</li>
+                    </ul>
+                </div>
+                
+                <div class="map-notes">
+                    <h3>OBSERVATION NOTES:</h3>
+                    <p id="day-indicator">CURRENT MAP DATA: DAY <span id="current-day">1</span></p>
+                    <div class="day-slider-container">
+                        <input type="range" min="1" max="14" value="1" class="day-slider" id="day-slider">
+                        <div class="day-labels">
+                            <span>1</span>
+                            <span>7</span>
+                            <span>14</span>
+                        </div>
+                    </div>
+                    <p>Shadow entities increasing in number near train tracks</p>
+                    <p>Blue lights consistently appearing south of tracks</p>
+                    <p>Reality distortions concentrated around school and hospital</p>
+                    <p class="glitch-text">Map inconsistencies detected in grid sectors C3, E4</p>
+                    <p id="hidden-note" class="hidden">FACILITY COORDINATES: SECTOR D6</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="terminal-nav">
+            <div class="nav-item" data-page="index.html">MAIN TERMINAL</div>
+            <div class="nav-item" data-page="journal.html">JOURNAL ENTRIES</div>
+            <div class="nav-item" data-page="sightings.html">ENTITY SIGHTINGS</div>
+            <div class="nav-item locked" data-page="facility.html" id="facility-nav">??? [LOCKED]</div>
+        </div>
+        
+        <div class="footer">
+            <div class="status">STATUS: MAP SYSTEM ACTIVE</div>
+            <div class="battery">BATTERY: <span id="battery-level">65</span>%</div>
+        </div>
+    </div>
+    
+    <audio id="ambient-sound" loop>
+        <source src="sounds/ambient.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="map-sound">
+        <source src="sounds/map.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="anomaly-sound">
+        <source src="sounds/anomaly.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="scripts/clock.js"></script>
+    
+    <script src="scripts/map.js"></script>
+</body>
+</html>

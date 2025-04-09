@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT NIGHTFALL - RESTRICTED ACCESS</title>
+    <link rel="stylesheet" href="facility-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="hologram-overlay"></div>
+    <div class="screen-glitch"></div>
+    
+    <div class="facility-container">
+        <div class="facility-header">
+            <div class="facility-logo">
+                <svg viewBox="0 0 100 100" class="nightfall-logo">
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="#0066aa" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#0088cc" stroke-width="1"/>
+                    <circle cx="50" cy="50" r="35" fill="none" stroke="#00aaee" stroke-width="0.5"/>
+                    <path d="M20,50 L80,50" stroke="#00ccff" stroke-width="2"/>
+                    <path d="M50,20 L50,80" stroke="#00ccff" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="10" fill="#00ccff" fill-opacity="0.3"/>
+                    <text x="30" y="95" font-family="monospace" fill="#00ccff" font-size="8">NIGHTFALL</text>
+                </svg>
+            </div>
+            <div class="facility-title">PROJECT NIGHTFALL - SECURE TERMINAL</div>
+            <div class="security-level">CLEARANCE LEVEL: OMEGA</div>
+        </div>
+        
+        <div class="tabs-container">
+            <div class="tab active" data-tab="overview">OVERVIEW</div>
+            <div class="tab" data-tab="files">FILES</div>
+            <div class="tab" data-tab="logs">LOGS</div>
+            <div class="tab" data-tab="terminal">ECHO TERMINAL</div>
+        </div>
+        
+        <div class="content-area">
+            <div class="tab-content active" id="overview">
+                <div class="welcome-message">
+                    <h2>WELCOME TO PROJECT NIGHTFALL</h2>
+                    <div class="user-info">
+                        <p>USER: <span class="user-id">MANLY_C</span></p>
+                        <p>STATUS: <span class="status-warning">UNAUTHORIZED</span></p>
+                        <p>LOCATION: <span class="location-data">SECTOR D6 - MILLFIELD RESEARCH FACILITY</span></p>
+                    </div>
+                    
+                    <div class="facility-description">
+                        <p>This facility is dedicated to research on <span class="redacted">dimensional anchoring</span> and <span class="redacted">temporal displacement</span> phenomena.</p>
+                        <p>Current status: <span class="alert-text">EMERGENCY PROTOCOL ACTIVE</span></p>
+                        <p>All personnel have been <span class="redacted">evacuated</span> following the <span class="redacted">Event Horizon Breach</span> on June 22, 1993.</p>
+                        <p>ECLIPSE Protocol is available as a last resort measure.</p>
+                    </div>
+                    
+                    <div class="system-warnings">
+                        <h3>SYSTEM ALERTS</h3>
+                        <ul>
+                            <li class="alert">PERIMETER BREACH DETECTED - SECTOR A3</li>
+                            <li class="alert">TEMPORAL ANOMALIES INCREASING - 78% ABOVE THRESHOLD</li>
+                            <li class="alert">ENTITY CONTAINMENT FAILURE - MULTIPLE SECTORS</li>
+                            <li class="alert">DIMENSIONAL STABILIZERS OFFLINE</li>
+                            <li class="alert">SUBJECT ZERO LOCATION: <span class="blinking">UNKNOWN</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="facility-map">
+                    <h3>FACILITY SCHEMATIC</h3>
+                    <div class="schematic-container">
+                        <svg viewBox="0 0 500 300" class="facility-schematic">
+                            <!-- Main facility outline -->
+                            <rect x="50" y="50" width="400" height="200" fill="none" stroke="#00aaee" stroke-width="2"/>
+                            
+                            <!-- Rooms -->
+                            <rect x="50" y="50" width="100" height="100" fill="none" stroke="#00aaee" stroke-width="1" class="room" data-room="LAB A"/>
+                            <rect x="150" y="50" width="100" height="100" fill="none" stroke="#00aaee" stroke-width="1" class="room" data-room="LAB B"/>
+                            <rect x="250" y="50" width="100" height="100" fill="none" stroke="#00aaee" stroke-width="1" class="room" data-room="CONTAINMENT"/>
+                            <rect x="350" y="50" width="100" height="100" fill="none" stroke="#00aaee" stroke-width="1" class="room" data-room="CONTROL"/>
+                            
+                            <rect x="50" y="150" width="100" height="100" fill="none" stroke="#00aaee" stroke-width="1" class="room" data-room="STORAGE"/>
+                            <rect x="150" y="150" width="100" height="100" fill="none" stroke="#00aaee" stroke-width="1" class="room" data-room="SERVER"/>
+                            <rect x="250" y="150" width="100" height="100" fill="none" stroke="#00aaee" stroke-width="1" class="room" data-room="QUARTERS"/>
+                            <rect x="350" y="150" width="100" height="100" fill="none" stroke="#00aaee" stroke-width="1" class="room" data-room="CRYO"/>
+                            
+                            <!-- Room labels -->
+                            <text x="100" y="100" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="10">LAB A</text>
+                            <text x="200" y="100" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="10">LAB B</text>
+                            <text x="300" y="100" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="10">CONTAINMENT</text>
+                            <text x="400" y="100" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="10">CONTROL</text>
+                            
+                            <text x="100" y="200" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="10">STORAGE</text>
+                            <text x="200" y="200" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="10">SERVER</text>
+                            <text x="300" y="200" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="10">QUARTERS</text>
+                            <text x="400" y="200" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="10">CRYO</text>
+                            
+                            <!-- Your location -->
+                            <circle cx="200" cy="200" r="5" fill="#ff0000" class="you-are-here"/>
+                            <text x="200" y="220" text-anchor="middle" fill="#ff0000" font-family="monospace" font-size="8">YOU ARE HERE</text>
+                            
+                            <!-- Anomalies -->
+                            <circle cx="300" cy="75" r="10" fill="none" stroke="#ff00ff" stroke-width="1" class="anomaly" data-type="ENTITY"/>
+                            <circle cx="400" cy="200" r="15" fill="none" stroke="#ff00ff" stroke-width="1" class="anomaly" data-type="TEMPORAL"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="files">
+                <div class="files-header">
+                    <h2>CLASSIFIED DOCUMENTS</h2>
+                    <p class="warning">UNAUTHORIZED ACCESS WILL BE REPORTED</p>
+                </div>
+                
+                <div class="files-container">
+                    <div class="file" data-file="project-overview">
+                        <div class="file-icon">📄</div>
+                        <div class="file-name">PROJECT_OVERVIEW.pdf</div>
+                    </div>
+                    
+                    <div class="file" data-file="subject-zero">
+                        <div class="file-icon">👤</div>
+                        <div class="file-name">SUBJECT_ZERO.dat</div>
+                    </div>
+                    
+                    <div class="file" data-file="event-breach">
+                        <div class="file-icon">⚠️</div>
+                        <div class="file-name">EVENT_HORIZON_BREACH.log</div>
+                    </div>
+                    
+                    <div class="file" data-file="eclipse">
+                        <div class="file-icon">🔒</div>
+                        <div class="file-name">ECLIPSE_PROTOCOL.exe</div>
+                    </div>
+                    
+                    <div class="file" data-file="entities">
+                        <div class="file-icon">👁️</div>
+                        <div class="file-name">ENTITY_ANALYSIS.dat</div>
+                    </div>
+                    
+                    <div class="file locked" data-file="timeline">
+                        <div class="file-icon">🔐</div>
+                        <div class="file-name">TIMELINE_PREDICTIONS.bin</div>
+                    </div>
+                </div>
+                
+                <div class="file-viewer">
+                    <div class="file-content" id="project-overview-content">
+                        <h3>PROJECT NIGHTFALL OVERVIEW</h3>
+                        <div class="document-text">
+                            <p>CLASSIFICATION: TOP SECRET - EYES ONLY</p>
+                            <p>PROJECT DIRECTOR: Dr. [REDACTED]</p>
+                            <p>ESTABLISHED: 1991</p>
+                            <p>LOCATION: MILLFIELD, OHIO (SUBTERRANEAN)</p>
+                            <p>PRIMARY OBJECTIVE: Research and development of <span class="redacted">dimensional anchoring</span> technology to facilitate controlled <span class="redacted">timeline manipulation</span>.</p>
+                            <p>SECONDARY OBJECTIVE: Study and containment of <span class="redacted">extradimensional entities</span> encountered during research operations.</p>
+                            <p>PROJECT STATUS: <span class="alert-text">COMPROMISED</span></p>
+                            <p>CURRENT PHASE: Emergency Containment and ECLIPSE Protocol preparation</p>
+                            <p class="corrupted-text">WARNING: Timeline instability detected. Possible temporal loop formation in progress.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="file-content hidden" id="subject-zero-content">
+                        <h3>SUBJECT ZERO PROFILE</h3>
+                        <div class="document-text">
+                            <div class="subject-image">
+                                <div class="image-container">
+                                    <div class="blurred-image">
+                                        <!-- Blurred image of Christopher -->
+                                        <div class="image-placeholder">[IMAGE CORRUPTED]</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>NAME: <span class="redacted">CHRISTOPHER MANLY</span></p>
+                            <p>AGE: 17</p>
+                            <p>STATUS: <span class="alert-text">TEMPORAL ANOMALY</span></p>
+                            <p>NOTES: Subject Zero is the primary <span class="redacted">temporal anchor</span> for the Millfield area. Subject exhibits unusual resistance to <span class="redacted">dimensional shifts</span> and maintains consciousness across timeline alterations.</p>
+                            <p>CURRENT LOCATION: Unknown. Last detected at [REDACTED] on June 22, 1993 at precisely 2:17 AM.</p>
+                            <p>WARNING: Subject Zero may be the only entity capable of activating the ECLIPSE Protocol. Subject must be <span class="redacted">guided</span> to the facility.</p>
+                            <p class="corrupted-text">ADDITIONAL NOTES: Subject may be experiencing a time loop. All attempts to [CORRUPTED DATA]</p>
+                        </div>
+                    </div>
+                    
+                    <div class="file-content hidden" id="event-breach-content">
+                        <h3>EVENT HORIZON BREACH LOG</h3>
+                        <div class="document-text log-text">
+                            <p>>>>> JUNE 21, 1993 - 23:45:12</p>
+                            <p>Dimensional stabilizers functioning at 94% capacity.</p>
+                            <p>Entity containment field stable.</p>
+                            <p>>>>> JUNE 22, 1993 - 00:30:45</p>
+                            <p>ALERT: Unusual energy readings in Containment Sector C.</p>
+                            <p>Dr. [REDACTED] ordered immediate lockdown.</p>
+                            <p>>>>> JUNE 22, 1993 - 01:15:33</p>
+                            <p>CRITICAL ALERT: Entity activity increasing. Multiple containment breaches detected.</p>
+                            <p>Security teams deployed to all sectors.</p>
+                            <p>>>>> JUNE 22, 1993 - 02:00:00</p>
+                            <p>EMERGENCY PROTOCOL INITIATED: All non-essential personnel evacuated.</p>
+                            <p>Dr. [REDACTED] initiating Timeline Stabilization Sequence.</p>
+                            <p>>>>> JUNE 22, 1993 - 02:15:56</p>
+                            <p>CATASTROPHIC FAILURE: Dimensional stabilizers offline.</p>
+                            <p>Entity containment field collapsed.</p>
+                            <p>Timeline fracture detected throughout Millfield.</p>
+                            <p>>>>> JUNE 22, 1993 - 02:17:00</p>
+                            <p class="alert-text">EVENT HORIZON BREACH CONFIRMED</p>
+                            <p>Millfield has been <span class="redacted">temporally isolated</span>.</p>
+                            <p>All personnel within effect radius [REDACTED].</p>
+                            <p>Subject Zero's status: <span class="blinking">ACTIVE</span></p>
+                            <p>>>>> JUNE 22, 1993 - 02:17:01</p>
+                            <p class="corrupted-text">[DATA CORRUPTED]</p>
+                            <p class="time-loop-text">TIME LOOP INITIATED...TIME LOOP INITIATED...TIME LOOP INITIATED...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="file-content hidden" id="eclipse-content">
+                        <h3>ECLIPSE PROTOCOL</h3>
+                        <div class="document-text">
+                            <p class="warning-header">!!! EXTREME CAUTION !!!</p>
+                            <p>The ECLIPSE Protocol is a last resort measure designed to <span class="redacted">reset the local timeline</span> in the event of catastrophic dimensional breach.</p>
+                            <p>PREREQUISITES:</p>
+                            <ul>
+                                <li>Confirmation of irreversible dimensional breach</li>
+                                <li>Presence of a temporal anchor (Subject Zero)</li>
+                                <li>Authorization code from at least one Level OMEGA personnel</li>
+                            </ul>
+                            <p>CONSEQUENCES:</p>
+                            <ul>
+                                <li>Complete <span class="redacted">timeline reset</span> for the affected area</li>
+                                <li>High probability of <span class="redacted">memory loss</span> for all individuals except the primary temporal anchor</li>
+                                <li>Possible <span class="redacted">deletion of temporal anchor</span> from the reset timeline</li>
+                            </ul>
+                            <p class="alert-text">WARNING: ECLIPSE Protocol may result in complete erasure of the initiator from the timeline.</p>
+                            <div class="execute-container">
+                                <button id="execute-eclipse" class="execute-button">EXECUTE ECLIPSE PROTOCOL</button>
+                                <div class="confirmation-code hidden">
+                                    <input type="text" id="confirmation-code" placeholder="ENTER AUTHORIZATION CODE">
+                                    <button id="confirm-eclipse">CONFIRM</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="file-content hidden" id="entities-content">
+                        <h3>ENTITY ANALYSIS</h3>
+                        <div class="document-text">
+                            <p>CLASSIFICATION: EXISTENTIAL THREAT</p>
+                            <p>SOURCE: <span class="redacted">INTERSTICE DIMENSION</span></p>
+                            <p>DESIGNATION: SHADOW ENTITIES</p>
+                            <p>PHYSICAL PROPERTIES:</p>
+                            <ul>
+                                <li>Non-corporeal</li>
+                                <li>Visible only in low-light conditions</li>
+                                <li>Cannot cross dimensional boundaries (e.g., Train Tracks)</li>
+                                <li>Averse to blue light frequencies (450-495 nm)</li>
+                            </ul>
+                            <p>BEHAVIOR PATTERNS:</p>
+                            <ul>
+                                <li>Primarily observational</li>
+                                <li>Attempt to mimic human forms and behavior</li>
+                                <li>Seek out <span class="redacted">temporal anchors</span></li>
+                                <li>Can manipulate physical reality in limited ways</li>
+                            </ul>
+                            <p>THREAT ASSESSMENT:</p>
+                            <p>Entities appear to be <span class="redacted">consuming temporal energy</span> from our dimension. Their presence is directly correlated with increasing timeline instability.</p>
+                            <p>COUNTERMEASURES:</p>
+                            <p>Project BEACON (blue light emitters) can temporarily repel entities and may guide Subject Zero to safety.</p>
+                            <p class="alert-text">CRITICAL UPDATE: Entity population increasing exponentially. Estimated timeline collapse in 14-16 days from breach.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="file-content hidden" id="timeline-content">
+                        <h3>ACCESS DENIED</h3>
+                        <div class="document-text">
+                            <p class="alert-text">AUTHORIZATION REQUIRED</p>
+                            <p>This file is restricted to DIRECTOR level access only.</p>
+                            <div class="password-container">
+                                <input type="password" id="timeline-password" placeholder="ENTER DIRECTOR CODE">
+                                <button id="timeline-submit">SUBMIT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="logs">
+                <div class="logs-header">
+                    <h2>RESEARCH LOGS</h2>
+                    <div class="log-filter">
+                        <select id="log-filter">
+                            <option value="all">All Logs</option>
+                            <option value="research">Research</option>
+                            <option value="security">Security</option>
+                            <option value="personnel">Personnel</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="logs-container">
+                    <div class="log-entry" data-type="research">
+                        <div class="log-date">05/15/1993 09:23</div>
+                        <div class="log-author">Dr. Reynolds</div>
+                        <div class="log-content">
+                            <p>Breakthrough in dimensional anchoring! By using Subject Zero as a focal point, we've stabilized the quantum fluctuations to within acceptable parameters. Next step is to attempt limited temporal displacement.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry" data-type="security">
+                        <div class="log-date">05/30/1993 14:17</div>
+                        <div class="log-author">Security Chief Markson</div>
+                        <div class="log-content">
+                            <p>Containment breach in Sector C. Entity escaped confinement for 3.4 seconds before recapture. All personnel accounted for, but Dr. Chen reporting unusual memory gaps. Placing him under observation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry" data-type="research">
+                        <div class="log-date">06/10/1993 11:05</div>
+                        <div class="log-author">Dr. Reynolds</div>
+                        <div class="log-content">
+                            <p>Temporal displacement test successful! We were able to push a small object 3.7 seconds into the past. However, odd side effect - the object appeared slightly changed, with markings none of us remember making. Implications are troubling.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry" data-type="personnel">
+                        <div class="log-date">06/15/1993 08:30</div>
+                        <div class="log-author">Dr. Chen</div>
+                        <div class="log-content">
+                            <p>I keep seeing shadows where there shouldn't be any. The others think I'm experiencing side effects from the Sector C incident, but I know something is watching us. The entities are learning.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry" data-type="security">
+                        <div class="log-date">06/18/1993 23:45</div>
+                        <div class="log-author">Security Chief Markson</div>
+                        <div class="log-content">
+                            <p>Multiple security breaches today. Cameras keep picking up movement in empty corridors. Dr. Chen found scrawling equations on the walls that none of our staff admit to writing. Something is very wrong here.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry" data-type="research">
+                        <div class="log-date">06/21/1993 19:12</div>
+                        <div class="log-author">Dr. Reynolds</div>
+                        <div class="log-content">
+                            <p>Major instability in the dimensional anchors. Subject Zero's readings are fluctuating wildly. We've initiated stabilization procedures but the effect is spreading throughout Millfield. Director has authorized ECLIPSE Protocol preparation as a contingency.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry alert-entry" data-type="personnel">
+                        <div class="log-date">06/21/1993 23:58</div>
+                        <div class="log-author">Dr. Chen</div>
+                        <div class="log-content">
+                            <p class="alert-text">THEY ARE COMING THROUGH. I CAN SEE THEM EVERYWHERE NOW. TIME IS BREAKING. WE OPENED SOMETHING WE SHOULDN'T HAVE. SUBJECT ZERO IS THE KEY.</p>
+                            <p class="corrupted-text">IF YOU'RE READING THIS, YOU NEED TO [DATA CORRUPTED]</p>
+                        </div>
+                    </div>
+                    
+                    <div class="log-entry" data-type="research">
+                        <div class="log-date">07/05/1993 ??:??</div>
+                        <div class="log-author">UNKNOWN</div>
+                        <div class="log-content">
+                            <p class="glitch-text">is this working? can anyone read this? i found the facility. the blue lights led me here. there's something in the cryo chamber with my name on it. i don't understand what's happening. the computer says i've been here before? that i'm "subject zero"?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="terminal">
+                <div class="echo-terminal">
+                    <div class="terminal-header">
+                        <h2>ECHO SYSTEM TERMINAL</h2>
+                        <div class="terminal-status">STATUS: <span class="status-text">PARTIALLY OPERATIONAL</span></div>
+                    </div>
+                    
+                    <div class="terminal-output">
+                        <p>> INITIALIZING ECHO INTERFACE...</p>
+                        <p>> SYSTEM RECOVERY MODE ACTIVATED</p>
+                        <p>> ATTEMPTING TO ESTABLISH CONNECTION...</p>
+                        <p>> WARNING: SYSTEM INTEGRITY COMPROMISED</p>
+                        <p>> ECHO: Hello, Christopher. Welcome back.</p>
+                    </div>
+                    
+                    <div class="terminal-input">
+                        <form id="echo-form">
+                            <input type="text" id="echo-input" placeholder="ENTER COMMAND">
+                            <button type="submit">SEND</button>
+                        </form>
+                    </div>
+                    
+                    <div class="echo-help">
+                        <p>Available commands:</p>
+                        <ul>
+                            <li>HELP - Display this help message</li>
+                            <li>STATUS - Check system status</li>
+                            <li>SCAN - Scan surroundings</li>
+                            <li>WHAT HAPPENED - Request information about the incident</li>
+                            <li>WHO AM I - Request identity confirmation</li>
+                            <li>ECLIPSE - Information about ECLIPSE Protocol</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="facility-nav">
+            <a href="index.html" class="nav-button">RETURN TO MAIN TERMINAL</a>
+            <div class="time-display">CURRENT TIMESTAMP: <span id="facility-time">07/05/1993 ??:??:??</span></div>
+        </div>
+        
+        <div class="footer">
+            <div class="power-status">POWER: EMERGENCY GENERATORS ACTIVE (27% REMAINING)</div>
+            <div class="alert-status">ALERT STATUS: CRITICAL</div>
+        </div>
+    </div>
+    
+    <audio id="facility-ambient" loop>
+        <source src="sounds/facility-ambient.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="terminal-sound">
+        <source src="sounds/terminal.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="alert-sound">
+        <source src="sounds/alert.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="glitch-sound">
+        <source src="sounds/glitch.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="scripts/clock.js"></script>
+    
+    <script src="scripts/facility.js"></script>
+</body>
+</html>
