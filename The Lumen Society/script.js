@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Special behavior for certain sections
             if (sectionId === 'project') {
-                // Start the watcher when entering Project Silverlight section
+                // Start the watcher when entering Project Lightway section
                 startWatcher();
                 
                 // If the user has already earned some access, reveal more hidden content
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         
-        if (username === 'lumen_member' && password === 'silverlight24') {
+        if (username === 'lumen_member' && password === 'lightway24') {
             grantAccess("Member credentials accepted");
         } else if (username === 'dr.vex' && password === 'audience_awaits') {
             // Special admin access
@@ -172,8 +172,8 @@ document.addEventListener('DOMContentLoaded', function() {
     passwordSubmit.addEventListener('click', function() {
         if (passwordInput.value === '24thframe') {
             grantAccess("24th frame password accepted");
-        } else if (passwordInput.value.toLowerCase() === 'silverlight') {
-            grantAccess("Project Silverlight credentials recognized");
+        } else if (passwordInput.value.toLowerCase() === 'lightway') {
+            grantAccess("Project Lightway credentials recognized");
             revealHiddenContent('project');
         } else if (passwordInput.value.toLowerCase() === 'audience') {
             grantAccess("The Audience welcomes you");
@@ -658,7 +658,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "Mirrors are gateways, not reflections",
             "November 11, 2008 - The boundary fell",
             "Dr. Vex knew the price was too high",
-            "Silver light bridges worlds"
+            "Lightway bridges worlds"
         ];
         
         if (hiddenContentFound < clues.length) {
@@ -699,14 +699,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function revealHiddenContent(section) {
         // Reveal section-specific hidden content
         if (section === 'project') {
-            // Reveal additional Project Silverlight content
+            // Reveal additional Project Lightway content
             const projectSection = document.getElementById('project');
             
             // Create new document page with hidden info
             const newPage = document.createElement('div');
             newPage.className = 'document-page';
             newPage.innerHTML = `
-                <h3>PROJECT SILVERLIGHT - LEVEL 2 ACCESS</h3>
+                <h3>PROJECT LIGHTWAY - LEVEL 2 ACCESS</h3>
                 <p>The 24th frame effect was discovered in 1967 during classified CIA experiments on subliminal messaging. Unlike standard subliminal techniques, the 24th frame doesn't merely flash content too quickly for conscious recognition - it creates a perceptual "doorway" through which information can flow bidirectionally.</p>
                 
                 <p>Dr. Vex's innovation was the discovery that when synchronized with the Lumen Frequency (a specific oscillation pattern in the 7-9 Hz range), the 24th frame could temporarily weaken what he termed "the perceptual boundary" - the cognitive filter that separates conscious reality from other forms of perception.</p>
@@ -1017,7 +1017,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
                     ctx.stroke();
                 }
-            } else if (currentVideo === 'silverlight_exp12') {
+            } else if (currentVideo === 'lightway_exp12') {
                 ctx.fillText('SL-EXPERIMENT_12.avi - CAUTION:', width/2, height/2 - 30);
                 ctx.fillText('THRESHOLD SEQUENCE DETECTED', width/2, height/2);
                 
