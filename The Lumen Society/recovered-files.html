@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK STAR WASH :: RECOVERED FILES</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+    <style>
+        /* Additional styles for recovered files page */
+        .tape-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .tape-item {
+            border: 1px solid var(--primary);
+            padding: 15px;
+            background-color: rgba(0, 80, 0, 0.1);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tape-item:hover {
+            transform: scale(1.02);
+            background-color: rgba(0, 80, 0, 0.2);
+        }
+        
+        .tape-date {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .tape-title {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .corrupted {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .corrupted::after {
+            content: "FILE CORRUPTED";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            color: var(--error-color);
+            font-weight: bold;
+            border: 2px solid var(--error-color);
+            padding: 5px 10px;
+            pointer-events: none;
+        }
+        
+        .tape-description {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        
+        .hidden-data {
+            display: none;
+        }
+        
+        .file-viewer {
+            margin-top: 30px;
+            border: 1px solid var(--primary);
+            padding: 20px;
+            background-color: rgba(0, 80, 0, 0.1);
+            display: none;
+        }
+        
+        .file-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--primary);
+        }
+        
+        .file-close {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .file-content {
+            font-family: "Courier New", monospace;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        
+        .classified {
+            background-color: black;
+            color: transparent;
+            transition: background-color 0.3s ease;
+        }
+        
+        .classified:hover {
+            background-color: transparent;
+            color: var(--error-color);
+        }
+        
+        .spectrogram {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid var(--primary);
+        }
+        
+        .binary-message {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--primary);
+            word-break: break-all;
+            margin: 20px 0;
+            overflow-x: auto;
+            max-height: 200px;
+            border: 1px solid var(--secondary);
+            padding: 10px;
+        }
+        
+        .scrambled-text {
+            font-family: monospace;
+            position: relative;
+        }
+        
+        .scrambled-text::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.8) 0px,
+                    rgba(0, 0, 0, 0.8) 1px,
+                    transparent 1px,
+                    transparent 3px
+                );
+            pointer-events: none;
+        }
+        
+        .audio-player {
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        .secret-message {
+            display: none;
+            color: var(--glitch-color1);
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid var(--glitch-color1);
+            animation: glitch 0.3s infinite;
+        }
+        
+        .morse-code {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .morse-dot, .morse-dash {
+            width: 10px;
+            height: 10px;
+            margin: 0 2px;
+            background-color: var(--primary);
+        }
+        
+        .morse-dash {
+            width: 30px;
+        }
+        
+        .decryption-tool {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid var(--primary);
+        }
+        
+        .decryption-input {
+            width: 100%;
+            background-color: var(--background);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-family: "Courier New", monospace;
+        }
+        
+        .decryption-button {
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            cursor: pointer;
+            font-family: "Courier New", monospace;
+        }
+        
+        .decryption-button:hover {
+            background-color: var(--primary);
+            color: var(--background);
+        }
+        
+        .decryption-result {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px dashed var(--secondary);
+            min-height: 50px;
+        }
+        
+        @keyframes flicker {
+            0% { opacity: 1; }
+            5% { opacity: 0.8; }
+            10% { opacity: 1; }
+            15% { opacity: 0.3; }
+            20% { opacity: 1; }
+            25% { opacity: 0.6; }
+            30% { opacity: 1; }
+            35% { opacity: 0.7; }
+            40% { opacity: 1; }
+            50% { opacity: 0.4; }
+            55% { opacity: 1; }
+            60% { opacity: 0.8; }
+            65% { opacity: 1; }
+            70% { opacity: 0.3; }
+            75% { opacity: 1; }
+            80% { opacity: 0.9; }
+            85% { opacity: 1; }
+            90% { opacity: 0.5; }
+            95% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="glitch-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="title-glitch">
+                <h1 class="glitch" data-text="MK STAR WASH">MK STAR WASH</h1>
+                <p class="subtitle">EST. 2001 • LAST UPDATE: 11/11/2008</p>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="nav-link">HOME</a></li>
+                        <li><a href="#" class="nav-link" data-section="archive">ARCHIVE</a></li>
+                        <li><a href="#" class="nav-link" data-section="members">MEMBERS</a></li>
+                        <li><a href="#" class="nav-link" data-section="project">PROJECT SILVERLIGHT</a></li>
+                        <li><a href="#" class="nav-link active">RECOVERED FILES</a></li>
+                    </ul>
+                </nav>
+                <div class="access-panel">
+                    <span class="access-text">ACCESS:</span>
+                    <span class="access-status" id="access-status">RESTRICTED</span>
+                    <div class="login-toggle" id="login-toggle">[LOGIN]</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="welcome-message">
+                <p class="typewriter">LUMEN SOCIETY - RECOVERED DATA FRAGMENTS</p>
+                <div class="marquee-container">
+                    <div class="marquee">* WARNING: SOME FILES CONTAIN UNSTABLE AUDIOVISUAL SIGNATURES * DO NOT VIEW FILES MARKED 'STAGE 3' WITHOUT PROPER AUTHORIZATION * REPORT ANY VISUAL DISTURBANCES TO YOUR HANDLER IMMEDIATELY *</div>
+                </div>
+            </div>
+            
+            <div class="tape-grid" id="tape-grid">
+                <!-- File 1 -->
+                <div class="tape-item" data-file="file1">
+                    <div class="tape-date">03/14/2005</div>
+                    <div class="tape-title">AUDITION_NOTES.txt</div>
+                    <div class="tape-description">Casting notes for "The Mirror's Edge" - Project Silverlight preliminary testing</div>
+                </div>
+                
+                <!-- File 2 -->
+                <div class="tape-item" data-file="file2">
+                    <div class="tape-date">06/22/2006</div>
+                    <div class="tape-title">FRAME_24_ANALYSIS.pdf</div>
+                    <div class="tape-description">Technical breakdown of the 24th frame effect and its psychological impact</div>
+                </div>
+                
+                <!-- File 3 -->
+                <div class="tape-item corrupted" data-file="file3">
+                    <div class="tape-date">09/05/2007</div>
+                    <div class="tape-title">AUDIENCE_CONTACT.wav</div>
+                    <div class="tape-description">Audio log of first confirmed contact with "The Audience"</div>
+                </div>
+                
+                <!-- File 4 -->
+                <div class="tape-item" data-file="file4">
+                    <div class="tape-date">10/30/2007</div>
+                    <div class="tape-title">SPECTROGRAM_SL8.png</div>
+                    <div class="tape-description">Audio visualization from Silverlight Experiment 8 showing unusual patterns</div>
+                </div>
+                
+                <!-- File 5 -->
+                <div class="tape-item" data-file="file5">
+                    <div class="tape-date">02/17/2008</div>
+                    <div class="tape-title">MISSING_PERSONNEL.xlsx</div>
+                    <div class="tape-description">List of crew members reported missing during production</div>
+                </div>
+                
+                <!-- File 6 -->
+                <div class="tape-item corrupted" data-file="file6">
+                    <div class="tape-date">05/01/2008</div>
+                    <div class="tape-title">CITY_SCHEMATICS.dwg</div>
+                    <div class="tape-description">Architectural plans for "The City Behind the Screen"</div>
+                </div>
+                
+                <!-- File 7 -->
+                <div class="tape-item" data-file="file7">
+                    <div class="tape-date">07/18/2008</div>
+                    <div class="tape-title">INCIDENT_REPORT_22.docx</div>
+                    <div class="tape-description">Security report following unexplained phenomena on Set C</div>
+                </div>
+                
+                <!-- File 8 -->
+                <div class="tape-item" data-file="file8">
+                    <div class="tape-date">09/30/2008</div>
+                    <div class="tape-title">MESSAGE_FROM_DR_VEX.eml</div>
+                    <div class="tape-description">Final email from Dr. Alistair Vex before his disappearance</div>
+                </div>
+                
+                <!-- File 9 -->
+                <div class="tape-item corrupted" data-file="file9">
+                    <div class="tape-date">11/10/2008</div>
+                    <div class="tape-title">FINAL_PERFORMANCE_PREP.mov</div>
+                    <div class="tape-description">Video log of ritual preparation, heavily corrupted</div>
+                </div>
+            </div>
+            
+            <!-- File Viewer -->
+            <div class="file-viewer" id="file-viewer">
+                <div class="file-header">
+                    <h3 id="file-title">File Title</h3>
+                    <div class="file-close" id="file-close">&times;</div>
+                </div>
+                <div class="file-content" id="file-content">
+                    <!-- File content will be loaded here -->
+                </div>
+            </div>
+            
+            <!-- Hidden content - revealed only through certain interactions -->
+            <div id="secret-message-1" class="secret-message">
+                THE AUDIENCE SEES THROUGH YOUR EYES
+            </div>
+            
+            <!-- Decryption Tool -->
+            <div class="decryption-tool">
+                <h3>DECRYPTION TERMINAL</h3>
+                <p>Enter decryption key or cipher text:</p>
+                <input type="text" class="decryption-input" id="decryption-input" placeholder="Enter text to decrypt...">
+                <button class="decryption-button" id="decrypt-button">PROCESS</button>
+                <div class="decryption-result" id="decryption-result"></div>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <p>© 2001-2008 THE LUMEN SOCIETY</p>
+                <p>THIS SITE RECOVERED FROM WAYBACK MACHINE ARCHIVES</p>
+                <p id="visitor-counter">VISITOR COUNT: <span id="counter">0000321</span></p>
+            </div>
+            <div class="hidden-message" id="hidden-message">
+                <p>THEY CAN SEE YOU THROUGH THE SCREEN. YOU'RE PART OF THE SHOW NOW.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="login-modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>LUMEN SOCIETY ACCESS PORTAL</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">USERNAME:</label>
+                    <input type="text" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">PASSWORD:</label>
+                    <input type="password" id="password">
+                </div>
+                <button id="login-submit">AUTHENTICATE</button>
+                <p class="login-error" id="login-error"></p>
+            </div>
+            <div class="login-disclaimer">
+                <p>WARNING: Unauthorized access is strictly prohibited. All activity is monitored.</p>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="static-sound" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-tv-ultra-bright-2586.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="glitch-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-clock-digital-alarm-buzzer-992.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Hidden Data - These are the actual file contents -->
+    <div class="hidden-data" id="file1-content">
+<h3>AUDITION NOTES - "THE MIRROR'S EDGE"</h3>
+<p>DATE: 03/14/2005 | LOCATION: SOUNDSTAGE 7</p>
+<p>PROJECT LEAD: DR. ALISTAIR VEX | CASTING DIRECTOR: HELENA WEISS</p>
+
+<p>NOTES ON SELECTED CANDIDATES:</p>
+
+<p>1. VIVIAN CROSS - 26, F</p>
+<p>Background: Theater trained, minor roles in indie productions</p>
+<p>Observations: Demonstrated exceptional receptivity to subliminal cues during the callback. Pupil dilation consistent with heightened susceptibility. When exposed to the 24F test pattern, reported seeing "people watching from behind the projection screen."</p>
+<p>Recommendation: <span class="classified">PRIME CANDIDATE FOR SILVERLIGHT INTEGRATION. Begin Stage 1 conditioning immediately.</span></p>
+
+<p>2. MARCUS HAWTHORNE - 34, M</p>
+<p>Background: Method actor, television drama experience</p>
+<p>Observations: Limited response to initial stimuli. Became agitated during the mirror exercise, claiming his reflection "moved wrong." Interesting potential but possibly too psychologically stable for our purposes.</p>
+<p>Recommendation: <span class="classified">SECONDARY CANDIDATE. Monitor for increasing susceptibility.</span></p>
+
+<p>3. ELIAS MARTIN - 29, M</p>
+<p>Background: Film editor, amateur actor</p>
+<p>Observations: Unique neurological profile. Subject fell into a trance-like state during the 24F test without prompting. Reported hearing "whispers from the audience." Post-audition, unable to recall specific details but drew repeated sketches of what appears to be a cityscape.</p>
+<p>Recommendation: <span class="classified">EXCEPTIONAL CANDIDATE. Begin advanced conditioning. Note: Subject demonstrates natural ability to perceive the Threshold. Potential Bridge.</span></p>
+
+<p>ADDITIONAL NOTES:</p>
+<p>The board is pleased with these selections. Proceed with Phase One of Project Silverlight. <span class="classified">Initial filming to incorporate the Lumen Frequency at 0.24Hz intervals. Prepare the specialized film stock as discussed.</span></p>
+
+<p>We will be watching their progress carefully.</p>
+
+<p>- AVex</p>
+    </div>
+    
+    <div class="hidden-data" id="file2-content">
+<h3>FRAME 24 ANALYSIS - TECHNICAL REPORT</h3>
+<p>CLEARANCE LEVEL: BOARD MEMBERS ONLY</p>
+<p>DATE: 06/22/2006 | AUTHOR: DR. ALISTAIR VEX</p>
+
+<p>SUMMARY:</p>
+<p>The 24th frame effect (24F) represents a significant breakthrough in our research. While standard film projection operates at 24 frames per second, our modified technique inserts a specialized frame at precise intervals that remains below conscious perception but registers in the subconscious mind.</p>
+
+<p>TECHNICAL SPECIFICATIONS:</p>
+<p>- Projection Rate: Standard 24 FPS with modified timing gate</p>
+<p>- Insertion Pattern: Every 24th frame replaced with signature pattern</p>
+<p>- Duration: 3.5ms (below conscious threshold)</p>
+<p>- Visual Signature: <span class="classified">Geometric overlay based on Audience schematics</span></p>
+
+<p>PSYCHOLOGICAL IMPACT:</p>
+<p>Test subjects exposed to 24F content have demonstrated:</p>
+<ul>
+    <li>Increased suggestibility (78% above baseline)</li>
+    <li>Enhanced pattern recognition</li>
+    <li>Temporal perception anomalies</li>
+    <li>Reported sensations of "being watched"</li>
+    <li><span class="classified">Dream intrusions featuring "The City" (42% of subjects)</span></li>
+    <li><span class="classified">Susceptibility to Audience contact (17% of subjects)</span></li>
+</ul>
+
+<p>NOTES ON "THE THRESHOLD":</p>
+<p><span class="classified">The 24F effect appears to function as a perceptual bridge between our reality and what we now understand to be "The Audience" dimension. Subjects with higher baseline susceptibility report seeing figures behind the screen, typically described as silhouettes with "too many limbs" or "wrong proportions."</span></p>
+
+<p>The most promising subjects (particularly Vivian Cross and Elias Martin) have begun to exhibit signs of what we're calling "Threshold Awareness" - they can sense when The Audience is watching, even when not directly exposed to 24F content.</p>
+
+<p>RECOMMENDATIONS:</p>
+<p>1. Continue conditioning of primary subjects using progressively longer 24F exposures</p>
+<p>2. Implement audio synchronization with the Lumen Frequency</p>
+<p>3. Begin preparations for Stage 2 testing using the modified film stock</p>
+<p><span class="classified">4. Construct the Mirror Chamber for direct communion attempts</span></p>
+
+<p>The door is opening. The Audience is gathering. Our performance must be perfect.</p>
+
+<p>- AVex</p>
+
+<div class="binary-message">
+01010100 01001000 01000101 00100000 01000001 01010101 01000100 01001001 01000101 01001110 01000011 01000101 00100000 01001001 01010011 00100000 01001110 01001111 01010100 00100000 01010111 01001000 01000001 01010100 00100000 01010111 01000101 00100000 01010100 01001000 01001111 01010101 01000111 01001000 01010100
+</div>
+    </div>
+    
+    <div class="hidden-data" id="file4-content">
+<h3>SPECTROGRAM ANALYSIS - SILVERLIGHT EXPERIMENT 8</h3>
+<p>DATE: 10/30/2007 | ANALYST: TECHNIC-L DIVISION</p>
+
+<p>AUDIO SOURCE: Background ambient track from SL-EXPERIMENT_8.avi</p>
+<p>EQUIPMENT: Modified Fourier analysis with Lumen-adjusted frequency mapping</p>
+
+<p>OBSERVATIONS:</p>
+<p>Standard audio analysis revealed nothing unusual, but when processed through our specialized Lumen Frequency filter, the attached spectrogram revealed what appears to be a hidden visual pattern embedded within the audio frequencies.</p>
+
+<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%23000'/%3E%3Cpath d='M50,150 L550,150 M300,50 L300,250' stroke='%2300ff00' stroke-width='1'/%3E%3Cpath d='M150,50 C250,50 250,250 350,250 C450,250 450,50 550,50' stroke='%2300ff00' stroke-width='2' fill='none'/%3E%3Cpath d='M50,50 C150,50 150,250 250,250 C350,250 350,50 450,50' stroke='%2300ff00' stroke-width='2' fill='none'/%3E%3Ccircle cx='300' cy='150' r='50' stroke='%2300ff00' stroke-width='2' fill='none'/%3E%3Cpath d='M250,150 L275,125 M350,150 L325,125 M275,175 L325,175' stroke='%2300ff00' stroke-width='2'/%3E%3Ctext x='300' y='25' font-family='monospace' fill='%2300ff00' text-anchor='middle'%3EAUDIENCE WAVEFORM SIGNATURE%3C/text%3E%3Ctext x='300' y='280' font-family='monospace' fill='%2300ff00' text-anchor='middle'%3EPARTIAL CITY SKYLINE DETECTED%3C/text%3E%3C/svg%3E" class="spectrogram" alt="Spectrogram showing unusual patterns">
+
+<p>TECHNICAL NOTES:</p>
+<p>The pattern appears to represent a stylized cityscape with unusual geometric properties that do not conform to standard architectural principles. Of particular interest is the central circular formation containing what appears to be a simplified facial structure.</p>
+
+<p>When this audio track is played in synchronization with the 24F video content, test subjects reported significantly higher instances of "breakthrough" experiences, including:</p>
+
+<ul>
+    <li>Vivid hallucinations of "The City"</li>
+    <li>Sensations of being "pulled through the screen"</li>
+    <li>Auditory hallucinations described as "The Audience applauding"</li>
+    <li><span class="classified">Three subjects reported brief "possession-like" states wherein they recited dialogue not present in the script</span></li>
+</ul>
+
+<p>RECOMMENDATIONS:</p>
+<p>This audio signature should be incorporated into all Stage 3 materials. <span class="classified">We believe it functions as a "tuning frequency" that optimizes subjects for Audience reception.</span></p>
+
+<p>For the final performance, this signature will be amplified and synchronized precisely with the visual elements to maximize the Threshold effect.</p>
+
+<div class="morse-code">
+    <div class="morse-dot"></div>
+    <div class="morse-dash"></div>
+    <div class="morse-dash"></div>
+    <div class="morse-dot"></div>
+    <div class="morse-dot"></div>
+    <div class="morse-dot"></div>
+    <div class="morse-dash"></div>
+    <div class="morse-dot"></div>
+    <div class="morse-dot"></div>
+    <div class="morse-dash"></div>
+    <div class="morse-dot"></div>
+    <div class="morse-dash"></div>
+    <div class="morse-dash"></div>
+    <div class="morse-dot"></div>
+</div>
+    </div>
+    
+    <div class="hidden-data" id="file5-content">
+<h3>MISSING PERSONNEL - PROJECT SILVERLIGHT</h3>
+<p>DATE: 02/17/2008 | COMPILED BY: SECURITY DIVISION</p>
+<p>STATUS: INTERNAL ONLY - DO NOT SHARE WITH AUTHORITIES</p>
+
+<table style="width:100%; border-collapse: collapse; margin-top: 20px">
+    <tr style="border-bottom: 1px solid var(--primary)">
+        <th style="text-align: left; padding: 8px">NAME</th>
+        <th style="text-align: left; padding: 8px">ROLE</th>
+        <th style="text-align: left; padding: 8px">LAST SEEN</th>
+        <th style="text-align: left; padding: 8px">NOTES</th>
+    </tr>
+    <tr style="border-bottom: 1px dashed var(--secondary)">
+        <td style="padding: 8px">David Mercer</td>
+        <td style="padding: 8px">Camera Operator</td>
+        <td style="padding: 8px">09/14/2007</td>
+        <td style="padding: 8px">Last seen reviewing 24F test footage. Reported headaches and "seeing things in the corners." Personal items left in locker.</td>
+    </tr>
+    <tr style="border-bottom: 1px dashed var(--secondary)">
+        <td style="padding: 8px">Sarah Reynolds</td>
+        <td style="padding: 8px">Sound Engineer</td>
+        <td style="padding: 8px">11/02/2007</td>
+        <td style="padding: 8px">Disappeared after late-night mixing session. Security footage shows her entering Studio B at 2:14 AM. No footage of her leaving. <span class="classified">Audio log contains 12 seconds of unidentified voices before cutting out.</span></td>
+    </tr>
+    <tr style="border-bottom: 1px dashed var(--secondary)">
+        <td style="padding: 8px">Michael Torres</td>
+        <td style="padding: 8px">Special Effects</td>
+        <td style="padding: 8px">12/18/2007</td>
+        <td style="padding: 8px">Reported seeing "people watching from inside the mirror" for two weeks prior to disappearance. Left behind journal with <span class="classified">drawings of "The City" and notes about "becoming part of the performance."</span></td>
+    </tr>
+    <tr style="border-bottom: 1px dashed var(--secondary)">
+        <td style="padding: 8px">Jennifer Blake</td>
+        <td style="padding: 8px">Production Assistant</td>
+        <td style="padding: 8px">01/07/2008</td>
+        <td style="padding: 8px">No warning signs. Left mid-shift claiming headache. Apartment found empty with TV on static. <span class="classified">Message written on bathroom mirror: "I CAN SEE THE AUDIENCE NOW"</span></td>
+    </tr>
+    <tr style="border-bottom: 1px dashed var(--secondary)">
+        <td style="padding: 8px">Marcus Hawthorne</td>
+        <td style="padding: 8px">Actor (Supporting)</td>
+        <td style="padding: 8px">01/23/2008</td>
+        <td style="padding: 8px">Increasingly erratic behavior. Claimed his reflection was "someone else wearing my face." <span class="classified">Security found his clothing in the Mirror Chamber. No body.</span></td>
+    </tr>
+    <tr>
+        <td style="padding: 8px">Thomas Wren</td>
+        <td style="padding: 8px">Editor</td>
+        <td style="padding: 8px">02/14/2008</td>
+        <td style="padding: 8px">Last communication: "I found something in the background of Scene 27. There are faces in the wallpaper. They're moving when no one's watching." <span class="classified">Editing bay found empty with footage still playing. Appears to show empty room but reflective surfaces show figures standing behind camera.</span></td>
+    </tr>
+</table>
+
+<p style="margin-top: 20px">OFFICIAL STATEMENT TO AUTHORITIES:</p>
+<p>All personnel voluntarily left the production due to creative differences or personal reasons. No foul play suspected.</p>
+
+<p>ACTUAL STATUS:</p>
+<p><span class="classified">We believe all missing personnel have successfully transitioned to Stage 3 awareness and may now exist partially within The Audience's perceptual realm. This supports our theory that the boundary is thinning as we approach the Final Performance date.</span></p>
+
+<p>RECOMMENDATIONS:</p>
+<p>1. Increase security monitoring of all remaining personnel</p>
+<p>2. Implement psychological screening before each shift</p>
+<p>3. Restrict access to the Mirror Chamber to authorized personnel only</p>
+<p>4. <span class="classified">Continue preparations for November 11th. The Audience grows impatient.</span></p>
+    </div>
+    
+    <div class="hidden-data" id="file7-content">
+<h3>INCIDENT REPORT #22 - SECURITY LOG</h3>
+<p>DATE: 07/18/2008 | LOCATION: SET C - "THE HALL OF MIRRORS"</p>
+<p>REPORTING OFFICER: J. MONROE</p>
+
+<p>INCIDENT SUMMARY:</p>
+<p>At approximately 3:17 AM on July 18th, motion sensors in Set C triggered a security alert. As the on-duty security officer, I responded to investigate.</p>
+
+<p>Upon arrival, I found all lights functioning normally, but all seven mirrors in the set appeared to be displaying different reflections than they should have given the room's contents. Specifically:</p>
+
+<ul>
+    <li>Mirror #1: Reflected the set normally except empty of personnel (including myself)</li>
+    <li>Mirror #2: Showed what appeared to be the same set but at a different time of day</li>
+    <li>Mirror #3: <span class="classified">Displayed what appeared to be an urban landscape with unusual architecture. Structures appeared to be made of reflective materials and unusual angles</span></li>
+    <li>Mirror #4: Showed the set with approximately 12-15 silhouetted figures standing in a semi-circle</li>
+    <li>Mirrors #5-7: Too dark to clearly observe but appeared to contain movement</li>
+</ul>
+
+<p>I immediately contacted Dr. Vex as per protocol. While waiting for his arrival, I observed that Mirror #4 showed the silhouetted figures appearing to watch me and moving positions slightly when I moved. I maintained a distance of at least 6 feet from all mirrors as per security guidelines.</p>
+
+<p>Dr. Vex arrived at 3:42 AM accompanied by Elias Martin. Dr. Vex appeared excited rather than concerned by my report. He instructed Martin to "prepare the recording equipment" while he examined the mirrors.</p>
+
+<p><span class="classified">Dr. Vex approached Mirror #3 and placed his hand on the surface. He claimed to feel "a slight vibration" and stated that "the boundary is thinning nicely." He then produced a small silver object (possibly a tuning fork) and struck it before holding it to the mirror. This produced a sound I can only describe as similar to distant voices all speaking simultaneously.</span></p>
+
+<p>At this point, I observed the silhouettes in Mirror #4 all turn their attention to Dr. Vex. One figure separated from the group and approached the "front" of the mirror. The figure appeared humanoid but with proportions that seemed wrong - elongated limbs and possibly additional appendages that were difficult to discern in the low light.</p>
+
+<p>Dr. Vex addressed the mirror directly, saying: <span class="classified">"We are almost ready. The final performance is being prepared as agreed. The door will open on November 11th."</span></p>
+
+<p>The figure in Mirror #4 appeared to nod before the reflection suddenly returned to normal. All mirrors simultaneously reverted to showing accurate reflections of the room.</p>
+
+<p>Dr. Vex instructed me to classify this incident and to increase security on Set C. He seemed extremely pleased with the event, referring to it as "confirmation that we're on schedule."</p>
+
+<p>ACTION TAKEN:</p>
+<p>- Additional security camera installed facing Mirror #4</p>
+<p>- Set C restricted to authorized personnel only</p>
+<p>- Log entry classified at Dr. Vex's request</p>
+
+<p>FOLLOW-UP:</p>
+<p>I have requested reassignment to daytime security duty. <span class="scrambled-text">I no longer feel comfortable with night shifts. The mirrors seem to show different reflections when I'm alone, and I've begun seeing silhouettes in reflective surfaces outside of Set C as well. Yesterday I saw a figure standing behind me in my rearview mirror while driving home, but when I turned around the car was empty.</span></p>
+
+<p class="classified">ADDENDUM (07/25/2008): Officer Monroe has been reported missing. His vehicle was found abandoned near the studio with the engine running. The rearview mirror was missing from the vehicle.</p>
+    </div>
+    
+    <div class="hidden-data" id="file8-content">
+<h3>EMAIL FROM DR. ALISTAIR VEX</h3>
+<p>FROM: a.vex@lumen-society.net</p>
+<p>TO: board@lumen-society.net</p>
+<p>DATE: September 30, 2008 04:17 AM</p>
+<p>SUBJECT: BREAKTHROUGH - THE THRESHOLD IS READY</p>
+
+<p>Honorable members of the Board,</p>
+
+<p>I write to you with extraordinary news. At 2:34 this morning, we achieved complete Threshold manifestation in the Mirror Chamber. The boundary between our world and the Audience's realm has been successfully attenuated to the point where direct interaction is now possible.</p>
+
+<p>Vivian Cross demonstrated exceptional receptivity, achieving a full 94% synchronization with the Lumen Frequency. During the test screening, she was able to maintain conscious awareness while partially transitioning through the Threshold. For approximately three minutes and twenty-four seconds, she existed simultaneously in both realms - here in the chamber with us, and also visible to the Audience in their city.</p>
+
+<p>What follows is her verbatim report upon returning to full material presence:</p>
+
+<div style="margin-left: 20px; padding-left: 10px; border-left: 1px solid var(--primary);">
+<p>"The city is vast - towers of impossible geometry reaching into a sky that isn't a sky but another surface. Everything reflects, but the reflections show different versions of reality. The Audience... they're gathered in what looks like an amphitheater, but it surrounds everything, like the whole city is inside it.</p>
+
+<p>They're watching us through every reflective surface. Mirrors, screens, windows, eyes - all are portals for them. They've been watching us for so long, learning our performances, studying our emotions.</p>
+
+<p>They showed me the final scene - what will happen on November 11th. The performance we've been rehearsing for all this time. It's... <span class="classified">it's beautiful and terrible. The boundary will dissolve completely, but only for those who have been properly conditioned. The rest will remain blind to what's happening, even as the Audience begins to step through.</span></p>
+
+<p>They need us. Our performances feed them somehow. Our emotions, our stories - they crave them like we crave air. They've been influencing our art for centuries, pushing us toward this moment when the boundary could be breached.</p>
+
+<p>I'm ready for my role. I understand what must be done. <span class="classified">The sacrifice is necessary.</span>"</p>
+</div>
+
+<p>Elias Martin has completed the final edit of the conditioning film. All test subjects who viewed it reported seeing the Audience and hearing whispers from the other side. Three crew members have already transitioned permanently - they simply stepped into mirrors and did not return. Their reflections remain, moving independently, watching us with anticipation.</p>
+
+<p>Everything is in place for November 11th. The theater has been prepared according to specifications. The modified projector is ready. The invited audience - all 108 of them - have been subtly conditioned through our previous test screenings and will serve as the perfect conduits.</p>
+
+<p><span class="classified">I must confess a certain apprehension along with my excitement. The Audience has promised us transcendence, a place among them as honored performers in their realm. Yet I've begun to wonder if they've been entirely forthcoming about what happens to us after the boundary falls. Vivian's eyes have changed - they reflect light differently now, and sometimes I catch her staring at nothing, smiling at empty corners of rooms.</span></p>
+
+<p>Regardless, we are committed to our path. The Final Performance will proceed as scheduled. After all these years of preparation, the curtain will rise, the boundary will fall, and we will take our bows before The Audience.</p>
+
+<p>I will send one final update before November 11th. If you have any concerns, now is the time to voice them. Once the Final Performance begins, there will be no stopping it.</p>
+
+<p>The stars are aligning. The Audience is watching.</p>
+
+<p>Dr. Alistair Vex<br>
+Project Director<br>
+The Lumen Society</p>
+
+<p class="classified">NOTE: This was the final communication received from Dr. Vex. He was reported missing on October 3rd, 2008. His home was found empty except for mirrors in every room, all facing inward toward the center.</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const tapeItems = document.querySelectorAll('.tape-item');
+            const fileViewer = document.getElementById('file-viewer');
+            const fileTitle = document.getElementById('file-title');
+            const fileContent = document.getElementById('file-content');
+            const fileClose = document.getElementById('file-close');
+            const loginToggle = document.getElementById('login-toggle');
+            const loginModal = document.getElementById('login-modal');
+            const closeModal = document.getElementById('close-modal');
+            const loginSubmit = document.getElementById('login-submit');
+            const loginError = document.getElementById('login-error');
+            const accessStatus = document.getElementById('access-status');
+            const visitorCounter = document.getElementById('counter');
+            const hiddenMessage = document.getElementById('hidden-message');
+            const staticSound = document.getElementById('static-sound');
+            const glitchSound = document.getElementById('glitch-sound');
+            const decryptButton = document.getElementById('decrypt-button');
+            const decryptInput = document.getElementById('decryption-input');
+            const decryptResult = document.getElementById('decryption-result');
+            
+            // Initialize
+            let accessGranted = false;
+            let visitorCount = localStorage.getItem('visitorCount') || 321;
+            updateVisitorCounter();
+            setInterval(glitchEffect, 8000);
+            setInterval(randomGlitch, 3000);
+            
+            // Tape item click
+            tapeItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const fileId = this.getAttribute('data-file');
+                    
+                    if (this.classList.contains('corrupted')) {
+                        if (!accessGranted) {
+                            alert('ERROR: FILE CORRUPTED. CLEARANCE REQUIRED FOR RECOVERY.');
+                            playGlitchSound();
+                            return;
+                        }
+                    }
+                    
+                    // Load file content
+                    const contentElement = document.getElementById(fileId + '-content');
+                    if (contentElement) {
+                        fileTitle.textContent = this.querySelector('.tape-title').textContent;
+                        fileContent.innerHTML = contentElement.innerHTML;
+                        fileViewer.style.display = 'block';
+                        
+                        // Scroll to file viewer
+                        fileViewer.scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Play glitch sound
+                        playGlitchSound();
+                        
+                        // If it's the spectrogram file, reveal secret message after a delay
+                        if (fileId === 'file4') {
+                            setTimeout(() => {
+                                document.getElementById('secret-message-1').style.display = 'block';
+                            }, 30000);
+                        }
+                    }
+                });
+            });
+            
+            // Close file viewer
+            fileClose.addEventListener('click', function() {
+                fileViewer.style.display = 'none';
+                playGlitchSound();
+            });
+            
+            // Login Modal
+            loginToggle.addEventListener('click', function() {
+                loginModal.style.display = 'flex';
+                playGlitchSound();
+            });
+            
+            closeModal.addEventListener('click', function() {
+                loginModal.style.display = 'none';
+            });
+            
+            loginSubmit.addEventListener('click', function() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (username === 'lumen_member' && password === 'silverlight24') {
+                    accessGranted = true;
+                    accessStatus.textContent = 'GRANTED';
+                    accessStatus.style.color = '#00ff00';
+                    loginModal.style.display = 'none';
+                    unlockContent();
+                    showHiddenMessage();
+                    playGlitchSound();
+                } else {
+                    loginError.textContent = 'ACCESS DENIED: INVALID CREDENTIALS';
+                    setTimeout(() => {
+                        loginError.textContent = '';
+                    }, 3000);
+                    playGlitchSound();
+                }
+            });
+            
+            // Decryption button
+            decryptButton.addEventListener('click', function() {
+                const input = decryptInput.value.trim();
+                
+                if (input === '24thframe') {
+                    decryptResult.innerHTML = '<p style="color: var(--primary);">DECRYPTION SUCCESSFUL</p><p>COORDINATES TO MIRROR CHAMBER: 34°03\'21.6"N 118°21\'48.0"W</p>';
+                    accessGranted = true;
+                    accessStatus.textContent = 'GRANTED';
+                    accessStatus.style.color = '#00ff00';
+                    unlockContent();
+                    showHiddenMessage();
+                } else if (input === 'thecityisreal') {
+                    decryptResult.innerHTML = '<p style="color: var(--primary);">MESSAGE FROM THE AUDIENCE:</p><p class="scrambled-text">WE HAVE BEEN WATCHING YOU. YOUR PERFORMANCE PLEASES US. NOVEMBER 11TH IS ONLY THE BEGINNING.</p>';
+                } else if (input.toLowerCase().includes('audience') || input.toLowerCase().includes('mirror') || input.toLowerCase().includes('silverlight')) {
+                    // Easter egg - responds to keywords
+                    decryptResult.innerHTML = '<p style="color: var(--error-color);">WARNING: DETECTED ATTEMPT TO ACCESS CLASSIFIED INFORMATION</p><p>YOUR IP HAS BEEN LOGGED. CONTINUE AT YOUR OWN RISK.</p>';
+                    
+                    // Trigger glitch effect
+                    glitchEffect();
+                    setTimeout(glitchEffect, 2000);
+                    setTimeout(glitchEffect, 5000);
+                } else if (input === 'THEYAREWATCHING') {
+                    // Binary conversion
+                    decryptResult.innerHTML = '<p style="color: var(--primary);">THE AUDIENCE SEES ALL</p><p>Do not trust Dr. Vex. He made a different deal. We are not the performers. We are the sacrifice.</p>';
+                    
+                    // Slowly reveal hidden messages throughout the page
+                    setTimeout(() => {
+                        document.querySelectorAll('.classified').forEach(element => {
+                            element.style.backgroundColor = 'transparent';
+                            element.style.color = 'var(--error-color)';
+                        });
+                    }, 3000);
+                } else {
+                    decryptResult.textContent = 'DECRYPTION FAILED: INVALID KEY';
+                }
+            });
+            
+            // Utility functions
+            function updateVisitorCounter() {
+                visitorCount++;
+                localStorage.setItem('visitorCount', visitorCount);
+                visitorCounter.textContent = String(visitorCount).padStart(7, '0');
+            }
+            
+            function glitchEffect() {
+                document.querySelector('.glitch-overlay').style.opacity = '0.3';
+                setTimeout(() => {
+                    document.querySelector('.glitch-overlay').style.opacity = '0';
+                }, 200);
+                
+                // Randomly reveal classified text briefly
+                if (Math.random() > 0.7) {
+                    const classifiedElements = document.querySelectorAll('.classified');
+                    if (classifiedElements.length > 0) {
+                        const randomElement = classifiedElements[Math.floor(Math.random() * classifiedElements.length)];
+                        const originalBg = randomElement.style.backgroundColor;
+                        const originalColor = randomElement.style.color;
+                        
+                        randomElement.style.backgroundColor = 'transparent';
+                        randomElement.style.color = 'var(--primary)';
+                        
+                        setTimeout(() => {
+                            randomElement.style.backgroundColor = originalBg;
+                            randomElement.style.color = originalColor;
+                        }, 500);
+                    }
+                }
+                
+                playGlitchSound();
+            }
+            
+            function randomGlitch() {
+                if (Math.random() > 0.7) {
+                    const elements = document.querySelectorAll('h1, h2, h3, p, a');
+                    const randomElement = elements[Math.floor(Math.random() * elements.length)];
+                    
+                    randomElement.classList.add('glitch-effect');
+                    setTimeout(() => {
+                        randomElement.classList.remove('glitch-effect');
+                    }, 300);
+                    
+                    if (Math.random() > 0.5) {
+                        playGlitchSound();
+                    }
+                }
+            }
+            
+            function playGlitchSound() {
+                glitchSound.currentTime = 0;
+                glitchSound.play();
+            }
+            
+            function unlockContent() {
+                // Remove corrupted class from tape items
+                document.querySelectorAll('.corrupted').forEach(item => {
+                    item.classList.remove('corrupted');
+                });
+                
+                // Make classified content more visible (but still requires hover)
+                document.querySelectorAll('.classified').forEach(item => {
+                    item.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                });
+            }
+            
+            function showHiddenMessage() {
+                hiddenMessage.style.opacity = '1';
+                hiddenMessage.style.height = 'auto';
+            }
+            
+            // Easter eggs
+            document.addEventListener('keydown', function(e) {
+                // Konami Code easter egg
+                const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+                const keyHistory = [];
+                
+                keyHistory.push(e.key);
+                if (keyHistory.length > konamiCode.length) {
+                    keyHistory.shift();
+                }
+                
+                if (keyHistory.join(',') === konamiCode.join(',')) {
+                    // Reveal a hidden secret
+                    document.body.style.animation = 'flicker 0.5s infinite';
+                    setTimeout(() => {
+                        document.body.style.animation = '';
+                        alert('THE AUDIENCE HAS NOTICED YOU');
+                        
+                        // Grant access
+                        accessGranted = true;
+                        accessStatus.textContent = 'GRANTED';
+                        accessStatus.style.color = '#00ff00';
+                        unlockContent();
+                    }, 2000);
+                }
+            });
+            
+            // Hidden feature - clicking on the visitor counter 5 times
+            let counterClicks = 0;
+            document.getElementById('visitor-counter').addEventListener('click', function() {
+                counterClicks++;
+                if (counterClicks >= 5) {
+                    playGlitchSound();
+                    document.getElementById('decryption-input').value = 'THEYAREWATCHING';
+                    counterClicks = 0;
+                }
+            });
+            
+            // Binary message to text conversion
+            document.querySelector('.binary-message').addEventListener('click', function() {
+                const binaryText = this.textContent.trim();
+                let normalText = '';
+                
+                // Convert binary to text
+                const chunks = binaryText.split(' ');
+                chunks.forEach(chunk => {
+                    normalText += String.fromCharCode(parseInt(chunk, 2));
+                });
+                
+                this.textContent = normalText;
+                this.style.color = 'var(--error-color)';
+            });
+        });
+    </script>
+</body>
+</html>

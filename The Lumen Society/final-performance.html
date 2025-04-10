@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK STAR WASH :: THE FINAL PERFORMANCE</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+    <style>
+        /* Additional styles for final performance page */
+        .timeline {
+            margin-top: 40px;
+            border-left: 2px solid var(--primary);
+            padding-left: 20px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid var(--primary);
+            background-color: var(--background);
+            left: -29px;
+            top: 0;
+        }
+        
+        .timeline-date {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-content {
+            background-color: rgba(0, 40, 0, 0.1);
+            padding: 15px;
+            border-left: 2px solid var(--secondary);
+        }
+        
+        .timeline-content p {
+            margin-bottom: 10px;
+        }
+        
+        .timeline-content p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .censored {
+            background-color: black;
+            color: transparent;
+            padding: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .censored:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--error-color);
+        }
+        
+        .countdown-container {
+            margin: 40px 0;
+            text-align: center;
+            padding: 30px;
+            border: 1px solid var(--primary);
+            background-color: rgba(0, 40, 0, 0.1);
+            position: relative;
+        }
+        
+        .countdown-title {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .countdown-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-top: 5px;
+        }
+        
+        .performance-details {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .details-section {
+            border: 1px solid var(--primary);
+            padding: 20px;
+            background-color: rgba(0, 40, 0, 0.1);
+        }
+        
+        .details-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        .cast-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .cast-item {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .cast-name {
+            font-weight: bold;
+        }
+        
+        .cast-role {
+            color: var(--secondary);
+            font-style: italic;
+        }
+        
+        .theater-map {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+            position: relative;
+            border: 1px solid var(--secondary);
+            overflow: hidden;
+        }
+        
+        .map-svg {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .evidence-item {
+            border: 1px solid var(--primary);
+            padding: 15px;
+            background-color: rgba(0, 40, 0, 0.1);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .evidence-item:hover {
+            background-color: rgba(0, 40, 0, 0.2);
+            transform: scale(1.02);
+        }
+        
+        .evidence-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed var(--secondary);
+            padding-bottom: 5px;
+        }
+        
+        .evidence-description {
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        
+        .evidence-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .evidence-modal-content {
+            background-color: var(--background);
+            border: 2px solid var(--primary);
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .evidence-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+        
+        .evidence-close:hover {
+            color: var(--text);
+        }
+        
+        .evidence-content {
+            margin-top: 20px;
+        }
+        
+        .evidence-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+            border: 1px solid var(--secondary);
+        }
+        
+        .flashing-warning {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+            padding: 5px 10px;
+            animation: flash 2s infinite;
+            font-size: 0.8rem;
+        }
+        
+        .hidden-clue {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        #clue-1 {
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.7rem;
+            color: var(--error-color);
+        }
+        
+        #clue-2 {
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            font-size: 0.7rem;
+        }
+        
+        .secret-input {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            border: 1px dashed var(--secondary);
+        }
+        
+        .secret-input input {
+            background-color: var(--background);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 12px;
+            margin-right: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .secret-input button {
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .secret-input button:hover {
+            background-color: var(--primary);
+            color: var(--background);
+        }
+        
+        .secret-result {
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        
+        .frame24-container {
+            margin-top: 40px;
+            border: 1px solid var(--primary);
+            padding: 20px;
+            background-color: rgba(0, 40, 0, 0.1);
+            position: relative;
+        }
+        
+        .frame24-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .frame24-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .frame24-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .frame24-button {
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .frame24-button:hover {
+            background-color: var(--primary);
+            color: var(--background);
+        }
+        
+        .frame24-screen {
+            width: 100%;
+            height: 400px;
+            background-color: #000;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .frame24-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.1),
+                    rgba(0, 0, 0, 0.1) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        
+        .frame-counter {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            color: var(--primary);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .frame-content {
+            width: 80%;
+            height: 80%;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hidden-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+        }
+        
+        .hidden-frame-image {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .subliminal-text {
+            position: absolute;
+            color: var(--error-color);
+            font-size: 3rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.05s ease;
+            text-align: center;
+        }
+        
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            .performance-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .countdown-timer {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="glitch-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="title-glitch">
+                <h1 class="glitch" data-text="MK STAR WASH">MK STAR WASH</h1>
+                <p class="subtitle">EST. 2001 • LAST UPDATE: 11/11/2008</p>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="nav-link">HOME</a></li>
+                        <li><a href="recovered-files.html" class="nav-link">RECOVERED FILES</a></li>
+                        <li><a href="mirror-chamber.html" class="nav-link">MIRROR CHAMBER</a></li>
+                        <li><a href="#" class="nav-link" data-section="project">PROJECT SILVERLIGHT</a></li>
+                        <li><a href="#" class="nav-link active">FINAL PERFORMANCE</a></li>
+                    </ul>
+                </nav>
+                <div class="access-panel">
+                    <span class="access-text">ACCESS:</span>
+                    <span class="access-status" id="access-status">RESTRICTED</span>
+                    <div class="login-toggle" id="login-toggle">[LOGIN]</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="welcome-message">
+                <p class="typewriter">THE FINAL PERFORMANCE - NOVEMBER 11, 2008</p>
+                <div class="marquee-container">
+                    <div class="marquee">* WARNING: ACCESSING THIS PAGE MAY EXPOSE YOU TO LUMEN FREQUENCY PATTERNS * UNEXPLAINED PHENOMENA HAVE BEEN REPORTED BY PREVIOUS VISITORS * BY CONTINUING, YOU ACKNOWLEDGE THAT YOU ARE NOW PART OF THE AUDIENCE *</div>
+                </div>
+            </div>
+            
+            <div class="document-page">
+                <h3>THE FINAL PERFORMANCE - EVENT RECORD</h3>
+                <p>On November 11th, 2008, the Lumen Society conducted what they referred to as "The Final Performance" at an undisclosed theater in Los Angeles. Attendance was by invitation only, with 108 guests selected through a process described in recovered documents as "preliminary conditioning via test screenings."</p>
+                
+                <p>According to multiple sources, what began as an experimental film screening rapidly descended into <span class="censored">mass psychosis, with reports of shared hallucinations among audience members</span>. At precisely 11:24 PM, security cameras throughout the venue experienced simultaneous failure, leaving a 27-minute gap in surveillance footage.</p>
+                
+                <p>When systems came back online, the theater was empty. All 108 audience members, along with the 12 Lumen Society members in attendance, had vanished. Their personal belongings remained, including phones, wallets, and in some cases, articles of clothing. No bodies were ever recovered, and the case remains open in LAPD files as a <span class="censored">mass disappearance with suspected cult activity</span>.</p>
+                
+                <p>Subsequent investigation of the projection booth revealed modified equipment and <span class="censored">film reels containing spliced frames with unusual geometric patterns</span>. Analysis of these frames was never completed, as the evidence was reportedly destroyed in a fire at the police evidence locker three weeks later.</p>
+            </div>
+            
+            <div class="countdown-container">
+                <div class="countdown-title">TIME ELAPSED SINCE THE FINAL PERFORMANCE:</div>
+                <div class="countdown-timer" id="countdown-timer">
+                    <div class="countdown-section">
+                        <div id="countdown-years">0000</div>
+                        <div class="countdown-label">YEARS</div>
+                    </div>
+                    <div class="countdown-section">
+                        <div id="countdown-days">000</div>
+                        <div class="countdown-label">DAYS</div>
+                    </div>
+                    <div class="countdown-section">
+                        <div id="countdown-hours">00</div>
+                        <div class="countdown-label">HOURS</div>
+                    </div>
+                    <div class="countdown-section">
+                        <div id="countdown-minutes">00</div>
+                        <div class="countdown-label">MINUTES</div>
+                    </div>
+                    <div class="countdown-section">
+                        <div id="countdown-seconds">00</div>
+                        <div class="countdown-label">SECONDS</div>
+                    </div>
+                </div>
+                <div class="hidden-clue" id="clue-1">What happens when the countdown reaches zero again?</div>
+            </div>
+            
+            <div class="timeline">
+                <h3>EVENTS LEADING TO THE FINAL PERFORMANCE</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">MARCH 2001</div>
+                    <div class="timeline-content">
+                        <p>The Lumen Society is formed by Dr. Alistair Vex, a former experimental psychologist with alleged ties to MK-Ultra-adjacent research. Initial membership consists of seven Hollywood industry professionals, including directors, actors, and production staff.</p>
+                        <p>Society manifesto speaks of "transcending the illusion of cinema" and "breaking the fourth wall between performer and audience in ways never before attempted."</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">JUNE 2003</div>
+                    <div class="timeline-content">
+                        <p>First documented experiment with "24F" technique - the insertion of subliminal frames into film at precise intervals. Initial tests show promising results in altering viewer perception and emotional states.</p>
+                        <p>Society membership grows to 19 individuals, with regular meetings held at a private residence in the Hollywood Hills.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">OCTOBER 2005</div>
+                    <div class="timeline-content">
+                    <p>Production begins on "The Mirror's Edge," an independent film serving as a cover for Project Silverlight research. Cast and crew are selectively chosen based on psychological profiles indicating high susceptibility to suggestion.</p>
+                    <p>First reports of <span class="censored">crew members experiencing vivid shared hallucinations</span> during filming. Dr. Vex's notes refer to these as "breakthrough moments" and "early contact with the Audience."</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">FEBRUARY 2007</div>
+                <div class="timeline-content">
+                    <p>Construction of the Mirror Chamber facility at an undisclosed location. Society records indicate this space was designed for "direct communion with the Audience" through specialized reflective surfaces and audiovisual stimuli.</p>
+                    <p>First documented disappearance associated with the Society: camera operator David Mercer vanishes after reviewing test footage. His journal, recovered from his apartment, contains increasingly paranoid entries about <span class="censored">seeing figures watching him from reflective surfaces</span>.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">APRIL 2008</div>
+                <div class="timeline-content">
+                    <p>Dr. Vex announces to Society members that "contact has been achieved" and begins planning for what he terms "The Final Performance." Attendance is described as mandatory for all members.</p>
+                    <p>Society begins distributing modified short films to select audiences, ostensibly as "experimental cinema" screenings. These are later identified as conditioning tools, preparing viewers for the main event.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">SEPTEMBER 2008</div>
+                <div class="timeline-content">
+                    <p>Series of unexplained events at Society headquarters: <span class="censored">power fluctuations, equipment malfunctions, and reports of "shadow figures" captured on security footage</span>.</p>
+                    <p>Dr. Vex's final documented communication expresses excitement about "the thinning boundary" and confirms November 11th as "the perfect date when the stars align."</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-date">NOVEMBER 11, 2008</div>
+                <div class="timeline-content">
+                    <p>6:00 PM: Invitees begin arriving at the theater. Witnesses report an unusual number of mirrors installed throughout the venue.</p>
+                    <p>8:30 PM: The screening begins. Limited accounts from theater staff who left early describe "strange geometric patterns" and "unsettling audio frequencies" in the presented film.</p>
+                    <p>11:24 PM: All electronic systems in the building fail simultaneously. When power returns 27 minutes later, all 120 people in the theater have vanished without trace.</p>
+                    <p>11:51 PM: <span class="censored">Security cameras briefly capture what appears to be a large crowd of silhouetted figures standing motionless in the empty theater before the footage cuts out again</span>.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="performance-details">
+            <div class="details-section">
+                <h3 class="details-title">KNOWN PARTICIPANTS</h3>
+                <ul class="cast-list">
+                    <li class="cast-item">
+                        <span class="cast-name">Dr. Alistair Vex</span>
+                        <span class="cast-role">Director / Project Lead</span>
+                    </li>
+                    <li class="cast-item">
+                        <span class="cast-name">Vivian Cross</span>
+                        <span class="cast-role">Lead Actress / "The Conduit"</span>
+                    </li>
+                    <li class="cast-item">
+                        <span class="cast-name">Elias Martin</span>
+                        <span class="cast-role">Editor / "The Bridge"</span>
+                    </li>
+                    <li class="cast-item">
+                        <span class="cast-name">Marcus Hawthorne</span>
+                        <span class="cast-role">Supporting Actor / "The Vessel"</span>
+                    </li>
+                    <li class="cast-item">
+                        <span class="cast-name">Helena Weiss</span>
+                        <span class="cast-role">Casting Director / "The Selector"</span>
+                    </li>
+                    <li class="cast-item">
+                        <span class="cast-name">Thomas Wren</span>
+                        <span class="cast-role">Editor / "The Seer"</span>
+                    </li>
+                    <li class="cast-item">
+                        <span class="cast-name">Jennifer Blake</span>
+                        <span class="cast-role">Production Assistant / "The Herald"</span>
+                    </li>
+                    <li class="cast-item">
+                        <span class="cast-name">+ 5 Unidentified Members</span>
+                        <span class="cast-role">Roles Unknown</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="details-section">
+                <h3 class="details-title">VENUE INFORMATION</h3>
+                <p>The location of the Final Performance has been officially redacted from police reports, but multiple sources indicate it took place at the now-demolished Argent Theater on Sunset Boulevard.</p>
+                <p>The building was constructed in 1928 and had a history of unusual incidents, including a <span class="censored">1939 mass hysteria event during a film screening where 14 patrons reportedly experienced identical hallucinations</span>.</p>
+                <p>Following the 2008 incident, the theater remained closed and was eventually demolished in 2010. The lot remains vacant, with multiple development projects abandoned after reporting issues with <span class="censored">unexplained equipment failures and construction workers refusing to return to the site</span>.</p>
+                
+                <div class="theater-map">
+                    <svg class="map-svg" viewBox="0 0 500 300">
+                        <!-- Theater layout -->
+                        <rect x="50" y="50" width="400" height="200" stroke="#00ff00" stroke-width="2" fill="none" />
+                        
+                        <!-- Stage area -->
+                        <rect x="50" y="50" width="400" height="50" stroke="#00ff00" stroke-width="1" fill="#003300" />
+                        <text x="250" y="80" font-family="monospace" font-size="14" fill="#00ff00" text-anchor="middle">SCREEN</text>
+                        
+                        <!-- Seating areas -->
+                        <path d="M100,120 L400,120 M100,150 L400,150 M100,180 L400,180 M100,210 L400,210" stroke="#004400" stroke-width="1" />
+                        <path d="M150,120 L150,210 M200,120 L200,210 M250,120 L250,210 M300,120 L300,210 M350,120 L350,210" stroke="#004400" stroke-width="1" />
+                        
+                        <!-- Special markings -->
+                        <circle cx="250" cy="150" r="30" stroke="#00ff00" stroke-width="1" fill="none" />
+                        <text x="250" y="155" font-family="monospace" font-size="10" fill="#00ff00" text-anchor="middle">CENTER</text>
+                        
+                        <!-- Exit markings -->
+                        <rect x="50" y="150" width="20" height="10" stroke="#ff0000" stroke-width="1" fill="none" />
+                        <rect x="430" y="150" width="20" height="10" stroke="#ff0000" stroke-width="1" fill="none" />
+                        <text x="60" y="147" font-family="monospace" font-size="8" fill="#ff0000">EXIT</text>
+                        <text x="440" y="147" font-family="monospace" font-size="8" fill="#ff0000">EXIT</text>
+                        
+                        <!-- Projection booth -->
+                        <rect x="225" y="230" width="50" height="20" stroke="#00ff00" stroke-width="1" fill="none" />
+                        <text x="250" y="243" font-family="monospace" font-size="8" fill="#00ff00" text-anchor="middle">BOOTH</text>
+                        
+                        <!-- Mirror locations -->
+                        <circle cx="100" cy="80" r="5" stroke="#00ffff" stroke-width="1" fill="none" />
+                        <circle cx="400" cy="80" r="5" stroke="#00ffff" stroke-width="1" fill="none" />
+                        <circle cx="100" cy="200" r="5" stroke="#00ffff" stroke-width="1" fill="none" />
+                        <circle cx="400" cy="200" r="5" stroke="#00ffff" stroke-width="1" fill="none" />
+                        <circle cx="250" cy="230" r="5" stroke="#00ffff" stroke-width="1" fill="none" />
+                        <circle cx="250" cy="80" r="5" stroke="#00ffff" stroke-width="1" fill="none" />
+                        <circle cx="250" cy="150" r="5" stroke="#00ffff" stroke-width="1" fill="none" />
+                        
+                        <!-- Hidden pattern - only visible on inspection -->
+                        <path d="M100,80 L400,200 M400,80 L100,200 M100,80 L100,200 M400,80 L400,200 M250,80 L250,230" stroke="#001100" stroke-width="1" />
+                        <circle cx="250" cy="150" r="60" stroke="#001100" stroke-width="1" fill="none" />
+                    </svg>
+                    <div class="flashing-warning">MIRROR CONFIGURATION DIAGRAM</div>
+                    <div class="hidden-clue" id="clue-2">7 mirrors. 7 points. The pattern is the key.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="frame24-container">
+            <div class="frame24-header">
+                <div class="frame24-title">24F VIEWER - RECOVERED SEQUENCE</div>
+                <div class="frame24-controls">
+                    <button class="frame24-button" id="play-button">PLAY</button>
+                    <button class="frame24-button" id="stop-button">STOP</button>
+                    <button class="frame24-button" id="frame24-button">SHOW 24TH FRAME</button>
+                </div>
+            </div>
+            
+            <div class="frame24-screen">
+                <div class="frame-content" id="frame-content">
+                    <div class="subliminal-text" id="subliminal-1">THE AUDIENCE IS WATCHING</div>
+                    <div class="subliminal-text" id="subliminal-2">LOOK BEHIND YOU</div>
+                    <div class="subliminal-text" id="subliminal-3">YOU ARE PART OF THE PERFORMANCE</div>
+                    <div class="hidden-frame" id="hidden-frame">
+                        <img class="hidden-frame-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23000' /%3E%3Ccircle cx='200' cy='150' r='100' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Cpath d='M150,150 L250,150 M200,100 L200,200' stroke='%2300ff00' stroke-width='1' /%3E%3Ccircle cx='175' cy='125' r='10' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Ccircle cx='225' cy='125' r='10' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Cpath d='M175,175 C175,175 200,190 225,175' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Cpath d='M100,50 L300,50 L300,250 L100,250 Z' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Cpath d='M50,100 L150,100 L150,200 L50,200 Z' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Cpath d='M250,100 L350,100 L350,200 L250,200 Z' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Cpath d='M150,75 L250,75 L250,225 L150,225 Z' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Ctext x='200' y='275' font-family='monospace' font-size='12' fill='%2300ff00' text-anchor='middle'%3EFRAME 24 - PROJECT SILVERLIGHT%3C/text%3E%3C/svg%3E" alt="Hidden frame 24">
+                    </div>
+                </div>
+                <div class="frame-counter" id="frame-counter">FRAME: 00</div>
+            </div>
+        </div>
+        
+        <div class="evidence-grid">
+            <h3>RECOVERED EVIDENCE</h3>
+            
+            <div class="evidence-item" data-evidence="1">
+                <div class="evidence-title">THEATER SECURITY LOG</div>
+                <div class="evidence-description">Partial transcript from Argent Theater security office, November 11, 2008. Contains final communications before systems failure.</div>
+            </div>
+            
+            <div class="evidence-item" data-evidence="2">
+                <div class="evidence-title">AUDIENCE MEMBER JOURNAL</div>
+                <div class="evidence-description">Pages from journal of Rebecca Collins, reported missing after attending the Final Performance. Found in her apartment one week later.</div>
+            </div>
+            
+            <div class="evidence-item" data-evidence="3">
+                <div class="evidence-title">POLICE INTERVIEW TRANSCRIPT</div>
+                <div class="evidence-description">Interview with theater janitor who left the building 30 minutes before the incident. Only known witness to preparation activities.</div>
+            </div>
+            
+            <div class="evidence-item" data-evidence="4">
+                <div class="evidence-title">PROJECTION EQUIPMENT ANALYSIS</div>
+                <div class="evidence-description">Technical report on modified film projector recovered from the Argent Theater. Shows unusual modifications to timing mechanism.</div>
+            </div>
+            
+            <div class="evidence-item" data-evidence="5">
+                <div class="evidence-title">DR. VEX'S FINAL NOTES</div>
+                <div class="evidence-description">Handwritten pages found in Dr. Vex's home safe after his disappearance. Contains cryptic references to "The Audience" and "crossing the threshold."</div>
+            </div>
+            
+            <div class="evidence-item" data-evidence="6">
+                <div class="evidence-title">THEATER DEMOLITION INCIDENT</div>
+                <div class="evidence-description">Accident report from demolition company regarding unexplained events during the Argent Theater demolition in 2010.</div>
+            </div>
+        </div>
+        
+        <div class="secret-input">
+            <p>ENTER LUMEN SEQUENCE CODE:</p>
+            <input type="text" id="secret-input" placeholder="Enter code...">
+            <button id="secret-submit">SUBMIT</button>
+            <div class="secret-result" id="secret-result"></div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>© 2001-2008 THE LUMEN SOCIETY</p>
+            <p>THIS SITE RECOVERED FROM WAYBACK MACHINE ARCHIVES</p>
+            <p id="visitor-counter">VISITOR COUNT: <span id="counter">0000127</span></p>
+        </div>
+        <div class="hidden-message" id="hidden-message">
+            <p>THE PERFORMANCE NEVER ENDED. THE AUDIENCE STILL WATCHES.</p>
+        </div>
+    </footer>
+</div>
+
+<div class="evidence-modal" id="evidence-modal">
+    <div class="evidence-modal-content">
+        <span class="evidence-close" id="evidence-close">&times;</span>
+        <h3 id="evidence-modal-title">Evidence Title</h3>
+        <div class="evidence-content" id="evidence-content">
+            <!-- Evidence content will be loaded here -->
+        </div>
+    </div>
+</div>
+
+<div class="login-modal" id="login-modal">
+    <div class="modal-content">
+        <span class="close-modal" id="close-modal">&times;</span>
+        <h2>LUMEN SOCIETY ACCESS PORTAL</h2>
+        <div class="login-form">
+            <div class="form-group">
+                <label for="username">USERNAME:</label>
+                <input type="text" id="username">
+            </div>
+            <div class="form-group">
+                <label for="password">PASSWORD:</label>
+                <input type="password" id="password">
+            </div>
+            <button id="login-submit">AUTHENTICATE</button>
+            <p class="login-error" id="login-error"></p>
+        </div>
+        <div class="login-disclaimer">
+            <p>WARNING: Unauthorized access is strictly prohibited. All activity is monitored.</p>
+        </div>
+    </div>
+</div>
+
+<audio id="static-sound" loop>
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-tv-ultra-bright-2586.mp3" type="audio/mpeg">
+</audio>
+<audio id="glitch-sound">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-clock-digital-alarm-buzzer-992.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Hidden Evidence Content -->
+<div style="display: none;" id="evidence-1-content">
+    <p class="evidence-date">DATE: November 11, 2008</p>
+    <p class="evidence-source">SOURCE: Argent Theater Security Office</p>
+    
+    <div style="font-family: monospace; background-color: rgba(0, 40, 0, 0.1); padding: 15px; margin-top: 20px;">
+        <p>[19:22] GUARD-A: All guests have their passes checked. Crowd seems normal. Maybe a bit quieter than usual for a premiere.</p>
+        
+        <p>[20:15] GUARD-B: Dr. Vex just arrived with the film canisters. Took them straight to the projection booth. Wouldn't let me look at them.</p>
+        
+        <p>[20:47] GUARD-A: Lights dimmed. Show starting now. Still don't understand why they installed all those extra mirrors.</p>
+        
+        <p>[21:33] GUARD-B: Getting some complaints about the sound. It's giving people headaches. Vex says it's intentional and not to interfere.</p>
+        
+        <p>[22:10] GUARD-A: Something weird about this film. Can see it on the monitors. Lot of flashing patterns. Making me dizzy even on the small screen.</p>
+        
+        <p>[22:56] GUARD-B: Tried to check on the audience. Vex has locked the theater doors from inside. Says not to interrupt "the experience" under any circumstances.</p>
+        
+        <p>[23:15] GUARD-A: Camera 3 is showing something strange. There appear to be more people in the theater than went in. Can't make out details but seats that were empty are now occupied.</p>
+        
+        <p>[23:22] GUARD-B: Going to override the locks and check what's happening. The audio from the theater doesn't sound right. Not like a movie. More like... <span class="censored">chanting or humming</span>.</p>
+        
+        <p>[23:24] GUARD-A: All systems just went <span class="censored">SIGNAL LOST</span></p>
+        
+        <p>[23:51] SYSTEM REBOOT AUTOMATIC LOG: Security systems online. Motion detectors active.</p>
+        
+        <p>[23:52] GUARD-C (Night Shift): Responding to system reboot. Building appears empty. Theater doors standing open. No sign of audience or staff. <span class="censored">All mirrors in the building have been shattered</span>.</p>
+        
+        <p>[23:54] GUARD-C: <span class="censored">There's someone on Camera 7. Theater appears empty but the camera shows... I'm going to check.</span></p>
+        
+        <p>[23:58] GUARD-C: <span class="censored">EMERGENCY. CONTACT POLICE. THEATER EMPTY BUT CAMERAS SHOW FIGURES STANDING IN SEATS. THEY'RE WATCHING ME THROUGH THE MONITORS.</span></p>
+        
+        <p>[00:01] SYSTEM ERROR: <span class="censored">VIDEO ARCHIVE CORRUPTED - FILE TERMINATED</span></p>
+    </div>
+</div>
+
+<div style="display: none;" id="evidence-2-content">
+    <p class="evidence-date">RECOVERED ITEM: Personal Journal</p>
+    <p class="evidence-source">OWNER: Rebecca Collins (Missing)</p>
+    
+    <img class="evidence-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23111' /%3E%3Cpath d='M50,25 L350,25 L350,225 L50,225 Z' stroke='%23333' stroke-width='1' fill='%23222' /%3E%3Cpath d='M60,40 L340,40 M60,60 L340,60 M60,80 L340,80 M60,100 L340,100 M60,120 L340,120 M60,140 L340,140 M60,160 L340,160 M60,180 L340,180 M60,200 L340,200' stroke='%23333' stroke-width='1' /%3E%3Cpath d='M70,35 C70,35 80,37 100,35 C120,33 130,32 150,35 C170,38 190,36 210,35 C230,34 250,37 270,35 C290,33 310,36 330,35' stroke='%23444' stroke-width='1' fill='none' /%3E%3Cpath d='M110,70 C110,70 130,75 150,70 C170,65 190,68 210,70 C230,72 250,68 270,70 C290,72 310,69 330,70' stroke='%23444' stroke-width='1' fill='none' /%3E%3Cpath d='M90,110 C90,110 110,112 130,110 C150,108 170,112 190,110 C210,108 230,112 250,110 C270,108 290,111 310,110 C330,109 340,111 350,110' stroke='%23444' stroke-width='1' fill='none' /%3E%3Cpath d='M70,150 C70,150 90,153 110,150 C130,147 150,153 170,150 C190,147 210,152 230,150 C250,148 270,153 290,150 C310,147 330,152 340,150' stroke='%23444' stroke-width='1' fill='none' /%3E%3Ctext x='200' y='240' font-family='monospace' font-size='10' fill='%23666' text-anchor='middle'%3EJOURNAL PAGE - FINAL ENTRIES%3C/text%3E%3C/svg%3E" alt="Journal Image">
+    
+    <div style="font-family: cursive; line-height: 1.6; background-color: rgba(0, 40, 0, 0.1); padding: 15px; margin-top: 20px;">
+        <p><strong>November 7, 2008</strong></p>
+        <p>Got the invitation today! Can't believe I made the cut for the Lumen Society's "special screening." Ever since that experimental film workshop in September, I've been hoping they'd contact me again. There's something so different about their approach to cinema - like they're trying to unlock something beyond just entertainment.</p>
+        
+        <p><strong>November 9, 2008</strong></p>
+        <p>Had the strangest dream last night. I was sitting in a theater, but the screen showed only my reflection watching myself. Then the reflection started doing things I wasn't doing. When I woke up, I could have sworn my bathroom mirror showed someone else for a split second before my face appeared. Probably just excitement about the screening.</p>
+        
+        <p><strong>November 10, 2008</strong></p>
+        <p>The invitation says to bring a personal object of significance to "anchor my experience." I'm bringing Mom's silver locket. Instructions say not to eat or drink anything 6 hours before the screening, and to "come with an open mind and receptive spirit." This feels less like a movie and more like some kind of ceremony.</p>
+        
+        <p><strong>November 11, 2008</strong></p>
+        <p>It's almost time to leave for the theater. I've been feeling strange all day - like I'm being watched. Caught glimpses of movement in reflective surfaces several times. <span class="censored">When I look in the mirror, my reflection seems delayed by a fraction of a second</span>. The invitation mentioned something about "preparation for reception" - maybe it's psychological suggestion taking effect?</p>
+        
+        <p>I'm excited but nervous. Dr. Vex's last film workshop left me with such vivid dreams for weeks. This is supposed to be his masterpiece. The "Final Performance" that the Society has been working toward for years.</p>
+        
+        <p>Final note before leaving: <span class="censored">I just noticed something strange about the invitation. If you hold it up to a mirror, there's hidden text that becomes visible. It says "THE AUDIENCE AWAITS YOUR PERFORMANCE." What does that mean? Am I not just a viewer?</span></p>
+        
+        <p>8:45 PM - At the theater now. Writing from the bathroom. Something strange about this place. So many mirrors everywhere. The other attendees seem... off somehow. Like they're all in a trance. They installed these weird silver panels around the screen that reflect the audience back at themselves. Dr. Vex just made an announcement that "the boundary will fall tonight" and "we will all become part of the true audience." Film starts in 15 minutes. Will write more after.</p>
+        
+        <p><span class="censored">11:??> TH3Y'RE N0T REFL3CTI0NS TH3Y'RE W4TCHING US FR0M TH3 0TH3R S1DE THE D00R OP3NS B0TH W4YS I S33 THE C1TY N0W</span></p>
+    </div>
+</div>
+
+<div style="display: none;" id="evidence-3-content">
+    <p class="evidence-date">DATE: November 12, 2008</p>
+    <p class="evidence-source">LAPD INTERVIEW TRANSCRIPT</p>
+    
+    <div style="font-family: monospace; background-color: rgba(0, 40, 0, 0.1); padding: 15px; margin-top: 20px;">
+        <p><strong>DETECTIVE MORRIS:</strong> State your name and occupation for the record.</p>
+        
+        <p><strong>HAROLD JENKINS:</strong> Harold Jenkins. I'm the night janitor at the Argent Theater. Been working there for 12 years.</p>
+        
+        <p><strong>DETECTIVE MORRIS:</strong> And you were working on the night of November 11th?</p>
+        
+        <p><strong>HAROLD JENKINS:</strong> Yes sir. Regular shift from 4 PM to midnight. Except I left early that night. Around 10:30 PM.</p>
+        
+        <p><strong>DETECTIVE MORRIS:</strong> Why did you leave early?</p>
+        
+        <p><strong>HAROLD JENKINS:</strong> [Pause] I didn't feel right, sir. That whole day felt wrong. They had this private event, which isn't unusual, but the people running it kept doing strange things to the theater.</p>
+        
+        <p><strong>DETECTIVE MORRIS:</strong> What kind of strange things?</p>
+        
+        <p><strong>HAROLD JENKINS:</strong> They brought in seven big mirrors. Expensive looking ones in silver frames. Positioned them very specific places around the theater. That Dr. Vex fellow was measuring the angles with some kind of special tool. Said they needed to be "precisely aligned."</p>
+        
+        <p><strong>DETECTIVE MORRIS:</strong> Did you notice anything else unusual?</p>
+        
+        <p><strong>HAROLD JENKINS:</strong> They replaced the normal projection bulb with something different. They replaced the normal projection bulb with something different. Much brighter, with a greenish tint to it. And they did something to the sound system too. I heard them testing it, and it made me feel... strange. Like pressure in my head.
+
+<p><strong>DETECTIVE MORRIS:</strong> What about the attendees? Did you notice anything unusual about them?</p>
+
+<p><strong>HAROLD JENKINS:</strong> They all had these silver pins on their lapels. Little mirror-like things. And they seemed... I don't know how to explain it... like they were already halfway in a trance when they arrived. Nobody was talking or checking their phones like normal crowds. They just filed in silently and sat exactly where they were told.</p>
+
+<p><strong>DETECTIVE MORRIS:</strong> You mentioned you left early. Why specifically?</p>
+
+<p><strong>HAROLD JENKINS:</strong> [Long pause] Look, I know how this sounds, but... <span class="censored">I saw something in one of those mirrors they installed. I was cleaning the bathroom across from it, and I glanced up, and I didn't see my reflection. I saw... figures standing behind me. But when I turned around, nobody was there. When I looked back at the mirror, there were these... shapes... watching me. That's when I decided to leave.</span></p>
+
+<p><strong>DETECTIVE MORRIS:</strong> Did you report this to anyone?</p>
+
+<p><strong>HAROLD JENKINS:</strong> I tried telling one of the security guards, but he just looked at me weird and said Dr. Vex had warned that "some might begin to see the audience early." Whatever that means. I clocked out and left. Best decision I ever made.</p>
+
+<p><strong>DETECTIVE MORRIS:</strong> One last question, Mr. Jenkins. Did you notice anything about a "24th frame" or hear that term mentioned?</p>
+
+<p><strong>HAROLD JENKINS:</strong> Yeah, actually. I overheard that editor guy - tall fellow with glasses - talking to Dr. Vex. He said something like "the 24th frame triggers are set" and that "the frequency has been synchronized." Dr. Vex seemed real pleased about that.</p>
+
+<p><strong>DETECTIVE MORRIS:</strong> Thank you for your time, Mr. Jenkins.</p>
+
+<p><strong>HAROLD JENKINS:</strong> Detective? <span class="censored">Those people... they're not missing. They're somewhere else. Somewhere behind the mirrors.</span> I know that sounds crazy, but... I've been seeing them. In reflections. Watching. Waiting.</p>
+
+<p><strong>DETECTIVE MORRIS:</strong> [End of transcript]</p>
+        </div>
+    </div>
+    
+    <div style="display: none;" id="evidence-4-content">
+        <p class="evidence-date">DATE: November 15, 2008</p>
+        <p class="evidence-source">TECHNICAL ANALYSIS REPORT</p>
+        
+        <img class="evidence-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 300'%3E%3Crect width='500' height='300' fill='%23111' /%3E%3Crect x='50' y='50' width='400' height='200' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Ccircle cx='250' cy='80' r='20' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Cpath d='M200,80 L230,80 M270,80 L300,80' stroke='%2300ff00' stroke-width='1' /%3E%3Crect x='150' y='120' width='200' height='100' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Cpath d='M150,150 L350,150 M150,180 L350,180' stroke='%2300ff00' stroke-width='1' /%3E%3Ccircle cx='175' cy='135' r='10' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Ccircle cx='325' cy='135' r='10' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Ccircle cx='175' cy='165' r='10' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Ccircle cx='325' cy='165' r='10' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Ccircle cx='250' cy='200' r='10' stroke='%2300ff00' stroke-width='1' fill='none' /%3E%3Ctext x='250' y='240' font-family='monospace' font-size='12' fill='%2300ff00' text-anchor='middle'%3EMODIFIED PROJECTOR SCHEMATIC%3C/text%3E%3C/svg%3E" alt="Projector Schematic">
+        
+        <div style="font-family: monospace; background-color: rgba(0, 40, 0, 0.1); padding: 15px; margin-top: 20px;">
+            <p><strong>EVIDENCE ITEM:</strong> Modified 35mm Film Projector</p>
+            <p><strong>RECOVERED FROM:</strong> Argent Theater Projection Booth</p>
+            <p><strong>ANALYSIS BY:</strong> LAPD Forensic Technology Unit</p>
+            
+            <p><strong>FINDINGS:</strong></p>
+            <p>1. Standard Bell & Howell 35mm projector with extensive custom modifications</p>
+            <p>2. Normal projection lamp replaced with custom high-intensity xenon bulb with unusual green-spectrum filter</p>
+            <p>3. Timing mechanism modified to create irregular frame progression</p>
+            <p>4. <span class="censored">Secondary optical system installed to project subliminal images at 1/24th second intervals</span></p>
+            <p>5. Custom audio system synchronized with visual anomalies, producing low-frequency tones at precise intervals</p>
+            <p>6. Seven fiber optic cables running from projector to locations throughout theater (corresponding to mirror positions)</p>
+            
+            <p><strong>TECHNICAL ASSESSMENT:</strong></p>
+            <p>The modified projector appears designed to create a synchronized audiovisual experience that would bypass normal sensory processing. The timing mechanism creates what our technicians refer to as a "flicker fusion" effect, where certain frames would be perceived only by the subconscious mind.</p>
+            
+            <p>Of particular interest is the <span class="censored">custom optical splitter that diverts light to seven fiber optic outputs at precise moments during projection. These outputs would illuminate the specially positioned mirrors throughout the theater with patterns not visible to the conscious mind but potentially registered subliminally.</span></p>
+            
+            <p>The cumulative effect of these modifications would be to create a viewing experience that could potentially induce altered states of consciousness in audience members, particularly in conjunction with the theater's unusual acoustic properties.</p>
+            
+            <p><strong>ADDITIONAL NOTES:</strong></p>
+            <p>Film reels recovered from the projection booth appear to contain standard film interspersed with <span class="censored">frames containing geometric patterns and glyphs resembling ancient occult symbols</span>. These frames would not be consciously perceived by viewers but could potentially create subliminal effects.</p>
+            
+            <p>Spectrographic analysis of the soundtrack reveals embedded frequencies between 7-9 Hz, which align with theta brainwave states associated with deep meditation, hypnosis, and in some cases, hallucinations.</p>
+            
+            <p><span class="censored">WARNING: Two technicians who worked extensively with this equipment reported experiencing unusual visual phenomena and "persistent sensory echoes" for several days after testing. Recommend limiting exposure to this equipment.</span></p>
+        </div>
+    </div>
+    
+    <div style="display: none;" id="evidence-5-content">
+        <p class="evidence-date">RECOVERED ITEM: Personal Notes</p>
+        <p class="evidence-source">OWNER: Dr. Alistair Vex</p>
+        
+        <div style="font-family: cursive; line-height: 1.6; background-color: rgba(0, 40, 0, 0.1); padding: 15px; margin-top: 20px;">
+            <p><em>These pages were recovered from a hidden wall safe in Dr. Vex's abandoned home, discovered during police investigation two weeks after the incident.</em></p>
+            
+            <p><strong>November 7, 2008</strong></p>
+            <p>The preparations are nearly complete. After seven years of research, experimentation, and careful conditioning, we stand at the threshold of the greatest breakthrough in human consciousness. The Audience has confirmed that November 11th is indeed the optimal date - the boundary between worlds will be at its thinnest.</p>
+            
+            <p>The 24F technique has been perfected. Our tests show that viewers' minds are completely receptive to the embedded patterns after just 15 minutes of exposure. The mirrors have been constructed according to precise specifications - silver-backed glass with the special reflective compound mixed into the amalgam.</p>
+            
+            <p><span class="censored">I still have lingering concerns about the "price" the Audience demanded. They insist that a permanent "doorway" requires an exchange - consciousness for consciousness. 120 minds crossing the threshold in exchange for their emissaries crossing into our world. They assure me this exchange is symbolic, that those who cross over will experience a transcendent existence as part of the eternal audience.</span></p>
+            
+            <p><strong>November 9, 2008</strong></p>
+            <p>Vivian is experiencing the most pronounced effects of all the conditioned subjects. She reports that her reflection now moves independently of her at times, and she can see the City Behind the Screen with increasing clarity. Her descriptions match my own visions perfectly - the impossible architecture, the amphitheater that surrounds everything, the entities that watch from every reflective surface.</p>
+            
+            <p>Elias continues to edit the Final Performance film. He has incorporated all the specified 24F insertions and synchronized them with the Lumen Frequency audio. The cumulative effect, even in our test screenings, is remarkable. The boundary becomes visibly permeable, reflective surfaces seeming to ripple like water.</p>
+            
+            <p><span class="censored">I had a troubling conversation with Martin today. He expressed doubts about the Audience's true intentions. He claims to have seen something during his last Mirror Chamber session that disturbed him greatly. Said the Audience isn't what we think - that they're "hungry" rather than enlightened. I reminded him how close we are to success. Too late for doubts now.</span></p>
+            
+            <p><strong>November 10, 2008</strong></p>
+            <p>Final rehearsal complete. The moment when all seven mirrors activate simultaneously created exactly the effect we sought - a momentary "tear" in perception. For 3.24 seconds, I could clearly see through to the other side. The Audience was gathered, watching with what I can only describe as anticipation.</p>
+            
+            <p>All 108 audience members have been selected and prepared through the preliminary screenings. Their minds are primed for the transition. None of them fully understand what awaits, of course, but that's for the best. <span class="censored">The fear would only inhibit the crossing.</span></p>
+            
+            <p><strong>November 11, 2008</strong></p>
+            <p>It is almost time. The projection equipment is installed. The mirrors are in position. The film is ready. I can feel the Audience's anticipation like a pressure against my mind.</p>
+            
+            <p>A final note before we begin: <span class="censored">I had a disturbing thought this morning. What if we are not the performers, as we've believed? What if we are merely the mechanism by which the Audience extends itself into our world? I dismissed the notion. We've come too far to turn back now.</span></p>
+            
+            <p>The stars have aligned. The Audience is watching. We take our bows in the dark.</p>
+            
+            <p><span class="censored">OH GOD THEY'RE NOT WHAT WE THOUGHT THEY'RE NOT WHAT WE</span></p>
+        </div>
+    </div>
+    
+    <div style="display: none;" id="evidence-6-content">
+        <p class="evidence-date">DATE: February 28, 2010</p>
+        <p class="evidence-source">INCIDENT REPORT: Argent Theater Demolition</p>
+        
+        <div style="font-family: monospace; background-color: rgba(0, 40, 0, 0.1); padding: 15px; margin-top: 20px;">
+            <p><strong>REPORTING COMPANY:</strong> ClearSite Demolition Services</p>
+            <p><strong>PROJECT:</strong> Argent Theater Structure Removal</p>
+            <p><strong>INCIDENT DATE:</strong> February 24, 2010</p>
+            
+            <p><strong>INCIDENT SUMMARY:</strong></p>
+            <p>This report documents a series of unexplained events that occurred during the demolition of the Argent Theater structure. The project was subsequently abandoned and our company has terminated our contract with the property owner.</p>
+            
+            <p><strong>CHRONOLOGY OF EVENTS:</strong></p>
+            <p>February 22, 2010 - Pre-demolition inspection completed. Building determined to be structurally sound for controlled demolition. All utilities disconnected. No unusual observations reported.</p>
+            
+            <p>February 23, 2010 - Equipment moved on-site. Interior strip-out begins. Workers report <span class="censored">unusual cold spots throughout the building, particularly in the main theater area. Two workers refuse to enter the projection booth after reporting "voices coming from the walls."</span> Work continues with reassigned personnel.</p>
+            
+            <p>February 24, 2010 - Scheduled implosion day. Following incidents occurred:</p>
+            <ul style="list-style-type: none; padding-left: 15px;">
+                <li>- 8:15 AM: Final sweep of building begins. Team leader reports that <span class="censored">the walls of the main theater appear to be "sweating" an unidentified greenish fluid</span>. Environmental team called to investigate.</li>
+                <li>- 9:30 AM: Environmental team collects samples but equipment malfunctions when attempting to analyze.</li>
+                <li>- 10:45 AM: Demolition charges set. All personnel clear the building.</li>
+                <li>- 11:24 AM: First detonation sequence initiated. <span class="censored">Explosives fail to detonate despite all systems showing proper function.</span></li>
+                <li>- 11:35 AM: Systems reset. Second detonation attempt made. Partial detonation occurs but structure remains standing.</li>
+                <li>- 12:10 PM: Engineering team enters building to inspect failed charges. <span class="censored">Team leader reports over radio that "there are people in the theater" despite the building being cleared. Radio communication subsequently lost.</span></li>
+                <li>- 12:24 PM: Two engineers exit building in a state of extreme distress. Both men immediately resign from company.</li>
+                <li>- 12:45 PM: <span class="censored">Security camera footage shows three remaining engineers still inside the building, apparently engaged in conversation with unseen presences. Footage becomes distorted and cuts out.</span></li>
+                <li>- 1:15 PM: Police called to site after engineers fail to respond to radio calls.</li>
+                <li>- 2:00 PM: Police complete sweep of building. No personnel found despite no observed exits. Engineers' equipment discovered in projection booth, arranged in a precise circular pattern.</li>
+            </ul>
+            
+            <p><strong>CONCLUSION:</strong></p>
+            <p>ClearSite Demolition Services has terminated our contract for the demolition of the Argent Theater, citing clause 15.b "unforeseen hazardous conditions." We recommend that any future demolition attempts involve specialized personnel and equipment.</p>
+            
+            <p><span class="censored">ADDENDUM - CONFIDENTIAL: The three missing engineers were never located. Two weeks after the incident, family members of all three men reported receiving identical text messages stating only: "WE ARE PART OF THE AUDIENCE NOW." Cell service providers confirmed the messages originated from inside the Argent Theater building, despite it being vacant and without power.</span></p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const loginToggle = document.getElementById('login-toggle');
+            const loginModal = document.getElementById('login-modal');
+            const closeModal = document.getElementById('close-modal');
+            const loginSubmit = document.getElementById('login-submit');
+            const loginError = document.getElementById('login-error');
+            const accessStatus = document.getElementById('access-status');
+            const visitorCounter = document.getElementById('counter');
+            const hiddenMessage = document.getElementById('hidden-message');
+            const playButton = document.getElementById('play-button');
+            const stopButton = document.getElementById('stop-button');
+            const frame24Button = document.getElementById('frame24-button');
+            const frameContent = document.getElementById('frame-content');
+            const frameCounter = document.getElementById('frame-counter');
+            const hiddenFrame = document.getElementById('hidden-frame');
+            const subliminalTexts = document.querySelectorAll('.subliminal-text');
+            const evidenceItems = document.querySelectorAll('.evidence-item');
+            const evidenceModal = document.getElementById('evidence-modal');
+            const evidenceClose = document.getElementById('evidence-close');
+            const evidenceModalTitle = document.getElementById('evidence-modal-title');
+            const evidenceContent = document.getElementById('evidence-content');
+            const secretInput = document.getElementById('secret-input');
+            const secretSubmit = document.getElementById('secret-submit');
+            const secretResult = document.getElementById('secret-result');
+            const staticSound = document.getElementById('static-sound');
+            const glitchSound = document.getElementById('glitch-sound');
+            const hiddenClues = document.querySelectorAll('.hidden-clue');
+            const censoredTexts = document.querySelectorAll('.censored');
+            
+            // Initialize
+            let accessGranted = false;
+            let visitorCount = localStorage.getItem('visitorCount') || 127;
+            let frameInterval = null;
+            let currentFrame = 0;
+            let frameDirection = 1;
+            
+            updateVisitorCounter();
+            updateCountdown();
+            setInterval(glitchEffect, 8000);
+            setInterval(randomGlitch, 3000);
+            setInterval(updateCountdown, 1000);
+            
+            // Login Modal
+            loginToggle.addEventListener('click', function() {
+                loginModal.style.display = 'flex';
+                playGlitchSound();
+            });
+            
+            closeModal.addEventListener('click', function() {
+                loginModal.style.display = 'none';
+            });
+            
+            loginSubmit.addEventListener('click', function() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (username === 'lumen_member' && password === 'silverlight24') {
+                    accessGranted = true;
+                    accessStatus.textContent = 'GRANTED';
+                    accessStatus.style.color = '#00ff00';
+                    loginModal.style.display = 'none';
+                    unlockContent();
+                    playGlitchSound();
+                } else {
+                    loginError.textContent = 'ACCESS DENIED: INVALID CREDENTIALS';
+                    setTimeout(() => {
+                        loginError.textContent = '';
+                    }, 3000);
+                    playGlitchSound();
+                }
+            });
+            
+            // Frame viewer
+            playButton.addEventListener('click', function() {
+                if (!frameInterval) {
+                    // Start playing frames
+                    frameInterval = setInterval(advanceFrame, 125); // ~8 frames per second
+                    playButton.textContent = 'PAUSE';
+                    staticSound.play();
+                } else {
+                    // Pause playback
+                    clearInterval(frameInterval);
+                    frameInterval = null;
+                    playButton.textContent = 'PLAY';
+                    staticSound.pause();
+                }
+            });
+            
+            stopButton.addEventListener('click', function() {
+                // Stop playback and reset
+                clearInterval(frameInterval);
+                frameInterval = null;
+                currentFrame = 0;
+                frameCounter.textContent = 'FRAME: 00';
+                playButton.textContent = 'PLAY';
+                hiddenFrame.style.opacity = 0;
+                subliminalTexts.forEach(text => {
+                    text.style.opacity = 0;
+                });
+                staticSound.pause();
+            });
+            
+            frame24Button.addEventListener('click', function() {
+                // Show the hidden 24th frame
+                playGlitchSound();
+                
+                if (hiddenFrame.style.opacity === '1') {
+                    hiddenFrame.style.opacity = 0;
+                } else {
+                    currentFrame = 24;
+                    frameCounter.textContent = 'FRAME: 24';
+                    hiddenFrame.style.opacity = 1;
+                    
+                    // Reveal a clue
+                    hiddenClues.forEach(clue => {
+                        clue.style.opacity = 1;
+                    });
+                    
+                    // If played for 3+ seconds, trigger an easter egg
+                    setTimeout(() => {
+                        if (hiddenFrame.style.opacity === '1') {
+                            glitchEffect();
+                            glitchEffect();
+                            document.body.style.animation = 'flicker 0.5s';
+                            setTimeout(() => {
+                                document.body.style.animation = '';
+                            }, 500);
+                        }
+                    }, 3000);
+                }
+            });
+            
+            // Evidence items
+            evidenceItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const evidenceId = this.getAttribute('data-evidence');
+                    const contentElement = document.getElementById('evidence-' + evidenceId + '-content');
+                    
+                    if (contentElement) {
+                        evidenceModalTitle.textContent = this.querySelector('.evidence-title').textContent;
+                        evidenceContent.innerHTML = contentElement.innerHTML;
+                        evidenceModal.style.display = 'flex';
+                        playGlitchSound();
+                    }
+                });
+            });
+            
+            evidenceClose.addEventListener('click', function() {
+                evidenceModal.style.display = 'none';
+                playGlitchSound();
+            });
+            
+            // Secret code input
+            secretSubmit.addEventListener('click', function() {
+                const input = secretInput.value.trim().toLowerCase();
+                
+                if (input === '24thframe' || input === 'the24thframe') {
+                    secretResult.textContent = 'ACCESS GRANTED TO HIDDEN FILES';
+                    secretResult.style.color = 'var(--primary)';
+                    
+                    // Grant access
+                    accessGranted = true;
+                    accessStatus.textContent = 'GRANTED';
+                    accessStatus.style.color = '#00ff00';
+                    unlockContent();
+                    
+                    // Show hidden message
+                    hiddenMessage.style.opacity = 1;
+                    hiddenMessage.style.height = 'auto';
+                    
+                    // Show all clues
+                    hiddenClues.forEach(clue => {
+                        clue.style.opacity = 1;
+                    });
+                    
+                    // Trigger special event
+                    setTimeout(() => {
+                        const subliminal = document.getElementById('subliminal-3');
+                        subliminal.style.opacity = 1;
+                        playGlitchSound();
+                        
+                        setTimeout(() => {
+                            subliminal.style.opacity = 0;
+                        }, 100);
+                    }, 3000);
+                    
+                } else if (input === 'silverlight' || input === 'project silverlight') {
+                    secretResult.textContent = 'PARTIAL ACCESS GRANTED';
+                    secretResult.style.color = 'var(--secondary)';
+                    
+                    // Reveal some censored text
+                    let revealed = 0;
+                    censoredTexts.forEach(text => {
+                        if (revealed < 5 && Math.random() > 0.5) {
+                            text.style.backgroundColor = 'transparent';
+                            text.style.color = 'var(--primary)';
+                            revealed++;
+                        }
+                    });
+                    
+                } else if (input === 'the audience is watching' || input === 'audience') {
+                    secretResult.textContent = 'THEY HEAR YOU';
+                    secretResult.style.color = 'var(--error-color)';
+                    
+                    // Trigger creepy effect
+                    glitchEffect();
+                    setTimeout(glitchEffect, 500);
+                    setTimeout(glitchEffect, 1000);
+                    
+                    // Show subliminal message
+                    const index = Math.floor(Math.random() * subliminalTexts.length);
+                    subliminalTexts[index].style.opacity = 1;
+                    setTimeout(() => {
+                        subliminalTexts[index].style.opacity = 0;
+                    }, 200);
+                    
+                } else if (input === '11112008' || input === '11/11/2008') {
+                    secretResult.textContent = 'DATE RECOGNIZED - ACCESSING TIME SIGNATURE';
+                    secretResult.style.color = 'var(--primary)';
+                    
+                    // Reset countdown to show specific time
+                    const countdown = document.getElementById('countdown-timer');
+                    countdown.innerHTML = `
+                        <div class="countdown-section">
+                            <div>11</div>
+                            <div class="countdown-label">HOUR</div>
+                        </div>
+                        <div class="countdown-section">
+                            <div>24</div>
+                            <div class="countdown-label">MINUTE</div>
+                        </div>
+                        <div class="countdown-section">
+                            <div>00</div>
+                            <div class="countdown-label">SECOND</div>
+                        </div>
+                    `;
+                    
+                } else {
+                    secretResult.textContent = 'INVALID CODE';
+                    secretResult.style.color = 'var(--error-color)';
+                }
+                
+                playGlitchSound();
+            });
+            
+            // Censored text interaction
+            censoredTexts.forEach(text => {
+                text.addEventListener('click', function() {
+                    if (accessGranted) {
+                        this.style.backgroundColor = 'transparent';
+                        this.style.color = 'var(--primary)';
+                        playGlitchSound();
+                    }
+                });
+            });
+            
+            // Functions
+            function updateVisitorCounter() {
+                visitorCount++;
+                localStorage.setItem('visitorCount', visitorCount);
+                visitorCounter.textContent = String(visitorCount).padStart(7, '0');
+            }
+            
+            function updateCountdown() {
+                // Calculate time since November 11, 2008 at 11:24 PM
+                const eventDate = new Date('2008-11-11T23:24:00');
+                const now = new Date();
+                const diff = now - eventDate;
+                
+                // Calculate years, days, hours, minutes, seconds
+                const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+                const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                // Update countdown elements
+                document.getElementById('countdown-years').textContent = String(years).padStart(4, '0');
+                document.getElementById('countdown-days').textContent = String(days).padStart(3, '0');
+                document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('countdown-minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('countdown-seconds').textContent = String(seconds).padStart(2, '0');
+            }
+            
+            function advanceFrame() {
+                currentFrame += frameDirection;
+                
+                // If frame count reaches 24 or 0, reverse direction
+                if (currentFrame >= 24) {
+                    frameDirection = -1;
+                    
+                    // Show the hidden 24th frame briefly
+                    hiddenFrame.style.opacity = 1;
+                    setTimeout(() => {
+                        hiddenFrame.style.opacity = 0;
+                    }, 125); // Show for one frame
+                    
+                    // Trigger subliminal message
+                    if (Math.random() > 0.5) {
+                        const index = Math.floor(Math.random() * subliminalTexts.length);
+                        subliminalTexts[index].style.opacity = 1;
+                        setTimeout(() => {
+                            subliminalTexts[index].style.opacity = 0;
+                        }, 50); // Very brief flash
+                    }
+                } else if (currentFrame <= 0) {
+                    frameDirection = 1;
+                }
+                
+                // Update frame counter
+                frameCounter.textContent = 'FRAME: ' + String(currentFrame).padStart(2, '0');
+            }
+            
+            function glitchEffect() {
+                document.querySelector('.glitch-overlay').style.opacity = '0.3';
+                setTimeout(() => {
+                    document.querySelector('.glitch-overlay').style.opacity = '0';
+                }, 200);
+                playGlitchSound();
+            }
+            
+            function randomGlitch() {
+                if (Math.random() > 0.7) {
+                    const elements = document.querySelectorAll('h1, h2, h3, p, a');
+                    const randomElement = elements[Math.floor(Math.random() * elements.length)];
+                    
+                    randomElement.classList.add('glitch-effect');
+                    setTimeout(() => {
+                        randomElement.classList.remove('glitch-effect');
+                    }, 300);
+                    
+                    if (Math.random() > 0.5) {
+                        playGlitchSound();
+                    }
+                }
+                
+                // Occasionally show subliminal text very briefly
+                if (Math.random() > 0.95) {
+                    const index = Math.floor(Math.random() * subliminalTexts.length);
+                    subliminalTexts[index].style.opacity = 0.7;
+                    setTimeout(() => {
+                        subliminalTexts[index].style.opacity = 0;
+                    }, 50);
+                }
+            }
+            
+            function playGlitchSound() {
+                glitchSound.currentTime = 0;
+                glitchSound.play();
+            }
+            
+            function unlockContent() {
+                // Reveal hidden message
+                hiddenMessage.style.opacity = 1;
+                hiddenMessage.style.height = 'auto';
+                
+                // Make censored content more visible
+                censoredTexts.forEach(text => {
+                    text.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+                });
+            }
+            
+            // Easter eggs
+            let clickSequence = [];
+            const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+            
+            document.addEventListener('keydown', function(e) {
+                // Add the key to the sequence
+                clickSequence.push(e.key);
+                
+                // Keep only the last 10 keys
+                if (clickSequence.length > 10) {
+                    clickSequence = clickSequence.slice(-10);
+                }
+                
+                // Check if the sequence matches the Konami code
+                let konamiMatch = true;
+                for (let i = 0; i < konamiCode.length; i++) {
+                    if (clickSequence[clickSequence.length - konamiCode.length + i] !== konamiCode[i]) {
+                        konamiMatch = false;
+                        break;
+                    }
+                }
+                
+                // If Konami code entered, trigger easter egg
+                if (konamiMatch) {
+                    // Trigger major glitch effect
+                    glitchEffect();
+                    setTimeout(glitchEffect, 200);
+                    setTimeout(glitchEffect, 400);
+                    
+                    // Show all subliminal messages in sequence
+                    subliminalTexts.forEach((text, index) => {
+                        setTimeout(() => {
+                            text.style.opacity = 1;
+                            setTimeout(() => {
+                                text.style.opacity = 0;
+                            }, 200);
+                        }, index * 300);
+                    });
+                    
+                    // Grant access
+                    accessGranted = true;
+                    accessStatus.textContent = 'GRANTED';
+                    accessStatus.style.color = '#00ff00';
+                    
+                    // Reveal all censored content
+                    censoredTexts.forEach(text => {
+                        text.style.backgroundColor = 'transparent';
+                        text.style.color = 'var(--error-color)';
+                    });
+                    
+                    // Show secret message
+                    secretResult.textContent = 'THE AUDIENCE RECOGNIZES YOU';
+                    secretResult.style.color = 'var(--primary)';
+                }
+            });
+            
+            // Theater map easter egg
+            const theaterMap = document.querySelector('.theater-map');
+            theaterMap.addEventListener('dblclick', function(e) {
+                // Show mirror pattern more clearly
+                const svg = this.querySelector('svg');
+                const hiddenPaths = svg.querySelectorAll('path[stroke="#001100"]');
+                
+                hiddenPaths.forEach(path => {
+                    path.setAttribute('stroke', '#00ff00');
+                    setTimeout(() => {
+                        path.setAttribute('stroke', '#001100');
+                    }, 3000);
+                });
+                
+                // Show clue
+                document.getElementById('clue-2').style.opacity = 1;
+                playGlitchSound();
+            });
+            
+            // Timeline date pattern easter egg
+            let dateClicks = [];
+            const timelineDates = document.querySelectorAll('.timeline-date');
+            
+            timelineDates.forEach(date => {
+                date.addEventListener('click', function() {
+                    dateClicks.push(this.textContent);
+                    
+                    // If clicked November 11, 2008 specifically
+                    if (this.textContent === 'NOVEMBER 11, 2008') {
+                        // Trigger special effect
+                        this.style.color = 'var(--error-color)';
+                        playGlitchSound();
+                        
+                        // Reset countdown
+                        const countdown = document.getElementById('countdown-timer');
+                        countdown.innerHTML = `
+                            <div class="countdown-section">
+                                <div>00</div>
+                                <div class="countdown-label">YEARS</div>
+                            </div>
+                            <div class="countdown-section">
+                                <div>000</div>
+                                <div class="countdown-label">DAYS</div>
+                            </div>
+                            <div class="countdown-section">
+                                <div>00</div>
+                                <div class="countdown-label">HOURS</div>
+                            </div>
+                            <div class="countdown-section">
+                                <div>00</div>
+                                <div class="countdown-label">MINUTES</div>
+                            </div>
+                            <div class="countdown-section">
+                                <div>00</div>
+                                <div class="countdown-label">SECONDS</div>
+                            </div>
+                        `;
+                        
+                        // Show message
+                        document.getElementById('clue-1').textContent = 'THE CYCLE REPEATS';
+                        document.getElementById('clue-1').style.opacity = 1;
+                    }
+                    
+                    // If clicked all dates in order
+                    if (dateClicks.length === timelineDates.length) {
+                        // Check if in chronological order
+                        let inOrder = true;
+                        for (let i = 1; i < dateClicks.length; i++) {
+                            // Simple string comparison works for these date formats
+                            if (dateClicks[i] < dateClicks[i-1]) {
+                                inOrder = false;
+                                break;
+                            }
+                        }
+                        
+                        if (inOrder) {
+                            // Reveal a secret
+                            secretResult.textContent = 'TIMELINE SYNCHRONIZED - THE PATTERN REPEATS EVERY 17 YEARS';
+                            secretResult.style.color = 'var(--primary)';
+                            
+                            // Hint at the next cycle
+                            const nextDate = new Date('2025-11-11T23:24:00');
+                            const now = new Date();
+                            const diff = nextDate - now;
+                            
+                            if (diff > 0) {
+                                // Calculate days, hours, minutes, seconds until next cycle
+                                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                                
+                                // Show countdown to next cycle
+                                const countdown = document.getElementById('countdown-timer');
+                                countdown.innerHTML = `
+                                    <div class="countdown-section">
+                                        <div>NEXT</div>
+                                        <div class="countdown-label">CYCLE</div>
+                                    </div>
+                                    <div class="countdown-section">
+                                        <div>${String(days).padStart(3, '0')}</div>
+                                        <div class="countdown-label">DAYS</div>
+                                    </div>
+                                    <div class="countdown-section">
+                                        <div>${String(hours).padStart(2, '0')}</div>
+                                        <div class="countdown-label">HOURS</div>
+                                    </div>
+                                    <div class="countdown-section">
+                                        <div>${String(minutes).padStart(2, '0')}</div>
+                                        <div class="countdown-label">MINUTES</div>
+                                    </div>
+                                `;
+                            }
+                        }
+                        
+                        // Reset date clicks
+                        dateClicks = [];
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

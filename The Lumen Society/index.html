@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK STAR WASH :: PROJECT SILVERLIGHT</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="glitch-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="title-glitch">
+                <h1 class="glitch" data-text="MK STAR WASH">MK STAR WASH</h1>
+                <p class="subtitle">EST. 2001 • LAST UPDATE: 11/11/2008</p>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-section="home">HOME</a></li>
+                        <li><a href="#" class="nav-link" data-section="archive">ARCHIVE</a></li>
+                        <li><a href="#" class="nav-link" data-section="members">MEMBERS</a></li>
+                        <li><a href="#" class="nav-link" data-section="project">PROJECT SILVERLIGHT</a></li>
+                        <li><a href="#" class="nav-link" data-section="forum">FORUM</a></li>
+                    </ul>
+                </nav>
+                <div class="access-panel">
+                    <span class="access-text">ACCESS:</span>
+                    <span class="access-status" id="access-status">RESTRICTED</span>
+                    <div class="login-toggle" id="login-toggle">[LOGIN]</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section id="home" class="content-section active">
+                <div class="welcome-message">
+                    <p class="typewriter">WELCOME TO THE LUMEN SOCIETY DIGITAL ARCHIVE</p>
+                    <div class="marquee-container">
+                        <div class="marquee">* NOTICE: THIS SITE HAS BEEN ARCHIVED BY THE WAYBACK MACHINE * NOTICE: SOME CONTENT MAY BE CORRUPTED OR MISSING * NOTICE: DO NOT WATCH THE SILVERLIGHT TAPES WITHOUT EYE PROTECTION *</div>
+                    </div>
+                </div>
+
+                <div class="main-content">
+                    <div class="left-column">
+                        <div class="recent-updates">
+                            <h2>FINAL MESSAGE (11/11/2008):</h2>
+                            <div class="update-box glitch-box">
+                                <p>"THE STARS HAVE ALIGNED. THE AUDIENCE IS WATCHING. WE TAKE OUR BOWS IN THE DARK."</p>
+                                <div class="glitch-effect"></div>
+                            </div>
+                        </div>
+
+                        <div class="password-prompt" id="password-prompt">
+                            <p>ENTER ACCESS CODE:</p>
+                            <input type="password" id="password-input">
+                            <button id="password-submit">SUBMIT</button>
+                            <p class="hint">Hint: What is hidden in the 24th frame?</p>
+                        </div>
+
+                        <div class="media-player">
+                            <div class="player-screen" id="player-screen">
+                                <div class="static-overlay"></div>
+                                <video id="main-video" controls style="display:none;">
+                                    <source src="" type="video/mp4">
+                                </video>
+                                <canvas id="video-canvas"></canvas>
+                            </div>
+                            <div class="player-controls">
+                                <button id="play-btn">PLAY</button>
+                                <button id="stop-btn">STOP</button>
+                                <div class="tape-counter">00:00:00</div>
+                            </div>
+                            <div class="tape-selection">
+                                <div class="tape-option" data-video="lumen_project_7">LUMEN_PROJECT_7.mov</div>
+                                <div class="tape-option" data-video="silverlight_exp12">SL-EXPERIMENT_12.avi</div>
+                                <div class="tape-option locked" data-video="final_performance">FINAL_PERFORMANCE.mpg</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right-column">
+                        <div class="member-log">
+                            <h2>MEMBER LOG EXCERPTS:</h2>
+                            <div class="log-entries">
+                                <div class="log-entry">
+                                    <p class="log-date">10/31/2008</p>
+                                    <p class="log-content">They showed us the city behind the screen today. It's beautiful. It's hungry. I can hear them whispering my lines before I say them.</p>
+                                </div>
+                                <div class="log-entry">
+                                    <p class="log-date">11/05/2008</p>
+                                    <p class="log-content">The role is wearing me. I look in the mirror and see someone else's face. They told me this is what transformation feels like.</p>
+                                </div>
+                                <div class="log-entry locked-entry">
+                                    <p class="log-date">11/10/2008</p>
+                                    <p class="log-content locked-text">[REDACTED]</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="image-grid">
+                            <div class="grid-item">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23000'/%3E%3Ctext x='100' y='100' font-family='monospace' font-size='14' fill='%23fff' text-anchor='middle'%3EIMAGE CORRUPTED%3C/text%3E%3C/svg%3E" class="glitch-img" alt="Corrupted image">
+                                <div class="img-caption">Group photo (2006) - Note the anomalies</div>
+                            </div>
+                            <div class="grid-item">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23000'/%3E%3Ctext x='100' y='100' font-family='monospace' font-size='14' fill='%23fff' text-anchor='middle'%3EIMAGE CORRUPTED%3C/text%3E%3C/svg%3E" class="glitch-img" alt="Corrupted image">
+                                <div class="img-caption">Editing bay - Notice the extra reels</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="archive" class="content-section">
+                <h2>ARCHIVED MATERIALS</h2>
+                <div class="archive-grid">
+                    <div class="archive-item">
+                        <a href="recovered-files.html" style="display: block; width: 100%; height: 100%; text-decoration: none; color: inherit;">
+                            <div class="archive-icon">📼</div>
+                            <h3>SILVERLIGHT TAPES</h3>
+                            <p>Recovered experiment reels (partial)</p>
+                            <div class="archive-lock">LOCKED</div>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="mirror-chamber.html" style="display: block; width: 100%; height: 100%; text-decoration: none; color: inherit;"></a>
+                            <div class="archive-icon">📝</div>
+                            <h3>FORUM POSTS</h3>
+                         <p>Member discussions 2001-2008</p>
+                         <div class="archive-lock">LOCKED</div>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <div class="archive-icon">🔍</div>
+                        <h3>SECURITY FOOTAGE</h3>
+                        <p>11/11/2008 blackout</p>
+                        <div class="archive-lock">LOCKED</div>
+                    </div>
+                    <div class="archive-item">
+                        <div class="archive-icon">💿</div>
+                        <h3>AUDIO RECORDINGS</h3>
+                        <p>Whisper tracks and backmasking</p>
+                        <div class="archive-lock">LOCKED</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="members" class="content-section">
+                <h2>KNOWN MEMBERS</h2>
+                <div class="member-list">
+                    <div class="member-card">
+                        <div class="member-photo glitch-img"></div>
+                        <h3>DR. ALISTAIR VEX</h3>
+                        <p>Experimental Psychologist</p>
+                        <p class="member-status missing">STATUS: MISSING</p>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-photo glitch-img"></div>
+                        <h3>ELIAS MARTIN</h3>
+                        <p>Film Editor</p>
+                        <p class="member-status missing">STATUS: MISSING</p>
+                    </div>
+                    <div class="member-card">
+                        <div class="member-photo glitch-img"></div>
+                        <h3>VIVIAN CROSS</h3>
+                        <p>Actress</p>
+                        <p class="member-status deceased">STATUS: DECEASED</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="project" class="content-section">
+                <h2>PROJECT SILVERLIGHT</h2>
+                <div class="document-viewer">
+                    <div class="document-page">
+                        <h3>CLASSIFIED - EYES ONLY</h3>
+                        <p>Project Silverlight represents the culmination of audiovisual conditioning research initiated under MK-Ultra. Through precise manipulation of film frames (particularly the 24th frame effect), subliminal audio cues, and ritualistic reinforcement, subjects can be guided to...</p>
+                        <p class="redacted">[REDACTED]</p>
+                        <p>The Lumen Society served as ideal test subjects due to their willingness to embrace "method acting" beyond normal parameters. Phase Three testing on November 11, 2008 demonstrated...</p>
+                        <p class="redacted">[REDACTED]</p>
+                    </div>
+                    <div class="document-page locked-page">
+                        <p class="locked-text">FURTHER DOCUMENTS REQUIRE LEVEL 4 CLEARANCE</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="forum" class="content-section">
+                <h2>MEMBERS ONLY FORUM</h2>
+                <div class="forum-container">
+                    <div class="forum-thread">
+                        <div class="thread-header">
+                            <span class="thread-title">Have you seen the city?</span>
+                            <span class="thread-date">10/28/2008</span>
+                        </div>
+                        <div class="thread-content">
+                            <p>After watching SL-EXPERIMENT_9, I keep seeing it in my dreams. The shining city behind everything. The audience that watches. Has anyone else...</p>
+                            <p class="redacted">[REMAINDER OF POST CORRUPTED]</p>
+                        </div>
+                    </div>
+                    <div class="forum-thread">
+                        <div class="thread-header">
+                            <span class="thread-title">The Board is pleased</span>
+                            <span class="thread-date">11/08/2008</span>
+                        </div>
+                        <div class="thread-content">
+                            <p>Final preparations are complete. The Grand Illumination will commence as scheduled. Remember your roles. The Audience expects a perfect performance.</p>
+                        </div>
+                    </div>
+                    <div class="forum-thread locked-thread">
+                        <div class="thread-header">
+                            <span class="thread-title">[THREAD LOCKED]</span>
+                            <span class="thread-date">11/11/2008</span>
+                        </div>
+                        <div class="thread-content">
+                            <p class="locked-text">ACCESS TO THIS THREAD REQUIRES SPECIAL CLEARANCE</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>© 2001-2008 THE LUMEN SOCIETY</p>
+                <p>THIS SITE RECOVERED FROM WAYBACK MACHINE ARCHIVES</p>
+                <p id="visitor-counter">VISITOR COUNT: <span id="counter">0000001</span></p>
+            </div>
+            <div class="hidden-message" id="hidden-message">
+                <p>YOU SHOULDN'T BE HERE. THEY'RE WATCHING.</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="login-modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>LUMEN SOCIETY ACCESS PORTAL</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">USERNAME:</label>
+                    <input type="text" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">PASSWORD:</label>
+                    <input type="password" id="password">
+                </div>
+                <button id="login-submit">AUTHENTICATE</button>
+                <p class="login-error" id="login-error"></p>
+            </div>
+            <div class="login-disclaimer">
+                <p>WARNING: Unauthorized access is strictly prohibited. All activity is monitored.</p>
+            </div>
+        </div>
+    </div>
+
+    <audio id="static-sound" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-tv-ultra-bright-2586.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="glitch-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-clock-digital-alarm-buzzer-992.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

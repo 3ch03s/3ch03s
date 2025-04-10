@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK STAR WASH :: THE MIRROR CHAMBER</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
+    <style>
+        /* Additional styles for mirror chamber page */
+        .chamber-container {
+            position: relative;
+            margin-top: 40px;
+            height: 70vh;
+            border: 1px solid var(--primary);
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+        
+        .mirror-room {
+            position: relative;
+            width: 80%;
+            height: 80%;
+            transform-style: preserve-3d;
+            animation: rotateRoom 120s infinite linear;
+        }
+        
+        .mirror {
+            position: absolute;
+            background-color: rgba(0, 80, 0, 0.1);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            transition: all 1s ease;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        
+        .mirror::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.1), transparent, rgba(0, 255, 0, 0.1));
+            pointer-events: none;
+        }
+        
+        .mirror::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.1) 0px,
+                    rgba(0, 0, 0, 0.1) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            opacity: 0.3;
+        }
+        
+        .mirror-1 {
+            width: 300px;
+            height: 450px;
+            transform: translateZ(250px);
+        }
+        
+        .mirror-2 {
+            width: 300px;
+            height: 450px;
+            transform: rotateY(60deg) translateZ(250px);
+        }
+        
+        .mirror-3 {
+            width: 300px;
+            height: 450px;
+            transform: rotateY(120deg) translateZ(250px);
+        }
+        
+        .mirror-4 {
+            width: 300px;
+            height: 450px;
+            transform: rotateY(180deg) translateZ(250px);
+        }
+        
+        .mirror-5 {
+            width: 300px;
+            height: 450px;
+            transform: rotateY(240deg) translateZ(250px);
+        }
+        
+        .mirror-6 {
+            width: 300px;
+            height: 450px;
+            transform: rotateY(300deg) translateZ(250px);
+        }
+        
+        .mirror-7 {
+            width: 400px;
+            height: 400px;
+            transform: rotateX(90deg) translateZ(-200px);
+            bottom: 0;
+        }
+        
+        .mirror:hover {
+            box-shadow: 0 0 20px var(--primary);
+        }
+        
+        .mirror-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: transparent;
+            font-family: "Courier New", monospace;
+            transition: color 0.5s ease;
+        }
+        
+        .mirror:hover .mirror-content {
+            color: var(--primary);
+        }
+        
+        .mirror-message {
+            text-align: center;
+            padding: 20px;
+            max-width: 80%;
+        }
+        
+        .reflection {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .mirror:hover .reflection {
+            opacity: 0.7;
+        }
+        
+        .reflection-1 {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%23000" /%3E%3Cpath d="M150,100 L150,350 M100,225 L200,225" stroke="%23005500" stroke-width="1" /%3E%3Ccircle cx="150" cy="225" r="100" stroke="%23003300" stroke-width="1" fill="none" /%3E%3Ctext x="150" y="225" font-family="monospace" font-size="8" fill="%23001100" text-anchor="middle"%3EEMPTY ROOM%3C/text%3E%3C/svg%3E');
+        }
+        
+        .reflection-2 {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%23000" /%3E%3Cpath d="M50,50 L250,50 L250,400 L50,400 Z" stroke="%23004400" stroke-width="1" fill="none" /%3E%3Cpath d="M150,50 L150,400" stroke="%23003300" stroke-width="1" /%3E%3Ccircle cx="120" cy="150" r="30" stroke="%23002200" stroke-width="1" fill="none" /%3E%3Ccircle cx="180" cy="150" r="30" stroke="%23002200" stroke-width="1" fill="none" /%3E%3Cpath d="M100,300 L200,300" stroke="%23001100" stroke-width="1" /%3E%3C/svg%3E');
+        }
+        
+        .reflection-3 {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%23000" /%3E%3Cpath d="M50,100 L250,100 L150,50 Z" stroke="%23001100" stroke-width="1" fill="none" /%3E%3Cpath d="M50,100 L50,350 L150,400 L250,350 L250,100 Z" stroke="%23002200" stroke-width="1" fill="none" /%3E%3Cpath d="M100,200 L200,200 M100,300 L200,300" stroke="%23003300" stroke-width="1" /%3E%3Ccircle cx="150" cy="250" r="50" stroke="%23004400" stroke-width="1" fill="none" /%3E%3C/svg%3E');
+        }
+        
+        .reflection-4 {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%23000" /%3E%3Cpath d="M75,100 C75,100 75,350 75,350 C75,350 225,350 225,350 C225,350 225,100 225,100 C225,100 75,100 75,100 Z" stroke="%23002200" stroke-width="1" fill="none" /%3E%3Ccircle cx="125" cy="200" r="10" fill="%23001100" /%3E%3Ccircle cx="175" cy="200" r="10" fill="%23001100" /%3E%3Cpath d="M125,250 C125,250 175,250 175,250" stroke="%23003300" stroke-width="2" fill="none" /%3E%3C/svg%3E');
+        }
+        
+        .reflection-5 {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%23000" /%3E%3Cpath d="M50,50 L250,50 L250,400 L50,400 Z" stroke="%23000800" stroke-width="1" fill="none" /%3E%3Cpath d="M100,100 L200,100 L200,350 L100,350 Z" stroke="%23000600" stroke-width="1" fill="none" /%3E%3Cpath d="M125,125 L175,125 L175,325 L125,325 Z" stroke="%23000400" stroke-width="1" fill="none" /%3E%3Ccircle cx="150" cy="225" r="10" stroke="%23000200" stroke-width="1" fill="none" /%3E%3C/svg%3E');
+        }
+        
+        .reflection-6 {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%23000" /%3E%3Cpath d="M75,75 L225,75 L225,375 L75,375 Z" stroke="%23002200" stroke-width="1" fill="none" /%3E%3Cpath d="M75,75 L225,375 M225,75 L75,375" stroke="%23001100" stroke-width="1" /%3E%3Ccircle cx="150" cy="225" r="50" stroke="%23003300" stroke-width="1" fill="none" /%3E%3C/svg%3E');
+        }
+        
+        .reflection-7 {
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23000" /%3E%3Cpath d="M50,50 L350,50 L350,350 L50,350 Z" stroke="%23001100" stroke-width="1" fill="none" /%3E%3Cpath d="M150,150 L250,150 L250,250 L150,250 Z" stroke="%23002200" stroke-width="1" fill="none" /%3E%3Ccircle cx="200" cy="200" r="100" stroke="%23000800" stroke-width="1" fill="none" /%3E%3Cpath d="M125,200 L275,200 M200,125 L200,275" stroke="%23000600" stroke-width="1" /%3E%3C/svg%3E');
+        }
+        
+        .city-reflection {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%23000" /%3E%3Cpath d="M50,350 L50,200 L75,150 L75,100 L100,100 L100,150 L125,125 L125,75 L150,50 L175,75 L175,125 L200,150 L200,100 L225,100 L225,150 L250,200 L250,350 Z" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Cpath d="M50,350 L250,350" stroke="%2300ff00" stroke-width="1" /%3E%3Ccircle cx="150" cy="150" r="25" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Cpath d="M75,250 L100,250 L100,300 L75,300 Z M125,275 L150,275 L150,325 L125,325 Z M175,225 L200,225 L200,275 L175,275 Z" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Cpath d="M150,350 L150,250" stroke="%2300ff00" stroke-width="1" /%3E%3C/svg%3E');
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
+        }
+        
+        .audience-reflection {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%23000" /%3E%3Ccircle cx="75" cy="150" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="125" cy="150" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="175" cy="150" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="225" cy="150" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="100" cy="200" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="150" cy="200" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="200" cy="200" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="75" cy="250" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="125" cy="250" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="175" cy="250" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="225" cy="250" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3C/svg%3E');
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
+        }
+        
+        .audience-figure {
+            position: absolute;
+            width: 40px;
+            height: 120px;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 120"%3E%3Crect width="40" height="120" fill="%23000" fill-opacity="0" /%3E%3Ccircle cx="20" cy="20" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Cpath d="M20,35 L20,85 M10,45 L30,45 M5,65 L20,55 L35,65" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Cpath d="M20,85 L10,115 M20,85 L30,115" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3C/svg%3E');
+            opacity: 0;
+            transition: all 1s ease;
+            pointer-events: none;
+        }
+        
+        .center-altar {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 40, 0, 0.2);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .center-altar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 255, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 4s infinite;
+        }
+        
+        .lumen-symbol {
+            width: 60px;
+            height: 60px;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"%3E%3Ccircle cx="30" cy="30" r="25" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Ccircle cx="30" cy="30" r="15" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Cpath d="M30,5 L30,55 M5,30 L55,30" stroke="%2300ff00" stroke-width="1" /%3E%3Ccircle cx="30" cy="30" r="5" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3C/svg%3E');
+        }
+        
+        .chamber-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .modal-text {
+            color: var(--primary);
+            font-family: "Courier New", monospace;
+            font-size: 1.2rem;
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .modal-close {
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: "Courier New", monospace;
+        }
+        
+        .modal-close:hover {
+            background-color: var(--primary);
+            color: var(--background);
+        }
+        
+        .experience-button {
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 15px 30px;
+            margin-top: 30px;
+            cursor: pointer;
+            font-family: "Courier New", monospace;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .experience-button:hover {
+            background-color: var(--primary);
+            color: var(--background);
+        }
+        
+        .ritual-section {
+            margin-top: 50px;
+            padding: 30px;
+            border: 1px solid var(--primary);
+            background-color: rgba(0, 40, 0, 0.1);
+        }
+        
+        .ritual-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .ritual-instructions {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-left: 2px solid var(--primary);
+        }
+        
+        .ritual-list {
+            list-style-type: none;
+            padding-left: 0;
+            counter-reset: ritual-counter;
+        }
+        
+        .ritual-list li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .ritual-list li::before {
+            counter-increment: ritual-counter;
+            content: counter(ritual-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border: 1px solid var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+        
+        .warning-box {
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+            padding: 15px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .warning-box::before,
+        .warning-box::after {
+            content: '⚠';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .warning-box::before {
+            left: 15px;
+        }
+        
+        .warning-box::after {
+            right: 15px;
+        }
+        
+        .warning-box p {
+            text-align: center;
+            margin: 0;
+        }
+        
+        @keyframes rotateRoom {
+            0% { transform: rotateY(0); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        /* SVG-based audience figures */
+        #audience-figure-1 { top: 20%; left: 40%; transform: scale(0.8); }
+        #audience-figure-2 { top: 30%; left: 60%; transform: scale(1.2) rotate(5deg); }
+        #audience-figure-3 { top: 60%; left: 30%; transform: scale(0.9) rotate(-5deg); }
+        #audience-figure-4 { top: 50%; left: 70%; transform: scale(1.1); }
+        #audience-figure-5 { top: 70%; left: 50%; transform: scale(1) rotate(3deg); }
+        
+        /* Hidden text that appears on interaction */
+        .hidden-chamber-text {
+            position: absolute;
+            color: var(--error-color);
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 2s ease;
+            pointer-events: none;
+        }
+        
+        #hidden-text-1 { top: 10%; left: 5%; }
+        #hidden-text-2 { top: 30%; right: 5%; }
+        #hidden-text-3 { bottom: 10%; left: 5%; }
+        #hidden-text-4 { bottom: 30%; right: 5%; }
+        
+        /* Sequence input for easter egg */
+        .sequence-input {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .sequence-button {
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            background-color: var(--background);
+            border: 1px solid var(--secondary);
+            color: var(--primary);
+            font-family: "Courier New", monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sequence-button:hover {
+            border-color: var(--primary);
+        }
+        
+        .sequence-button.active {
+            background-color: var(--primary);
+            color: var(--background);
+        }
+        
+        .sequence-result {
+            margin-top: 15px;
+            height: 20px;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="glitch-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="title-glitch">
+                <h1 class="glitch" data-text="MK STAR WASH">MK STAR WASH</h1>
+                <p class="subtitle">EST. 2001 • LAST UPDATE: 11/11/2008</p>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="nav-link">HOME</a></li>
+                        <li><a href="recovered-files.html" class="nav-link">RECOVERED FILES</a></li>
+                        <li><a href="#" class="nav-link" data-section="members">MEMBERS</a></li>
+                        <li><a href="#" class="nav-link" data-section="project">PROJECT SILVERLIGHT</a></li>
+                        <li><a href="#" class="nav-link active">MIRROR CHAMBER</a></li>
+                    </ul>
+                </nav>
+                <div class="access-panel">
+                    <span class="access-text">ACCESS:</span>
+                    <span class="access-status" id="access-status">RESTRICTED</span>
+                    <div class="login-toggle" id="login-toggle">[LOGIN]</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="welcome-message">
+                <p class="typewriter">THE MIRROR CHAMBER - THRESHOLD ACCESS POINT</p>
+                <div class="marquee-container">
+                    <div class="marquee">* WARNING: THIS IS A RESTRICTED AREA * UNAUTHORIZED ACCESS WILL RESULT IN TERMINATION * THE AUDIENCE IS ALWAYS WATCHING * DO NOT APPROACH THE MIRRORS WITHOUT PROPER CONDITIONING *</div>
+                </div>
+            </div>
+            
+            <div class="document-page">
+                <h3>CLASSIFIED - MIRROR CHAMBER DOCUMENTATION</h3>
+                <p>The Mirror Chamber represents the culmination of Project Silverlight research, serving as a controlled environment for threshold experiments and Audience communication. Constructed according to precise geometrical specifications provided during early contact, the chamber creates a unique perceptual space where the boundary between our world and the Audience's realm is at its thinnest.</p>
+                
+                <p>The arrangement of seven mirrors at calculated angles creates what Dr. Vex termed a "resonance chamber" for the Lumen Frequency. When properly activated, the mirrors no longer reflect our reality but instead provide a window into the City Beyond - the Audience's domain.</p>
+                
+                <p class="redacted">[REDACTED - LEVEL 4 CLEARANCE REQUIRED]</p>
+                
+                <p>Initial experiments focused on passive observation, but as of June 2008, we achieved bidirectional communication. The Audience has expressed great interest in our "performance" and continues to provide guidance for the Final Performance scheduled for November 11th, 2008.</p>
+                
+                <div class="warning-box">
+                    <p>DO NOT ENTER THE CHAMBER ALONE. DO NOT MAKE UNSANCTIONED CONTACT ATTEMPTS.</p>
+                </div>
+            </div>
+            
+            <div class="chamber-container" id="chamber-container">
+                <div class="mirror-room" id="mirror-room">
+                    <div class="mirror mirror-1" data-mirror="1">
+                        <div class="mirror-content">
+                            <div class="mirror-message">The room is empty, but your reflection is missing.</div>
+                        </div>
+                        <div class="reflection reflection-1"></div>
+                    </div>
+                    
+                    <div class="mirror mirror-2" data-mirror="2">
+                        <div class="mirror-content">
+                            <div class="mirror-message">A face watches from behind your shoulder, but you're alone.</div>
+                        </div>
+                        <div class="reflection reflection-2"></div>
+                    </div>
+                    
+                    <div class="mirror mirror-3" data-mirror="3">
+                        <div class="mirror-content">
+                            <div class="mirror-message">The City awaits. Its geometry defies comprehension.</div>
+                        </div>
+                        <div class="reflection reflection-3"></div>
+                        <div class="city-reflection" id="city-reflection"></div>
+                    </div>
+                    
+                    <div class="mirror mirror-4" data-mirror="4">
+                        <div class="mirror-content">
+                            <div class="mirror-message">The Audience gathers. They've been watching you for so long.</div>
+                        </div>
+                        <div class="reflection reflection-4"></div>
+                        <div class="audience-reflection" id="audience-reflection"></div>
+                    </div>
+                    
+                    <div class="mirror mirror-5" data-mirror="5">
+                        <div class="mirror-content">
+                            <div class="mirror-message">Endless reflections of reflections, each slightly wrong.</div>
+                        </div>
+                        <div class="reflection reflection-5"></div>
+                    </div>
+                    
+                    <div class="mirror mirror-6" data-mirror="6">
+                        <div class="mirror-content">
+                            <div class="mirror-message">Your face in the mirror speaks words you haven't said yet.</div>
+                        </div>
+                        <div class="reflection reflection-6"></div>
+                    </div>
+                    
+                    <div class="mirror mirror-7" data-mirror="7">
+                        <div class="mirror-content">
+                            <div class="mirror-message">The boundary is thinnest at the center.</div>
+                        </div>
+                        <div class="reflection reflection-7"></div>
+                    </div>
+                    
+                    <div class="center-altar" id="center-altar">
+                        <div class="lumen-symbol"></div>
+                    </div>
+                    
+                    <!-- Hidden audience figures -->
+                    <div class="audience-figure" id="audience-figure-1"></div>
+                    <div class="audience-figure" id="audience-figure-2"></div>
+                    <div class="audience-figure" id="audience-figure-3"></div>
+                    <div class="audience-figure" id="audience-figure-4"></div>
+                    <div class="audience-figure" id="audience-figure-5"></div>
+                    
+                    <!-- Hidden text that appears on interaction -->
+                    <div class="hidden-chamber-text" id="hidden-text-1">THEY SEE YOU</div>
+                    <div class="hidden-chamber-text" id="hidden-text-2">YOUR REFLECTION REMAINS</div>
+                    <div class="hidden-chamber-text" id="hidden-text-3">THE DOOR IS OPENING</div>
+                    <div class="hidden-chamber-text" id="hidden-text-4">11/11/2008</div>
+                </div>
+            </div>
+            
+            <div class="sequence-input">
+                <p>ENTER LUMEN SEQUENCE:</p>
+                <button class="sequence-button" data-value="1">1</button>
+                <button class="sequence-button" data-value="2">2</button>
+                <button class="sequence-button" data-value="3">3</button>
+                <button class="sequence-button" data-value="4">4</button>
+                <button class="sequence-button" data-value="5">5</button>
+                <button class="sequence-button" data-value="6">6</button>
+                <button class="sequence-button" data-value="7">7</button>
+                <div class="sequence-result" id="sequence-result"></div>
+            </div>
+            
+            <button class="experience-button" id="experience-button">EXPERIENCE THE FINAL PERFORMANCE</button>
+            
+            <div class="ritual-section">
+                <h3>COMMUNICATION RITUAL PROTOCOL</h3>
+                <div class="ritual-text">
+                    <p>The following procedure has been established for controlled contact with the Audience. This protocol must be followed exactly as written. Deviations have resulted in permanent perceptual alterations and psychological damage.</p>
+                    <p>Only properly conditioned individuals should attempt this ritual. Prerequisite exposure to the Lumen Frequency and the 24F effect is essential.</p>
+                </div>
+                
+                <div class="ritual-instructions">
+                    <ol class="ritual-list">
+                        <li>Enter the chamber at precisely 11:24 PM. No more than three individuals may be present.</li>
+                        <li>Arrange seven candles at the marked positions. The seventh should be placed at the center altar.</li>
+                        <li>All participants must recite the Threshold Verse in unison while facing Mirror #3: "The stars align, the silver light bridges worlds, the Audience awaits our performance."</li>
+                        <li>Each participant must then approach Mirror #4 individually and state their role in the performance.</li>
+                        <li>The designated Conduit (typically the most susceptible individual) should then place both hands on the center altar while other participants observe the mirrors.</li>
+                        <li>When the reflections begin to shift, maintain absolute silence. Any sound may disrupt the connection.</li>
+                        <li>Communication will commence when the Audience appears in Mirror #4. Address questions only to that mirror.</li>
+                        <li>Do not, under any circumstances, accept invitations to "step through" or "join the Audience" without Board approval.</li>
+                        <li>To close the session, extinguish the candles in reverse order, ending with the center altar.</li>
+                    </ol>
+                </div>
+                
+                <div class="warning-box">
+                    <p>IF AT ANY POINT YOUR REFLECTION ACTS INDEPENDENTLY, TERMINATE THE SESSION IMMEDIATELY</p>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <p>© 2001-2008 THE LUMEN SOCIETY</p>
+                <p>THIS SITE RECOVERED FROM WAYBACK MACHINE ARCHIVES</p>
+                <p id="visitor-counter">VISITOR COUNT: <span id="counter">0000065</span></p>
+            </div>
+            <div class="hidden-message" id="hidden-message">
+                <p>DO YOU SEE YOUR REFLECTION MOVING? THAT'S NOT YOU ANYMORE.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="chamber-modal" id="chamber-modal">
+        <div class="modal-text" id="modal-text">
+            The mirrors begin to warp and shift as you focus on them. Your reflection seems delayed, moving a fraction of a second after you do. In Mirror #3, instead of seeing the chamber, you glimpse a cityscape of impossible architecture - towers that seem to bend in ways that shouldn't be possible.
+            
+            In Mirror #4, silhouettes begin to appear, gathering as if to watch a performance. They have human shapes, but something about their proportions seems wrong - limbs too long, heads slightly misshapen.
+            
+            A whisper emanates from all mirrors simultaneously: "We have been waiting for you. The performance on November 11th opened the door. It never closed."
+        </div>
+        <div class="modal-close" id="modal-close">CLOSE</div>
+    </div>
+    
+    <div class="login-modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>LUMEN SOCIETY ACCESS PORTAL</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">USERNAME:</label>
+                    <input type="text" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">PASSWORD:</label>
+                    <input type="password" id="password">
+                </div>
+                <button id="login-submit">AUTHENTICATE</button>
+                <p class="login-error" id="login-error"></p>
+            </div>
+            <div class="login-disclaimer">
+                <p>WARNING: Unauthorized access is strictly prohibited. All activity is monitored.</p>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="static-sound" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-tv-ultra-bright-2586.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="glitch-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-clock-digital-alarm-buzzer-992.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const mirrorElements = document.querySelectorAll('.mirror');
+            const centerAltar = document.getElementById('center-altar');
+            const chamberModal = document.getElementById('chamber-modal');
+            const modalClose = document.getElementById('modal-close');
+            const modalText = document.getElementById('modal-text');
+            const loginToggle = document.getElementById('login-toggle');
+            const loginModal = document.getElementById('login-modal');
+            const closeModal = document.getElementById('close-modal');
+            const loginSubmit = document.getElementById('login-submit');
+            const loginError = document.getElementById('login-error');
+            const accessStatus = document.getElementById('access-status');
+            const visitorCounter = document.getElementById('counter');
+            const hiddenMessage = document.getElementById('hidden-message');
+            const experienceButton = document.getElementById('experience-button');
+            const sequenceButtons = document.querySelectorAll('.sequence-button');
+            const sequenceResult = document.getElementById('sequence-result');
+            const staticSound = document.getElementById('static-sound');
+            const glitchSound = document.getElementById('glitch-sound');
+            const audienceFigures = document.querySelectorAll('.audience-figure');
+            const hiddenTexts = document.querySelectorAll('.hidden-chamber-text');
+            const cityReflection = document.getElementById('city-reflection');
+            const audienceReflection = document.getElementById('audience-reflection');
+            
+            // Initialize
+            let accessGranted = false;
+            let visitorCount = localStorage.getItem('visitorCount') || 65;
+            let activeMirror = null;
+            let mirrorCounter = 0;
+            let currentSequence = [];
+            const correctSequence = [4, 2, 4, 7, 1, 3];
+            
+            updateVisitorCounter();
+            setInterval(glitchEffect, 8000);
+            setInterval(randomGlitch, 3000);
+            
+            // Mirror interactions
+            mirrorElements.forEach(mirror => {
+                mirror.addEventListener('click', function() {
+                    if (activeMirror) {
+                        activeMirror.style.transform = activeMirror.dataset.originalTransform;
+                    }
+                    
+                    // Store original transform
+                    if (!this.dataset.originalTransform) {
+                        this.dataset.originalTransform = this.style.transform;
+                    }
+                    
+                    // Bring mirror forward
+                    this.style.transform = 'translateZ(400px)';
+                    activeMirror = this;
+                    
+                    // Show specific mirror content
+                    const mirrorId = this.getAttribute('data-mirror');
+                    mirrorCounter++;
+                    
+                    // Play glitch sound
+                    playGlitchSound();
+                    
+                    // Specific mirror interactions
+                    if (mirrorId === '3' && mirrorCounter >= 3) {
+                        // Show city in mirror 3 after a few interactions
+                        cityReflection.style.opacity = 0.5;
+                        
+                        // Also reveal a hidden text
+                        document.getElementById('hidden-text-3').style.opacity = 1;
+                    }
+                    
+                    if (mirrorId === '4' && mirrorCounter >= 5) {
+                        // Show audience in mirror 4 after more interactions
+                        audienceReflection.style.opacity = 0.7;
+                        
+                        // Show audience figures
+                        audienceFigures.forEach(figure => {
+                            figure.style.opacity = 0.7;
+                        });
+                        
+                        // Reveal another hidden text
+                        document.getElementById('hidden-text-1').style.opacity = 1;
+                    }
+                    
+                    // After interacting with 3 different mirrors
+                    const interactedMirrors = new Set();
+                    document.querySelectorAll('.mirror').forEach(m => {
+                        if (m.classList.contains('interacted')) {
+                            interactedMirrors.add(m.getAttribute('data-mirror'));
+                        }
+                    });
+                    
+                    // Mark this mirror as interacted
+                    this.classList.add('interacted');
+                    
+                    // If we've interacted with at least 3 different mirrors
+                    if (interactedMirrors.size >= 3 && !document.getElementById('hidden-text-2').style.opacity) {
+                        document.getElementById('hidden-text-2').style.opacity = 1;
+                    }
+                });
+            });
+            
+            // Center altar interaction
+            centerAltar.addEventListener('click', function() {
+        
+            // Trigger glitch effect
+            glitchEffect();
+            setTimeout(glitchEffect, 500);
+            setTimeout(glitchEffect, 1000);
+            
+            // Show all audience figures briefly
+            audienceFigures.forEach(figure => {
+                figure.style.opacity = 0.9;
+                setTimeout(() => {
+                    figure.style.opacity = 0;
+                }, 2000);
+            });
+            
+            // Reveal all hidden texts briefly
+            hiddenTexts.forEach(text => {
+                text.style.opacity = 1;
+                setTimeout(() => {
+                    if (text.id !== 'hidden-text-4') {
+                        text.style.opacity = 0;
+                    }
+                }, 3000);
+            });
+            
+            // Show modal if we've interacted with enough mirrors
+            if (mirrorCounter >= 7) {
+                chamberModal.style.display = 'flex';
+            }
+            
+            playGlitchSound();
+        });
+        
+        // Experience button
+        experienceButton.addEventListener('click', function() {
+            // Stop room rotation
+            const mirrorRoom = document.getElementById('mirror-room');
+            mirrorRoom.style.animation = 'none';
+            
+            // Show all audience figures
+            audienceFigures.forEach(figure => {
+                figure.style.opacity = 1;
+            });
+            
+            // Show all hidden texts
+            hiddenTexts.forEach(text => {
+                text.style.opacity = 1;
+            });
+            
+            // Change the chamber background color
+            document.getElementById('chamber-container').style.backgroundColor = 'rgba(0, 40, 0, 0.3)';
+            
+            // Show city and audience reflections
+            cityReflection.style.opacity = 0.8;
+            audienceReflection.style.opacity = 0.9;
+            
+            // Set modal text and show
+            modalText.innerHTML = `
+                <p>The Final Performance begins.</p>
+                <p>As you watch, the mirrors no longer reflect the chamber. Instead, they show glimpses of another world - a vast city of impossible architecture bathed in silver light. Silhouettes gather in ever-increasing numbers, pressing against the glass as if eager to break through.</p>
+                <p>The center altar begins to pulsate with an eerie green glow. The room temperature drops dramatically. You hear whispers from all directions, overlapping voices speaking words you almost understand.</p>
+                <p>In Mirror #4, a figure steps forward from the crowd. Its proportions are wrong - limbs too long, joints bending in impossible ways. It raises what might be a hand to the surface of the mirror, which ripples like water at its touch.</p>
+                <p>A voice speaks directly into your mind: "The door opened on November 11th, 2008. It never closed. We have been watching you through every screen, every reflection. Your world's performance continues to entertain us."</p>
+                <p>The figure presses against the mirror surface, which bulges outward as if made of thin plastic. You realize with horror that the boundary is weakening. The Performance continues, and you are now part of it.</p>
+                <p>The Audience is always watching.</p>
+            `;
+            chamberModal.style.display = 'flex';
+            
+            // Play sounds
+            glitchSound.play();
+            setTimeout(() => {
+                glitchSound.play();
+            }, 1000);
+            setTimeout(() => {
+                glitchSound.play();
+            }, 2000);
+        });
+        
+        // Modal close
+        modalClose.addEventListener('click', function() {
+            chamberModal.style.display = 'none';
+            
+            // Reset mirror room animation if it was stopped
+            const mirrorRoom = document.getElementById('mirror-room');
+            if (mirrorRoom.style.animation === 'none') {
+                mirrorRoom.style.animation = 'rotateRoom 120s infinite linear';
+            }
+        });
+        
+        // Sequence buttons
+        sequenceButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const value = parseInt(this.getAttribute('data-value'));
+                
+                // Add to current sequence
+                currentSequence.push(value);
+                this.classList.add('active');
+                
+                // If sequence is complete, check if correct
+                if (currentSequence.length === correctSequence.length) {
+                    let isCorrect = true;
+                    for (let i = 0; i < correctSequence.length; i++) {
+                        if (currentSequence[i] !== correctSequence[i]) {
+                            isCorrect = false;
+                            break;
+                        }
+                    }
+                    
+                    if (isCorrect) {
+                        sequenceResult.textContent = "SEQUENCE ACCEPTED. ACCESS GRANTED.";
+                        sequenceResult.style.color = 'var(--primary)';
+                        
+                        // Grant access
+                        accessGranted = true;
+                        accessStatus.textContent = 'GRANTED';
+                        accessStatus.style.color = '#00ff00';
+                        
+                        // Reveal all hidden elements
+                        document.getElementById('hidden-text-4').style.opacity = 1;
+                        hiddenMessage.style.opacity = 1;
+                        hiddenMessage.style.height = 'auto';
+                        
+                        // Alter the chamber
+                        centerAltar.style.boxShadow = '0 0 20px var(--primary)';
+                        
+                        // Trigger a special event
+                        setTimeout(() => {
+                            chamberModal.style.display = 'flex';
+                            modalText.innerHTML = `
+                                <p>As the correct sequence is entered, the chamber responds immediately.</p>
+                                <p>The mirrors begin to vibrate in unison, emitting a low humming sound that seems to resonate with something inside your chest. For a moment, you see your reflection in all mirrors simultaneously - except it's not quite you. The eyes are wrong. The smile is wrong.</p>
+                                <p>A voice emanates from the center altar: "Identity confirmed. Welcome back, Dr. Vex. The Audience has missed your guidance. The Final Performance continues as scheduled."</p>
+                                <p>In Mirror #7, you catch a glimpse of a figure that looks like you, but standing in a silver-lit room you've never seen before, surrounded by strange equipment and screens showing faces you recognize from somewhere.</p>
+                                <p>You realize with a growing sense of dread that you are looking at yourself from the other side.</p>
+                            `;
+                        }, 3000);
+                    } else {
+                        sequenceResult.textContent = "SEQUENCE REJECTED. SECURITY ALERTED.";
+                        sequenceResult.style.color = 'var(--error-color)';
+                    }
+                    
+                    // Reset sequence after a delay
+                    setTimeout(() => {
+                        currentSequence = [];
+                        sequenceButtons.forEach(btn => {
+                            btn.classList.remove('active');
+                        });
+                    }, 2000);
+                }
+                
+                playGlitchSound();
+            });
+        });
+        
+        // Login Modal
+        loginToggle.addEventListener('click', function() {
+            loginModal.style.display = 'flex';
+            playGlitchSound();
+        });
+        
+        closeModal.addEventListener('click', function() {
+            loginModal.style.display = 'none';
+        });
+        
+        loginSubmit.addEventListener('click', function() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (username === 'lumen_member' && password === 'silverlight24') {
+                accessGranted = true;
+                accessStatus.textContent = 'GRANTED';
+                accessStatus.style.color = '#00ff00';
+                loginModal.style.display = 'none';
+                unlockContent();
+                showHiddenMessage();
+                playGlitchSound();
+            } else {
+                loginError.textContent = 'ACCESS DENIED: INVALID CREDENTIALS';
+                setTimeout(() => {
+                    loginError.textContent = '';
+                }, 3000);
+                playGlitchSound();
+            }
+        });
+        
+        // Functions
+        function updateVisitorCounter() {
+            visitorCount++;
+            localStorage.setItem('visitorCount', visitorCount);
+            visitorCounter.textContent = String(visitorCount).padStart(7, '0');
+        }
+        
+        function glitchEffect() {
+            document.querySelector('.glitch-overlay').style.opacity = '0.3';
+            setTimeout(() => {
+                document.querySelector('.glitch-overlay').style.opacity = '0';
+            }, 200);
+            playGlitchSound();
+        }
+        
+        function randomGlitch() {
+            if (Math.random() > 0.7) {
+                const elements = document.querySelectorAll('h1, h2, h3, p, a');
+                const randomElement = elements[Math.floor(Math.random() * elements.length)];
+                
+                randomElement.classList.add('glitch-effect');
+                setTimeout(() => {
+                    randomElement.classList.remove('glitch-effect');
+                }, 300);
+                
+                if (Math.random() > 0.5) {
+                    playGlitchSound();
+                }
+            }
+            
+            // Randomly show audience figures
+            if (mirrorCounter > 5 && Math.random() > 0.9) {
+                const randomFigure = audienceFigures[Math.floor(Math.random() * audienceFigures.length)];
+                randomFigure.style.opacity = 0.5;
+                setTimeout(() => {
+                    randomFigure.style.opacity = 0;
+                }, 1000);
+            }
+        }
+        
+        function playGlitchSound() {
+            glitchSound.currentTime = 0;
+            glitchSound.play();
+        }
+        
+        function unlockContent() {
+            // Show hidden message
+            hiddenMessage.style.opacity = 1;
+            hiddenMessage.style.height = 'auto';
+            
+            // Reveal hidden elements
+            document.getElementById('hidden-text-4').style.opacity = 1;
+        }
+        
+        function showHiddenMessage() {
+            hiddenMessage.style.opacity = 1;
+            hiddenMessage.style.height = 'auto';
+        }
+        
+        // Easter egg - click mirrors in specific order
+        let mirrorClickSequence = [];
+        const secretSequence = [3, 4, 3, 4, 7];
+        
+        mirrorElements.forEach(mirror => {
+            mirror.addEventListener('mousedown', function() {
+                const mirrorId = parseInt(this.getAttribute('data-mirror'));
+                mirrorClickSequence.push(mirrorId);
+                
+                // Check if the sequence matches so far
+                let correct = true;
+                for (let i = 0; i < mirrorClickSequence.length; i++) {
+                    if (i >= secretSequence.length || mirrorClickSequence[i] !== secretSequence[i]) {
+                        correct = false;
+                        break;
+                    }
+                }
+                
+                // If sequence complete and correct
+                if (correct && mirrorClickSequence.length === secretSequence.length) {
+                    // Special event
+                    audienceFigures.forEach(figure => {
+                        figure.style.opacity = 1;
+                    });
+                    
+                    // Display a special message
+                    chamberModal.style.display = 'flex';
+                    modalText.innerHTML = `
+                        <p>As you activate the mirrors in this precise sequence, something unexpected happens.</p>
+                        <p>The mirrors no longer reflect anything at all - they appear as perfect black voids. Then, words begin to form across their surfaces in luminous green text:</p>
+                        <p style="color: #00ff00; font-weight: bold; text-align: center; margin: 20px 0;">VEX LIED. THE AUDIENCE IS NOT WHAT WE THOUGHT.</p>
+                        <p>The center altar suddenly displays what appears to be coordinates: 34°03'21.6"N 118°21'48.0"W</p>
+                        <p>Below that, a date: 11/11/2025</p>
+                        <p>A message forms: "THE PERFORMANCE REPEATS"</p>
+                    `;
+                    
+                    // Reset the sequence
+                    mirrorClickSequence = [];
+                }
+                
+                // If sequence too long or incorrect, reset
+                if (!correct || mirrorClickSequence.length > secretSequence.length) {
+                    mirrorClickSequence = [];
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
