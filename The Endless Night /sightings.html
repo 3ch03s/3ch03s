@@ -7,6 +7,173 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* Additional styling to match the screenshots */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #0f0;
+            margin-bottom: 15px;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: 1px solid #0f0;
+            border-bottom: none;
+            color: #0f0;
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .tab-button.active {
+            background-color: #001100;
+            color: #0f0;
+            font-weight: bold;
+        }
+        
+        .tab-button.locked {
+            color: #555;
+            cursor: not-allowed;
+        }
+        
+        .entity-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        
+        .entity-card {
+            border: 1px solid #0f0;
+            background-color: #001100;
+            width: calc(33.333% - 10px);
+            margin-bottom: 15px;
+        }
+        
+        .entity-image {
+            position: relative;
+            overflow: hidden;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px dashed #0f0;
+            cursor: pointer;
+        }
+        
+        .entity-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        
+        .entity-details {
+            padding: 10px;
+        }
+        
+        .entity-details h3 {
+            color: #0f0;
+            margin-bottom: 10px;
+            text-align: left;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 5px;
+        }
+        
+        .entity-details p {
+            color: #0f0;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .entity-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #0f0;
+            text-shadow: 0 0 3px #0f0;
+            font-size: 16px;
+            z-index: 2;
+            text-align: center;
+            width: 100%;
+            pointer-events: none;
+        }
+        
+        .image-date {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            color: #ff6600;
+            font-size: 12px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            border: 1px solid #0f0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            position: relative;
+        }
+        
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #0f0;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .modal-overlay-text {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #0f0;
+            font-size: 16px;
+            z-index: 1001;
+        }
+        
+        .modal-date {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            color: #ff6600;
+            font-size: 14px;
+            z-index: 1001;
+        }
+        
+        @media (max-width: 768px) {
+            .entity-card {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="static-overlay"></div>
@@ -22,21 +189,21 @@
             <div class="tabs">
                 <button class="tab-button active" data-tab="shadow-entities">SHADOW ENTITIES</button>
                 <button class="tab-button" data-tab="blue-lights">BLUE LIGHTS</button>
-                <button class="tab-button locked" data-tab="classified" id="classified-tab">CLASSIFIED</button>
+                <button class="tab-button locked" data-tab="classified">CLASSIFIED</button>
             </div>
             
             <div class="tab-content">
                 <div class="tab-panel active" id="shadow-entities">
                     <div class="entity-header">
                         <h2>SHADOW ENTITY SIGHTINGS</h2>
-                        <div class="entity-counter">DOCUMENTED ENCOUNTERS: <span id="shadow-count">7</span></div>
+                        <div class="entity-counter">DOCUMENTED ENCOUNTERS: <span id="shadow-count">5</span></div>
                     </div>
                     
                     <div class="entity-grid">
                         <div class="entity-card" data-entity="shadow-1">
-                            <div class="entity-image corrupted">
-                                <div class="image-placeholder">IMAGE CORRUPTED</div>
-                                <div class="hidden-image" id="shadow-img-1"></div>
+                            <div class="entity-image" data-entity-name="Shadow Entity 1" data-date="06/24/1993">
+                                <img src="images/shadow_entity_1.png" alt="Shadow Entity 1">
+                                <div class="image-date">06/24/1993</div>
                             </div>
                             <div class="entity-details">
                                 <h3>SIGHTING #1</h3>
@@ -48,9 +215,9 @@
                         </div>
                         
                         <div class="entity-card" data-entity="shadow-2">
-                            <div class="entity-image corrupted">
-                                <div class="image-placeholder">IMAGE CORRUPTED</div>
-                                <div class="hidden-image" id="shadow-img-2"></div>
+                            <div class="entity-image" data-entity-name="Shadow Entity 2" data-date="06/25/1993">
+                                <div class="entity-overlay-text">Shadow Entity 2</div>
+                                <img src="images/shadow_entity_2.png" alt="Shadow Entity 2">
                             </div>
                             <div class="entity-details">
                                 <h3>SIGHTING #2</h3>
@@ -58,14 +225,14 @@
                                 <p>DATE: 06/25/1993</p>
                                 <p>COUNT: 3 ENTITIES</p>
                                 <p>BEHAVIOR: FORMED TRIANGLE FORMATION</p>
-                                <p class="glitch-text">MATCHED SCHOOL PHOTO POSITIONS</p>
+                                <p>MATCHED SCHOOL PHOTO POSITIONS</p>
                             </div>
                         </div>
                         
                         <div class="entity-card" data-entity="shadow-3">
-                            <div class="entity-image corrupted">
-                                <div class="image-placeholder">IMAGE CORRUPTED</div>
-                                <div class="hidden-image" id="shadow-img-3"></div>
+                            <div class="entity-image" data-entity-name="Shadow Entity 3" data-date="06/27/1993">
+                                <div class="entity-overlay-text">Shadow Entity 3</div>
+                                <img src="images/shadow_entity_3.png" alt="Shadow Entity 3">
                             </div>
                             <div class="entity-details">
                                 <h3>SIGHTING #3</h3>
@@ -78,9 +245,8 @@
                         </div>
                         
                         <div class="entity-card" data-entity="shadow-4">
-                            <div class="entity-image corrupted">
-                                <div class="image-placeholder">IMAGE CORRUPTED</div>
-                                <div class="hidden-image" id="shadow-img-4"></div>
+                            <div class="entity-image" data-entity-name="Shadow Entity 4" data-date="06/29/1993">
+                                <img src="images/shadow_entity_4.png" alt="Shadow Entity 4">
                             </div>
                             <div class="entity-details">
                                 <h3>SIGHTING #4</h3>
@@ -88,7 +254,6 @@
                                 <p>DATE: 06/29/1993</p>
                                 <p>HEIGHT: UNKNOWN</p>
                                 <p>BEHAVIOR: WRITING ON GLASS</p>
-                                <p class="hidden-message">MESSAGE: "STAY"</p>
                             </div>
                         </div>
                     </div>
@@ -109,13 +274,13 @@
                 <div class="tab-panel" id="blue-lights">
                     <div class="entity-header">
                         <h2>BLUE LIGHT PHENOMENA</h2>
-                        <div class="entity-counter">DOCUMENTED ENCOUNTERS: <span id="light-count">5</span></div>
+                        <div class="entity-counter">DOCUMENTED ENCOUNTERS: <span id="light-count">3</span></div>
                     </div>
                     
                     <div class="entity-grid">
                         <div class="entity-card" data-entity="light-1">
-                            <div class="entity-image light-image">
-                                <div class="blue-light-animation"></div>
+                            <div class="entity-image" data-entity-name="Blue Light 1" data-date="06/30/1993">
+                                <img src="images/blue_light_1.png" alt="Blue Light 1">
                             </div>
                             <div class="entity-details">
                                 <h3>ENCOUNTER #1</h3>
@@ -127,8 +292,8 @@
                         </div>
                         
                         <div class="entity-card" data-entity="light-2">
-                            <div class="entity-image light-image">
-                                <div class="blue-light-animation multiple"></div>
+                            <div class="entity-image" data-entity-name="Blue Light 2" data-date="07/01/1993">
+                                <img src="images/blue_light_2.png" alt="Blue Light 2">
                             </div>
                             <div class="entity-details">
                                 <h3>ENCOUNTER #2</h3>
@@ -141,8 +306,8 @@
                         </div>
                         
                         <div class="entity-card" data-entity="light-3">
-                            <div class="entity-image light-image">
-                                <div class="blue-light-animation path"></div>
+                            <div class="entity-image" data-entity-name="Blue Light 3" data-date="07/03/1993">
+                                <img src="images/blue_light_3.png" alt="Blue Light 3">
                             </div>
                             <div class="entity-details">
                                 <h3>ENCOUNTER #3</h3>
@@ -151,20 +316,6 @@
                                 <p>COUNT: 20+ LIGHTS</p>
                                 <p>BEHAVIOR: FORMED PATH</p>
                                 <p>NOTE: SHADOW ENTITIES AVOIDED THEM</p>
-                            </div>
-                        </div>
-                        
-                        <div class="entity-card locked" data-entity="light-4">
-                            <div class="entity-image locked-image">
-                                <div class="lock-icon">🔒</div>
-                                <div class="image-placeholder">ENCRYPTED</div>
-                            </div>
-                            <div class="entity-details">
-                                <h3>ENCOUNTER #4</h3>
-                                <p>LOCATION: [RESTRICTED]</p>
-                                <p>DATE: 07/05/1993</p>
-                                <p>BEHAVIOR: [RESTRICTED]</p>
-                                <p class="password-hint">PASSWORD HINT: FACILITY NAME</p>
                             </div>
                         </div>
                     </div>
@@ -178,7 +329,6 @@
                             <li>Shadow entities avoid them</li>
                             <li>They respond to human presence</li>
                             <li>Camera can capture them but images are blurred</li>
-                            <li class="hidden-text" data-show-after="60">They seem to be trying to communicate: "N-I-G-H-T-F-A-L-L"</li>
                         </ul>
                     </div>
                 </div>
@@ -208,8 +358,18 @@
         
         <div class="footer">
             <div class="status">STATUS: DOCUMENTATION ACTIVE</div>
-            <div class="battery">BATTERY: <span id="battery-level">72</span>%</div>
+            <div class="battery">BATTERY: <span id="battery-level">67</span>%</div>
         </div>
+    </div>
+    
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-overlay-text" id="modalEntityName"></div>
+        <div class="modal-content">
+            <img id="expandedImage" src="">
+        </div>
+        <div class="modal-date" id="modalDate"></div>
     </div>
     
     <audio id="ambient-sound" loop>
@@ -227,9 +387,68 @@
     <audio id="error-sound">
         <source src="sounds/error.mp3" type="audio/mpeg">
     </audio>
-
-    <script src="scripts/clock.js"></script>
     
+    <script src="scripts/clock.js"></script>
     <script src="scripts/sightings.js"></script>
+    <script>
+        // Image expansion functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const entityImages = document.querySelectorAll('.entity-image');
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('expandedImage');
+            const modalEntityName = document.getElementById('modalEntityName');
+            const modalDate = document.getElementById('modalDate');
+            const closeModal = document.querySelector('.close-modal');
+            
+            // Open modal when clicking on an image
+            entityImages.forEach(image => {
+                image.addEventListener('click', function() {
+                    const img = this.querySelector('img');
+                    const entityName = this.getAttribute('data-entity-name');
+                    const date = this.getAttribute('data-date');
+                    
+                    modal.style.display = 'flex';
+                    modalImg.src = img.src;
+                    modalEntityName.textContent = entityName;
+                    modalDate.textContent = date;
+                    
+                    // Play entity sound
+                    const entityType = this.parentElement.getAttribute('data-entity');
+                    if (entityType && entityType.startsWith('shadow')) {
+                        const entitySound = document.getElementById('entity-sound');
+                        if (entitySound) {
+                            entitySound.currentTime = 0;
+                            entitySound.play().catch(e => console.log('Sound play failed: ' + e));
+                        }
+                    } else if (entityType && entityType.startsWith('light')) {
+                        const lightSound = document.getElementById('light-sound');
+                        if (lightSound) {
+                            lightSound.currentTime = 0;
+                            lightSound.play().catch(e => console.log('Sound play failed: ' + e));
+                        }
+                    }
+                });
+            });
+            
+            // Close modal when clicking on X
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside the image
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
