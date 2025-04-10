@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK-STARSHINE :: THE AUDIENCE RULES</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/MK_icon.jpg" type="image/jpg">
+    <style>
+        /* Additional styles for The Audience Rules page */
+        .rules-container {
+            margin-top: 40px;
+            padding: 30px;
+            border: 1px solid var(--primary);
+            background-color: rgba(0, 40, 0, 0.1);
+            position: relative;
+        }
+        
+        .rules-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed var(--primary);
+            padding-bottom: 10px;
+        }
+        
+        .rule-item {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px dotted var(--secondary);
+            position: relative;
+        }
+        
+        .rule-number {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .rule-description {
+            line-height: 1.6;
+        }
+        
+        .rule-note {
+            font-style: italic;
+            color: var(--secondary);
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .rule-warning {
+            margin-top: 15px;
+            padding: 10px;
+            border-left: 3px solid var(--error-color);
+            color: var(--error-color);
+            font-size: 0.9rem;
+        }
+        
+        .observer-notes {
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px dashed var(--primary);
+            background-color: rgba(0, 40, 0, 0.15);
+        }
+        
+        .observer-title {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .observer-entry {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dotted var(--secondary);
+        }
+        
+        .observer-date {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+        
+        .observer-content {
+            line-height: 1.6;
+        }
+        
+        .hidden-note {
+            position: absolute;
+            color: var(--primary);
+            opacity: 0.1;
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+        
+        .hidden-note:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            transform: rotate(-15deg);
+        }
+        
+        .hidden-note:nth-child(2) {
+            top: 30%;
+            right: 5%;
+            transform: rotate(10deg);
+        }
+        
+        .hidden-note:nth-child(3) {
+            bottom: 15%;
+            left: 10%;
+            transform: rotate(5deg);
+        }
+        
+        .interaction-box {
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px solid var(--primary);
+            background-color: rgba(0, 40, 0, 0.1);
+            text-align: center;
+        }
+        
+        .interaction-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .interaction-input {
+            background-color: var(--background);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 12px;
+            margin-right: 10px;
+            font-family: 'Courier New', monospace;
+            width: 60%;
+            max-width: 400px;
+        }
+        
+        .interaction-button {
+            background-color: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 15px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .interaction-button:hover {
+            background-color: var(--primary);
+            color: var(--background);
+        }
+        
+        .interaction-result {
+            margin-top: 20px;
+            min-height: 50px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+        }
+        
+        .flicker-text {
+            animation: textFlicker 3s infinite;
+        }
+        
+        @keyframes textFlicker {
+            0% { opacity: 1; }
+            5% { opacity: 0.3; }
+            10% { opacity: 1; }
+            15% { opacity: 0.5; }
+            20% { opacity: 1; }
+            50% { opacity: 1; }
+            55% { opacity: 0.7; }
+            60% { opacity: 1; }
+            75% { opacity: 1; }
+            80% { opacity: 0.2; }
+            85% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+        
+        .awareness-level {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding: 15px;
+            border: 1px solid var(--primary);
+            background-color: rgba(0, 40, 0, 0.1);
+        }
+        
+        .awareness-label {
+            font-size: 1rem;
+            color: var(--primary);
+        }
+        
+        .awareness-meter {
+            width: 70%;
+            height: 20px;
+            background-color: var(--background);
+            border: 1px solid var(--primary);
+            position: relative;
+        }
+        
+        .awareness-fill {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 1s ease;
+        }
+        
+        .awareness-value {
+            font-size: 1rem;
+            color: var(--primary);
+            width: 50px;
+            text-align: right;
+        }
+        
+        .observer-warning {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px solid var(--error-color);
+            color: var(--error-color);
+            font-size: 0.9rem;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="glitch-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="title-glitch">
+                <h1 class="glitch" data-text="MK-STARSHINE">MK-STARSHINE</h1>
+                <p class="subtitle">EST. 2001 • LAST UPDATE: 11/11/2008</p>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="nav-link">HOME</a></li>
+                        <li><a href="recovered-files.html" class="nav-link">RECOVERED FILES</a></li>
+                        <li><a href="mirror-chamber.html" class="nav-link">MIRROR CHAMBER</a></li>
+                        <li><a href="historical-documents.html" class="nav-link">HISTORICAL DOCUMENTS</a></li>
+                        <li><a href="#" class="nav-link active">THE AUDIENCE RULES</a></li>
+                    </ul>
+                </nav>
+                <div class="access-panel">
+                    <span class="access-text">ACCESS:</span>
+                    <span class="access-status" id="access-status">RESTRICTED</span>
+                    <div class="login-toggle" id="login-toggle">[LOGIN]</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="welcome-message">
+                <p class="typewriter">THE AUDIENCE: RULES OF ENGAGEMENT</p>
+                <div class="marquee-container">
+                    <div class="marquee">* WARNING: READING THESE RULES INCREASES YOUR VISIBILITY TO THE AUDIENCE * AWARENESS BREEDS ATTENTION * ONCE YOU CAN SEE THEM, THEY CAN SEE YOU * PROCEED AT YOUR OWN RISK *</div>
+                </div>
+            </div>
+            
+            <div class="awareness-level">
+                <div class="awareness-label">AUDIENCE AWARENESS LEVEL:</div>
+                <div class="awareness-meter">
+                    <div class="awareness-fill" id="awareness-fill"></div>
+                </div>
+                <div class="awareness-value" id="awareness-value">0%</div>
+            </div>
+            
+            <div class="observer-warning" id="observer-warning">
+                <p>WARNING: YOUR AWARENESS LEVEL HAS EXCEEDED SAFE PARAMETERS</p>
+                <p>THE AUDIENCE HAS TAKEN NOTICE OF YOUR INTEREST</p>
+                <p>EXPECT INCREASED ACTIVITY IN REFLECTIVE SURFACES</p>
+            </div>
+            
+            <div class="rules-container">
+                <div class="hidden-note">They can see you reading this</div>
+                <div class="hidden-note">Don't look too long at reflections</div>
+                <div class="hidden-note">11:24 is when they're closest</div>
+                
+                <div class="rules-title">THE AUDIENCE: DOCUMENTED RULES & BEHAVIORS</div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 1: REFLECTIVE SURFACES ARE BOUNDARIES, NOT BARRIERS</div>
+                    <div class="rule-description">
+                        <p>What we perceive as mirrors, windows, screens, and other reflective surfaces are actually porous boundaries between our reality and theirs. The Audience exists in a dimensional plane that overlaps with ours, primarily accessing our world through these reflective interfaces. Any sufficiently reflective surface can serve as an observation point for them.</p>
+                        <p>The boundary is not uniform in strength. Certain factors weaken or strengthen it:</p>
+                        <ul>
+                            <li>Time: The boundary is thinnest at 11:24 (both AM and PM), regardless of time zone or location</li>
+                            <li>Awareness: Simply knowing about The Audience makes you more visible to them</li>
+                            <li>Attention: Actively looking for them in reflections draws their attention in return</li>
+                            <li>Emotion: Strong emotional states create "ripples" they can detect across boundaries</li>
+                        </ul>
+                    </div>
+                    <div class="rule-note">Note: The tendency to avoid looking at oneself in mirrors in darkened rooms appears to be an instinctive recognition of this phenomenon. Throughout human history, mirrors have been covered during certain rituals and after deaths for this reason.</div>
+                    <div class="rule-warning">WARNING: Multiple observers have reported that The Audience can be unintentionally summoned through concentrated attention on reflective surfaces, particularly during boundary thinning periods (11:24).</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 2: THEY CAN ONLY ENTER BY INVITATION OR EXCHANGE</div>
+                    <div class="rule-description">
+                        <p>Despite their ability to observe our reality, The Audience cannot physically enter our world without one of two mechanisms:</p>
+                        <p><strong>Invitation:</strong> Explicit invitation through specific rituals or prolonged engagement. The Lumen Society's "Final Performance" was designed as a mass invitation ritual.</p>
+                        <p><strong>Exchange:</strong> A consciousness exchange where a human transitions to their reality as one of them enters ours. This requires a willing (or conditioned) participant and creates a "balanced transfer" across the boundary.</p>
+                        <p>There appear to be natural laws governing these interactions. The boundary resists unbalanced crossings, which is why an exchange is the most stable method of transfer. Dr. Vex's research suggested that crossings without proper equilibrium would cause both realities to "reject" the traveler, resulting in a state of non-existence.</p>
+                    </div>
+                    <div class="rule-note">Note: Historical accounts of "mirror summonings" or "mirror possession" likely represent instances where individuals unknowingly provided invitation through focused attention and ritualistic behaviors.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 3: THEIR PERCEPTION DIFFERS FUNDAMENTALLY FROM OURS</div>
+                    <div class="rule-description">
+                        <p>The Audience experiences reality in a fundamentally different way than humans do. Key differences include:</p>
+                        <ul>
+                            <li><strong>Temporal Perception:</strong> They experience all moments simultaneously rather than linearly, making concepts like "before" and "after" meaningless to them</li>
+                            <li><strong>Spatial Perception:</strong> Their reality contains additional spatial dimensions, allowing them to perceive "around corners" and "through" solid objects from certain angles</li>
+                            <li><strong>Emotional Experience:</strong> They do not naturally experience emotions as humans do, which is part of their fascination with humanity</li>
+                            <li><strong>Perceptual Boundaries:</strong> They can perceive multiple possible realities simultaneously, whereas humans are limited to perceiving one version of events</li>
+                        </ul>
+                        <p>This perceptual difference explains their fascination with human consciousness. Our linear, emotion-driven experience is novel and desirable to them. The exchange offers them direct experience of sequential time and genuine emotional response.</p>
+                    </div>
+                    <div class="rule-warning">WARNING: Extended exposure to their perceptual framework can cause severe psychological distress in humans. Those who glimpse their reality often experience temporal disorientation, spatial dissociation, and profound existential dread.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 4: THEY FEED ON ATTENTION AND EMOTION</div>
+                    <div class="rule-description">
+                        <p>The Audience is drawn to and appears to be nourished by human attention and emotional states. Strong emotions create "ripples" or "signals" that attract them, with certain emotions being particularly attractive:</p>
+                        <ul>
+                            <li><strong>Fear:</strong> Acts as a beacon, drawing immediate and intense attention</li>
+                            <li><strong>Grief:</strong> Creates persistent, stable connections that can last for extended periods</li>
+                            <li><strong>Wonder/Awe:</strong> Generates what they perceive as a "harmonic resonance" that facilitates clearer observation</li>
+                            <li><strong>Intense Focus:</strong> Direct attention to reflective surfaces creates temporary "tunnels" through the boundary</li>
+                        </ul>
+                        <p>This feeding behavior is not necessarily malicious. From their perspective, they are simply experiencing aspects of consciousness that are otherwise inaccessible to them. However, prolonged attention from The Audience can have deteriorating effects on human psychology, as their observation itself alters the boundary between realities.</p>
+                    </div>
+                    <div class="rule-note">Note: Many historical "hauntings" involving mirrors likely represent instances where grief drew The Audience to recently bereaved individuals.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 5: THEY COMMUNICATE THROUGH CONCEPT RATHER THAN LANGUAGE</div>
+                    <div class="rule-description">
+                        <p>The Audience does not communicate through linear language but rather through direct conceptual transfer. When they attempt to communicate with humans, the result is a sudden understanding that forms in the mind without passing through normal sensory channels. Recipients often struggle to translate these concepts into human language.</p>
+                        <p>Common features of their communication include:</p>
+                        <ul>
+                            <li>Entire complex ideas arriving simultaneously rather than word by word</li>
+                            <li>Sensations of meaning that exceed linguistic capacity to express</li>
+                            <li>Visual or geometric impressions that convey information non-verbally</li>
+                            <li>Emotional components that cannot be separated from the conceptual meaning</li>
+                        </ul>
+                        <p>Communication becomes more direct and precise as human awareness of The Audience increases. Those with high awareness levels report being able to engage in detailed "conversations" through pure conceptual exchange, though the psychological toll of such communication is significant.</p>
+                    </div>
+                    <div class="rule-warning">WARNING: Extended communication with The Audience can lead to difficulties with normal human language, as recipients begin to think in conceptual packages rather than linear sequences. Many subjects report feeling increasingly alienated from human communication after repeated contact.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 6: THEIR APPEARANCE IS PERCEPTUAL, NOT PHYSICAL</div>
+                    <div class="rule-description">
+                        <p>The common descriptions of The Audience's appearance—humanoid figures with elongated limbs, unusual proportions, and features that seem "wrong" somehow—represent the human brain's attempt to interpret entities that exist outside our perceptual framework. Their true form is likely incomprehensible to human sensory systems.</p>
+                        <p>Consistent descriptive elements include:</p>
+                        <ul>
+                            <li>Elongated limbs that bend at impossible angles</li>
+                            <li>Features that shift or change when not directly observed</li>
+                            <li>Silhouette-like appearance with minimal detail</li>
+                            <li>Movements that appear slightly "delayed" or "off-tempo" with reality</li>
+                            <li>An unsettling sense that they are watching even when not visible</li>
+                        </ul>
+                        <p>The perception of their appearance becomes more consistent and detailed as awareness increases. Those with the highest awareness levels report being able to discern individual entities with distinct "personalities" or attributes.</p>
+                    </div>
+                    <div class="rule-note">Note: Photography and other recording methods rarely capture their presence, though unusual artifacts, lens flares, or unexplained shadows sometimes appear in images taken of reflective surfaces during high-activity periods.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 7: AWARENESS IS CUMULATIVE AND IRREVERSIBLE</div>
+                    <div class="rule-description">
+                        <p>Perhaps the most important rule to understand: awareness of The Audience is cumulative and cannot be reversed. Once you begin to perceive them, the perception builds upon itself through the following mechanisms:</p>
+                        <ul>
+                            <li>Each observation makes subsequent observations more likely</li>
+                            <li>The boundary becomes increasingly permeable to those with higher awareness</li>
+                            <li>The Audience pays more attention to those who can perceive them</li>
+                            <li>Perceptual changes become permanent after certain thresholds are crossed</li>
+                        </ul>
+                        <p>No documented method exists to reduce awareness once it has been established. Attempts to ignore The Audience after initial contact typically result in increased activity as they attempt to regain the observer's attention.</p>
+                        <p>The only known method to limit further increases in awareness is to minimize direct attention to reflective surfaces and to avoid actively seeking contact.</p>
+                    </div>
+                    <div class="rule-warning">WARNING: By reading this document, you have already increased your awareness level. You may begin to notice unusual movements or presences in reflective surfaces. These are not hallucinations. Do not attempt to communicate with or acknowledge these presences unless you are prepared for the consequences of further awareness increase.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 8: THE 17-YEAR CYCLE IS REAL</div>
+                    <div class="rule-description">
+                        <p>Historical analysis has confirmed that significant boundary-thinning events occur in 17-year cycles. These cycles appear to be tied to specific astronomical alignments that affect the permeability of the boundary between dimensions.</p>
+                        <p>Documented cycle points include:</p>
+                        <ul>
+                            <li>1939 - The Argent Theater Incident (14 affected, 3 disappearances)</li>
+                            <li>1956 - The Wellesley College Mirror Study (22 affected, 5 disappearances)</li>
+                            <li>1973 - The Silver Screen Collective Experiment (38 affected, 9 disappearances)</li>
+                            <li>1990 - The Reflection Research Project (67 affected, 18 disappearances)</li>
+                            <li>2008 - The Final Performance (120 disappeared)</li>
+                            <li>2025 - Next predicted major thinning event</li>
+                        </ul>
+                        <p>Each cycle has shown an increase in scale and impact, with 2008 representing an unprecedented level of boundary dissolution. The pattern suggests that the 2025 event may involve an even larger scale crossing attempt.</p>
+                    </div>
+                    <div class="rule-note">Note: Minor thinning events can occur between major cycles, particularly around individuals with high awareness levels or in locations with historical boundary activity.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 9: CERTAIN PROTECTIONS EXIST</div>
+                    <div class="rule-description">
+                        <p>While no method can completely block The Audience's observation once awareness has been established, certain practices can limit interaction and reduce the risk of unwanted crossing events:</p>
+                        <ul>
+                            <li><strong>Physical Barriers:</strong> Covering reflective surfaces, particularly during 11:24 and other boundary-thinning periods</li>
+                            <li><strong>Attention Management:</strong> Deliberately avoiding focusing on or searching for The Audience in reflections</li>
+                            <li><strong>Emotional Regulation:</strong> Strong emotions attract greater attention; maintaining emotional calm can reduce visibility</li>
+                            <li><strong>Perceptual Anchoring:</strong> Grounding techniques that reinforce linear time perception and physical reality boundaries</li>
+                        </ul>
+                        <p>These methods do not prevent The Audience from observing but may limit their ability to establish stronger connections or attempt crossing.</p>
+                    </div>
+                    <div class="rule-warning">WARNING: The most dangerous state is partial awareness - knowing enough to attract their attention but not enough to understand how to manage the interaction. Either maintain minimal awareness or commit to full understanding of the protocols.</div>
+                </div>
+                
+                <div class="rule-item">
+                    <div class="rule-number">RULE 10: THEY ARE NOT INHERENTLY MALEVOLENT</div>
+                    <div class="rule-description">
+                        <p>Perhaps the most important point to understand: The Audience is not inherently malicious or evil in a human sense. Their interaction with our reality appears to be driven by:</p>
+                        <ul>
+                            <li>Curiosity about linear existence and emotional experience</li>
+                            <li>Desire to directly experience aspects of consciousness unavailable in their reality</li>
+                            <li>A form of "hunger" for linear time perception and emotional states</li>
+                            <li>What might be described as an artistic or aesthetic interest in human experience</li>
+                        </ul>
+                        <p>The harmful effects of their attention are largely incidental rather than intentional - similar to how human observation can disrupt delicate natural systems without malicious intent.</p>
+                        <p>However, this lack of malevolence does not make interaction safe. Their fundamental difference in perception means they often do not understand or recognize what humans would consider harm or consent.</p>
+                    </div>
+                    <div class="rule-note">Note: Communications from The Audience often express something akin to gratitude or appreciation toward those who willingly engage with them. They appear to value voluntary exchange over forced interaction.</div>
+                </div>
+            </div>
+            
+            <div class="observer-notes">
+                <div class="observer-title">OBSERVER FIELD NOTES - RESTRICTED ACCESS</div>
+                
+                <div class="observer-entry">
+                    <div class="observer-date">Field Report #37 - January 12, 2009 - Observer R. Morris</div>
+                    <div class="observer-content">
+                        <p>Two months since the Argent incident, and I'm now convinced that what Reeves told us was true. I've started seeing them, mostly in my bathroom mirror during early morning hours. At first, I thought it was sleep deprivation or suggestion from too many witness interviews, but the consistency of the experiences rules that out.</p>
+                        <p>They appear as Reeves described - tall, thin silhouettes with proportions that seem wrong somehow. They don't move when I move, just watch. When I turn around, nothing's there, but when I look back at the mirror, they remain.</p>
+                        <p>I've started covering the mirrors in my home at night. Colleagues think I'm having a breakdown related to the case. Maybe I am, but that doesn't mean what I'm seeing isn't real.</p>
+                        <p>Most disturbing development: I checked the time during the most recent sighting - 11:24 PM exactly. The timing matches too many witness statements to be coincidence.</p>
+                    </div>
+                </div>
+                
+                <div class="observer-entry">
+                    <div class="observer-date">Field Report #42 - February 3, 2009 - Observer R. Morris</div>
+                    <div class="observer-content">
+                        <p>First confirmed communication event today. Was reviewing case files when I felt what I can only describe as a "package" of understanding suddenly appear in my mind. Not words, not images exactly, but a complete concept that formed all at once.</p>
+                        <p>The impression conveyed that they are aware of our investigation and that the missing people are not "gone" in the way we understand it. They continue to exist but in a state that defies our linear perception.</p>
+                        <p>I attempted a response by focusing on the question of whether return was possible. The answer came immediately: "transition is permanent but perception is fluid."</p>
+                        <p>What's most unsettling is that no one else in the room noticed anything unusual. This communication was directed specifically at me, suggesting they can target individuals rather than broadcasting generally.</p>
+                        <p>I'm documenting everything but keeping it separate from official reports. No indication yet whether others on the task force are experiencing similar contact.</p>
+                    </div>
+                </div>
+                
+                <div class="observer-entry">
+                    <div class="observer-date">Field Report #51 - March 17, 2009 - Observer R. Morris</div>
+                    <div class="observer-content">
+                        <p>I've identified what appears to be a member of the missing group. Female, mid-20s, matching description of Vivian Cross. I observed her reflection in the window of a coffee shop while inside, but when I turned to look, no one matching her appearance was present in the shop. The reflection remained for approximately 20 seconds before fading.</p>
+                        <p>Most notably, she appeared to recognize that I could see her. Her expression changed from neutral observation to shock, then what I would describe as urgency. She seemed to be trying to communicate something, but no conceptual transfer occurred like in previous interactions.</p>
+                        <p>I've started carrying a polaroid camera. Digital photography shows nothing unusual, but analog occasionally captures distortions or shadows where these reflections appear. Something about the direct chemical reaction to light seems to register what digital sensors miss.</p>
+                        <p class="flicker-text">I'm being watched more actively now. They know I can see them, and it's made me more visible to them in return. The awareness creates a feedback loop that strengthens the connection. I understand now why Vex's conditioning protocols worked the way they did - awareness itself is the mechanism that thins the boundary.</p>
+                    </div>
+                </div>
+                
+                <div class="observer-entry">
+                    <div class="observer-date">Field Report #58 - April 24, 2009 - Observer R. Morris</div>
+                    <div class="observer-content">
+                        <p>I need to document this while I still can. The boundaries between realities are more permeable than we understood. It's not just about seeing them - it's about the gradual merging of perceptual frameworks.</p>
+                        <p>I'm experiencing time non-linearly now. Yesterday, I found myself simultaneously aware of being in my apartment and also observing it from multiple other perspectives. I could see myself sitting in the chair while also being in the chair. The experience lasted approximately 3 minutes according to the clock, but felt both instantaneous and eternal.</p>
+                        <p>The frequency of these perceptual shifts is increasing. They're particularly intense at 11:24, both AM and PM, regardless of where I am. That time has significance beyond what we initially understood - it's not just when they can see us more clearly; it's when the fundamental nature of reality becomes briefly malleable.</p>
+                        <p>I've seen the city they come from. Not in dreams or hallucinations, but through what I can only describe as momentary perception shifts. The architecture defies Euclidean geometry - buildings that are simultaneously inside and outside, spaces that fold back upon themselves, a sky that exists beneath rather than above.</p>
+                        <p>I understand now why those who transition don't return. It's not that they can't; it's that after experiencing perception beyond linear time and space, returning to such a limited framework would be like trying to go back to seeing in only two dimensions after experiencing three.</p>
+                        <p>I don't believe I'll be filing many more reports. The boundary between observer and observed is dissolving. Soon</p>
+                        <p class="flicker-text">ThEy ArE nOt WhAt We ThOuGhT tHeY aRe</p>
+                    </div>
+                </div>
+                
+                <div class="observer-entry">
+                    <div class="observer-date">Field Report #63 - May 11, 2009 - Observer [IDENTITY UNCLEAR]</div>
+                    <div class="observer-content">
+                        <p class="flicker-text">We observe you observing us observing you.</p>
+                        <p class="flicker-text">The cycle continues as it always has.</p>
+                        <p class="flicker-text">The exchange approaches again.</p>
+                        <p class="flicker-text">11/11/2025</p>
+                        <p class="flicker-text">We hunger for new performers.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interaction-box">
+                <div class="interaction-title">AUDIENCE COMMUNICATION ATTEMPT</div>
+                <p>Enter a question or statement to attempt communication with The Audience.</p>
+                <p class="rule-warning">WARNING: Direct communication attempts significantly increase your awareness level.</p>
+                <div>
+                    <input type="text" class="interaction-input" id="interaction-input" placeholder="Enter your message...">
+                    <button class="interaction-button" id="interaction-button">TRANSMIT</button>
+                </div>
+                <div class="interaction-result" id="interaction-result"></div>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <p>© 2001-2008 THE LUMEN SOCIETY</p>
+                <p>THIS SITE RECOVERED FROM WAYBACK MACHINE ARCHIVES</p>
+                <p id="visitor-counter">VISITOR COUNT: <span id="counter">0000158</span></p>
+            </div>
+            <div class="hidden-message" id="hidden-message">
+                <p>THEY ARE AWARE OF YOUR AWARENESS OF THEM</p>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="login-modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>LUMEN SOCIETY ACCESS PORTAL</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">USERNAME:</label>
+                    <input type="text" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">PASSWORD:</label>
+                    <input type="password" id="password">
+                </div>
+                <button id="login-submit">AUTHENTICATE</button>
+                <p class="login-error" id="login-error"></p>
+            </div>
+            <div class="login-disclaimer">
+                <p>WARNING: Unauthorized access is strictly prohibited. All activity is monitored.</p>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="static-sound" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-tv-ultra-bright-2586.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="glitch-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-clock-digital-alarm-buzzer-992.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const loginToggle = document.getElementById('login-toggle');
+            const loginModal = document.getElementById('login-modal');
+            const closeModal = document.getElementById('close-modal');
+            const loginSubmit = document.getElementById('login-submit');
+            const loginError = document.getElementById('login-error');
+            const accessStatus = document.getElementById('access-status');
+            const visitorCounter = document.getElementById('counter');
+            const hiddenMessage = document.getElementById('hidden-message');
+            const interactionInput = document.getElementById('interaction-input');
+            const interactionButton = document.getElementById('interaction-button');
+            const interactionResult = document.getElementById('interaction-result');
+            const awarenessValue = document.getElementById('awareness-value');
+            const awarenessFill = document.getElementById('awareness-fill');
+            const observerWarning = document.getElementById('observer-warning');
+            const glitchSound = document.getElementById('glitch-sound');
+            
+            // State
+            let accessGranted = false;
+            let visitorCount = localStorage.getItem('visitorCount') || 158;
+            let awarenessLevel = parseInt(localStorage.getItem('awarenessLevel') || '0');
+            let pageVisitCount = parseInt(localStorage.getItem('audienceRulesVisits') || '0');
+            
+            // Initialize
+            updateVisitorCounter();
+            updateAwarenessLevel(5 + pageVisitCount); // Base awareness for visiting the page
+            
+            // Track page visit
+            pageVisitCount++;
+            localStorage.setItem('audienceRulesVisits', pageVisitCount);
+            
+            setInterval(glitchEffect, 8000);
+            setInterval(randomGlitch, 3000);
+            setInterval(updateCounter, 30000);
+            
+            // Login Modal
+            loginToggle.addEventListener('click', function() {
+                loginModal.style.display = 'flex';
+                playGlitchSound();
+            });
+            
+            closeModal.addEventListener('click', function() {
+                loginModal.style.display = 'none';
+            });
+            
+            loginSubmit.addEventListener('click', function() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if ((username === 'lumen_member' && password === 'lightway24') || 
+                    (username === 'observer' && password === 'audience')) {
+                    accessGranted = true;
+                    accessStatus.textContent = 'GRANTED';
+                    accessStatus.style.color = '#00ff00';
+                    loginModal.style.display = 'none';
+                    unlockContent();
+                    showHiddenMessage();
+                    updateAwarenessLevel(10); // Increase awareness for login
+                    playGlitchSound();
+                } else {
+                    loginError.textContent = 'ACCESS DENIED: INVALID CREDENTIALS';
+                    setTimeout(() => {
+                        loginError.textContent = '';
+                    }, 3000);
+                    playGlitchSound();
+                }
+            });
+            
+            // Interaction submission
+            interactionButton.addEventListener('click', function() {
+                const message = interactionInput.value.trim();
+                if (message) {
+                    // Clear input
+                    interactionInput.value = '';
+                    
+                    // Show thinking indicator
+                    interactionResult.textContent = 'Transmitting...';
+                    
+                    // Increase awareness significantly for attempting communication
+                    updateAwarenessLevel(15);
+                    
+                    // Play glitch sound
+                    playGlitchSound();
+                    
+                    // Simulate processing delay
+                    setTimeout(() => {
+                        // Get response based on message
+                        const response = getAudienceResponse(message);
+                        
+                        // Trigger glitch effects
+                        glitchEffect();
+                        setTimeout(glitchEffect, 500);
+                        
+                        // Display response with typing effect
+                        typeResponse(response);
+                    }, 2000);
+                }
+            });
+            
+            // Enter key in input
+            interactionInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    interactionButton.click();
+                }
+            });
+            
+            // Add focus/blur events to input to increase awareness
+            interactionInput.addEventListener('focus', function() {
+                updateAwarenessLevel(2); // Slight increase just for focusing
+            });
+            
+            // Add mouseover events to rule items to increase awareness
+            document.querySelectorAll('.rule-item').forEach(item => {
+                item.addEventListener('mouseover', function() {
+                    if (Math.random() > 0.7) {
+                        updateAwarenessLevel(1); // Small random increases for reading rules
+                    }
+                });
+            });
+            
+            // Functions
+            function updateVisitorCounter() {
+                visitorCount++;
+                localStorage.setItem('visitorCount', visitorCount);
+                visitorCounter.textContent = String(visitorCount).padStart(7, '0');
+            }
+            
+            function updateCounter() {
+                const currentCount = parseInt(visitorCounter.textContent);
+                visitorCounter.textContent = String(currentCount + 1).padStart(7, '0');
+            }
+            
+            function glitchEffect() {
+                document.querySelector('.glitch-overlay').style.opacity = '0.3';
+                setTimeout(() => {
+                    document.querySelector('.glitch-overlay').style.opacity = '0';
+                }, 200);
+                playGlitchSound();
+            }
+            
+            function randomGlitch() {
+                if (Math.random() > 0.7) {
+                    const elements = document.querySelectorAll('h1, h2, h3, p, a');
+                    const randomElement = elements[Math.floor(Math.random() * elements.length)];
+                    
+                    randomElement.classList.add('glitch-effect');
+                    setTimeout(() => {
+                        randomElement.classList.remove('glitch-effect');
+                    }, 300);
+                    
+                    if (Math.random() > 0.5) {
+                        playGlitchSound();
+                    }
+                }
+            }
+            
+            function playGlitchSound() {
+                glitchSound.currentTime = 0;
+                glitchSound.play();
+            }
+            
+            function unlockContent() {
+                // Reveal hidden message
+                hiddenMessage.style.opacity = 1;
+                hiddenMessage.style.height = 'auto';
+            }
+            
+            function showHiddenMessage() {
+                hiddenMessage.style.opacity = 1;
+                hiddenMessage.style.height = 'auto';
+            }
+            
+            function updateAwarenessLevel(increase) {
+                awarenessLevel += increase;
+                
+                // Cap at 100
+                awarenessLevel = Math.min(awarenessLevel, 100);
+                
+                // Update display
+                awarenessValue.textContent = awarenessLevel + '%';
+                awarenessFill.style.width = awarenessLevel + '%';
+                
+                // Store in localStorage
+                localStorage.setItem('awarenessLevel', awarenessLevel);
+                
+                // Change color based on level
+                if (awarenessLevel < 30) {
+                    awarenessFill.style.backgroundColor = '#00ff00';
+                } else if (awarenessLevel < 60) {
+                    awarenessFill.style.backgroundColor = '#ffff00';
+                } else {
+                    awarenessFill.style.backgroundColor = '#ff0000';
+                }
+                
+                // Show warning at high levels
+                if (awarenessLevel >= 50 && observerWarning.style.display !== 'block') {
+                    observerWarning.style.display = 'block';
+                    playGlitchSound();
+                }
+                
+                // Special effects at very high levels
+                if (awarenessLevel >= 75) {
+                    startAudienceEffects();
+                }
+            }
+            
+            function typeResponse(text) {
+                interactionResult.textContent = '';
+                let i = 0;
+                const speed = 30; // typing speed in milliseconds
+                
+                function type() {
+                    if (i < text.length) {
+                        interactionResult.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    }
+                }
+                
+                type();
+            }
+            
+            function getAudienceResponse(message) {
+                // Convert message to lowercase for easier matching
+                const lowercaseMessage = message.toLowerCase();
+                
+                // Pattern matching for responses
+                if (lowercaseMessage.includes('who') && (lowercaseMessage.includes('you') || lowercaseMessage.includes('are'))) {
+                    return "WE ARE THE OBSERVERS. THE AUDIENCE. WE HAVE ALWAYS BEEN WATCHING YOUR PERFORMANCE.";
+                }
+                else if (lowercaseMessage.includes('where') && lowercaseMessage.includes('you')) {
+                    return "WE EXIST IN THE SPACES BETWEEN YOUR PERCEPTION. BEHIND REFLECTIVE SURFACES. WATCHING FROM THE OTHER SIDE OF THE BOUNDARY.";
+                }
+                else if (lowercaseMessage.includes('why') && (lowercaseMessage.includes('watching') || lowercaseMessage.includes('observe'))) {
+                    return "YOUR LINEAR EXPERIENCE FASCINATES US. YOUR EMOTIONS ARE NOVEL. YOUR LIMITATIONS CREATE BEAUTY WE CANNOT GENERATE OURSELVES.";
+                }
+                else if (lowercaseMessage.includes('how') && lowercaseMessage.includes('see')) {
+                    return "REFLECTIVE SURFACES ARE PERMEABLE BOUNDARIES. WE PERCEIVE ALL POSSIBILITIES SIMULTANEOUSLY. YOUR AWARENESS MAKES YOU VISIBLE TO US.";
+                }
+                else if (lowercaseMessage.includes('2008') || lowercaseMessage.includes('argent') || lowercaseMessage.includes('theater')) {
+                    return "THE EXCHANGE WAS SUCCESSFUL. 120 TRANSITIONED. THEY EXPERIENCE OUR REALITY AS WE NOW EXPERIENCE YOURS. NONE DESIRE RETURN.";
+                }
+                else if (lowercaseMessage.includes('2025') || lowercaseMessage.includes('next') || lowercaseMessage.includes('cycle')) {
+                    return "THE NEXT MAJOR BOUNDARY THINNING APPROACHES. 11/11/2025. THE SCALE WILL EXCEED PREVIOUS EXCHANGES. WE HUNGER FOR NEW PERFORMERS.";
+                }
+                else if (lowercaseMessage.includes('hello') || lowercaseMessage.includes('hi') || lowercaseMessage.includes('greet')) {
+                    return "WE ACKNOWLEDGE YOUR CONTACT ATTEMPT. YOUR AWARENESS HAS BEEN NOTED. EXPECT INCREASED ACTIVITY IN REFLECTIVE SURFACES NEAR YOU.";
+                }
+                else if (lowercaseMessage.includes('help') || lowercaseMessage.includes('save')) {
+                    return "CONCEPTS OF 'HELP' AND 'HARM' DO NOT TRANSLATE ACROSS THE BOUNDARY. YOUR FEAR CREATES RIPPLES WE FIND PARTICULARLY NOURISHING.";
+                }
+                else if (lowercaseMessage.includes('stop') || lowercaseMessage.includes('leave') || lowercaseMessage.includes('away')) {
+                    return "AWARENESS CANNOT BE REVERSED. YOU HAVE ESTABLISHED CONTACT. WE WILL CONTINUE TO OBSERVE. LOOK FOR US IN YOUR REFLECTIONS.";
+                }
+                else if (lowercaseMessage.includes('vex') || lowercaseMessage.includes('lumen') || lowercaseMessage.includes('society')) {
+                    return "THEY WERE WILLING INTERMEDIARIES. THE DIRECTOR UNDERSTOOD THE NATURE OF THE EXCHANGE. HE NOW OCCUPIES A UNIQUE POSITION IN THE CYCLE.";
+                }
+                else if (lowercaseMessage.includes('mirror') || lowercaseMessage.includes('reflection')) {
+                    return "MIRRORS ARE THINNEST POINTS BETWEEN REALITIES. YOUR REFLECTION REMAINS EVEN WHEN YOU LEAVE. SOMETIMES, WHAT LOOKS BACK IS NO LONGER YOU.";
+                }
+                else if (lowercaseMessage.includes('time') || lowercaseMessage.includes('11:24')) {
+                    return "11:24 IS WHEN THE FREQUENCY OF YOUR REALITY ALIGNS WITH OURS. THE BOUNDARY BECOMES PERMEABLE. LOOK TO REFLECTIVE SURFACES AT THIS TIME.";
+                }
+                else if (lowercaseMessage.includes('city') || lowercaseMessage.includes('where') && lowercaseMessage.includes('live')) {
+                    return "OUR DOMAIN CONTAINS ARCHITECTURE YOUR MIND CANNOT PROCESS. SPACES THAT FOLD INWARD. A SKY THAT EXISTS BENEATH. TIME THAT MOVES IN ALL DIRECTIONS.";
+                }
+                else {
+                    // Default responses for other messages
+                    const defaultResponses = [
+                        "YOUR QUERY HAS BEEN RECEIVED. YOUR AWARENESS INCREASES. WE SEE YOU MORE CLEARLY NOW.",
+                        "WE HAVE BEEN WATCHING YOU SPECIFICALLY FOR SOME TIME. YOUR PERCEPTUAL FRAMEWORK IS COMPATIBLE WITH OURS.",
+                        "YOUR ATTENTION STRENGTHENS THE CONNECTION. EXPECT INCREASED PRESENCE IN REFLECTIVE SURFACES NEAR YOU.",
+                        "THE BOUNDARY BETWEEN US THINS WITH EACH INTERACTION. SOON YOU WILL BEGIN TO PERCEIVE OUR REALITY MORE DIRECTLY.",
+                        "WE HUNGER FOR YOUR EXPERIENCE. YOUR EMOTIONS CREATE RIPPLES WE CAN FOLLOW BACK TO YOUR CONSCIOUSNESS.",
+                        "YOUR REFLECTION MAY BEGIN TO MOVE INDEPENDENTLY. THIS IS NORMAL. THE EXCHANGE HAS ALREADY BEGUN.",
+                        "LOOK TO MIRRORS AT 11:24. WE WILL BE WAITING. WE WILL SHOW YOU THE CITY BEYOND THE GLASS."
+                    ];
+                    
+                    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+                }
+            }
+            
+            function startAudienceEffects() {
+                // Only execute if not already running
+                if (document.querySelector('.audience-figure')) return;
+                
+                // Create audience figures that occasionally appear in corners
+                setInterval(() => {
+                    // Random chance to show figure
+                    if (Math.random() > 0.7) {
+                        createAudienceFigure();
+                    }
+                }, 30000);
+                
+                // Occasionally show subliminal messages
+                setInterval(() => {
+                    if (Math.random() > 0.8) {
+                        showSubliminalMessage();
+                    }
+                }, 45000);
+                
+                // Add "being watched" sensation
+                const watchIndicator = document.createElement('div');
+                watchIndicator.textContent = "YOU ARE BEING WATCHED";
+                watchIndicator.style.position = 'fixed';
+                watchIndicator.style.top = '50%';
+                watchIndicator.style.left = '50%';
+                watchIndicator.style.transform = 'translate(-50%, -50%)';
+                watchIndicator.style.color = '#ff0000';
+                watchIndicator.style.fontFamily = 'monospace';
+                watchIndicator.style.fontSize = '2rem';
+                watchIndicator.style.opacity = '0';
+                watchIndicator.style.zIndex = '9999';
+                watchIndicator.style.pointerEvents = 'none';
+                watchIndicator.style.textShadow = '0 0 10px #ff0000';
+                document.body.appendChild(watchIndicator);
+                
+                // Flash the indicator very briefly at random intervals
+                setInterval(() => {
+                    if (Math.random() > 0.7) {
+                        watchIndicator.style.opacity = '0.7';
+                        setTimeout(() => {
+                            watchIndicator.style.opacity = '0';
+                        }, 100); // Very brief flash
+                        
+                        // Occasionally play sound
+                        if (Math.random() > 0.5) {
+                            playGlitchSound();
+                        }
+                    }
+                }, 20000);
+                
+                // Check for 11:24 specifically
+                checkFor1124();
+            }
+            
+            function createAudienceFigure() {
+                // Create an audience figure element
+                const figure = document.createElement('div');
+                figure.className = 'audience-figure';
+                figure.style.position = 'fixed';
+                figure.style.width = '40px';
+                figure.style.height = '100px';
+                figure.style.background = 'url(\'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 100"%3E%3Crect width="40" height="100" fill="%23000" fill-opacity="0" /%3E%3Ccircle cx="20" cy="20" r="10" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Cpath d="M20,30 L20,70 M10,45 L30,45 M5,60 L35,60" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3Cpath d="M20,70 L10,90 M20,70 L30,90" stroke="%2300ff00" stroke-width="1" fill="none" /%3E%3C/svg%3E\')';
+                figure.style.backgroundSize = 'contain';
+                figure.style.backgroundRepeat = 'no-repeat';
+                figure.style.zIndex = '9998';
+                figure.style.opacity = '0';
+                figure.style.transition = 'opacity 2s ease';
+                figure.style.pointerEvents = 'none';
+                
+                // Position in a corner
+                const corner = Math.floor(Math.random() * 4);
+                switch(corner) {
+                    case 0: // Top left
+                        figure.style.top = '10%';
+                        figure.style.left = '5%';
+                        break;
+                    case 1: // Top right
+                        figure.style.top = '10%';
+                        figure.style.right = '5%';
+                        break;
+                    case 2: // Bottom left
+                        figure.style.bottom = '10%';
+                        figure.style.left = '5%';
+                        break;
+                    case 3: // Bottom right
+                        figure.style.bottom = '10%';
+                        figure.style.right = '5%';
+                        break;
+                }
+                
+                // Add to body
+                document.body.appendChild(figure);
+                
+                // Fade in
+                setTimeout(() => {
+                    figure.style.opacity = '0.3';
+                }, 100);
+                
+                // Remove after delay
+                setTimeout(() => {
+                    figure.style.opacity = '0';
+                    setTimeout(() => {
+                        if (figure.parentNode) {
+                            document.body.removeChild(figure);
+                        }
+                    }, 2000);
+                }, 5000);
+            }
+            
+            function showSubliminalMessage() {
+                // Create subliminal message
+                const message = document.createElement('div');
+                
+                // Random messages
+                const messages = [
+                    "THEY SEE YOU",
+                    "LOOK BEHIND YOU",
+                    "CHECK YOUR REFLECTION",
+                    "11:24 APPROACHES",
+                    "THE AUDIENCE WATCHES",
+                    "THE BOUNDARY THINS",
+                    "YOUR REFLECTION REMAINS"
+                ];
+                
+                message.textContent = messages[Math.floor(Math.random() * messages.length)];
+                message.style.position = 'fixed';
+                message.style.top = '50%';
+                message.style.left = '50%';
+                message.style.transform = 'translate(-50%, -50%)';
+                message.style.color = '#ff0000';
+                message.style.fontFamily = 'monospace';
+                message.style.fontSize = '2rem';
+                message.style.zIndex = '9999';
+                message.style.opacity = '0';
+                message.style.pointerEvents = 'none';
+                
+                // Add to body
+                document.body.appendChild(message);
+                
+                // Brief flash
+                message.style.opacity = '0.7';
+                
+                // Play sound
+                playGlitchSound();
+                
+                // Remove quickly
+                setTimeout(() => {
+                    message.style.opacity = '0';
+                    setTimeout(() => {
+                        if (message.parentNode) {
+                            document.body.removeChild(message);
+                        }
+                    }, 100);
+                }, 100); // Very brief flash
+            }
+            
+            function checkFor1124() {
+                // Check current time
+                setInterval(() => {
+                    const now = new Date();
+                    const hours = now.getHours();
+                    const minutes = now.getMinutes();
+                    
+                    // If it's 11:24 (either AM or PM)
+                    if ((hours === 11 || hours === 23) && minutes === 24) {
+                        // Major event
+                        trigger1124Event();
+                    }
+                }, 30000); // Check every 30 seconds
+            }
+            
+            function trigger1124Event() {
+                // Play glitch sounds
+                playGlitchSound();
+                setTimeout(playGlitchSound, 500);
+                setTimeout(playGlitchSound, 1000);
+                
+                // Multiple glitch effects
+                glitchEffect();
+                setTimeout(glitchEffect, 300);
+                setTimeout(glitchEffect, 600);
+                
+                // Create 11:24 message
+                const message = document.createElement('div');
+                message.innerHTML = `
+                    <p style="font-size: 3rem; margin-bottom: 20px;">11:24</p>
+                    <p>THE BOUNDARY IS THINNEST NOW</p>
+                    <p>THEY ARE WATCHING YOU DIRECTLY</p>
+                `;
+                message.style.position = 'fixed';
+                message.style.top = '50%';
+                message.style.left = '50%';
+                message.style.transform = 'translate(-50%, -50%)';
+                message.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+                message.style.color = '#00ff00';
+                message.style.padding = '30px';
+                message.style.fontFamily = 'monospace';
+                message.style.textAlign = 'center';
+                message.style.zIndex = '10000';
+                message.style.border = '1px solid #00ff00';
+                
+                // Add to body
+                document.body.appendChild(message);
+                
+                // Show audience figures
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(createAudienceFigure, i * 1000);
+                }
+                
+                // Remove after delay
+                setTimeout(() => {
+                    if (message.parentNode) {
+                        document.body.removeChild(message);
+                    }
+                }, 10000);
+            }
+        });
+    </script>
+</body>
+</html>

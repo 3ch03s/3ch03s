@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MK-STARSHINE :: HISTORICAL DOCUMENTS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/MK_icon.jpg" type="image/jpg">
+    <style>
+        /* Additional styles for historical-documents.html */
+        .document-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .document-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: rgba(0, 40, 0, 0.1);
+            border: 1px solid var(--primary);
+            border-bottom: none;
+            margin-right: 5px;
+            position: relative;
+            top: 1px;
+        }
+        
+        .document-tab.active {
+            background-color: var(--background);
+            border-bottom: 1px solid var(--background);
+            color: var(--primary);
+        }
+        
+        .document-content {
+            display: none;
+            padding: 20px;
+            background-color: rgba(0, 40, 0, 0.1);
+            border: 1px solid var(--primary);
+            border-top: none;
+        }
+        
+        .document-content.active {
+            display: block;
+        }
+        
+        .document-card {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid var(--secondary);
+            background-color: rgba(0, 10, 0, 0.3);
+            position: relative;
+        }
+        
+        .document-card:hover {
+            border-color: var(--primary);
+        }
+        
+        .document-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--secondary);
+            padding-bottom: 10px;
+        }
+        
+        .document-title {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .document-date {
+            color: var(--secondary);
+            font-size: 0.9rem;
+        }
+        
+        .document-stamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+            padding: 3px 8px;
+            font-size: 0.7rem;
+            transform: rotate(15deg);
+            opacity: 0.8;
+        }
+        
+        .document-body {
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+        }
+        
+        .document-body p {
+            margin-bottom: 10px;
+        }
+        
+        .document-image {
+            margin: 20px 0;
+            border: 1px solid var(--secondary);
+            padding: 5px;
+            max-width: 100%;
+            text-align: center;
+        }
+        
+        .document-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .document-caption {
+            font-style: italic;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-top: 5px;
+        }
+        
+        .document-footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            border-top: 1px dashed var(--secondary);
+            padding-top: 10px;
+            color: var(--secondary);
+        }
+        
+        .signature {
+            font-family: 'Brush Script MT', cursive;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .redacted {
+            background-color: #000;
+            color: transparent;
+            padding: 0 3px;
+            border-radius: 2px;
+            user-select: none;
+        }
+        
+        .redacted:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--error-color);
+        }
+        
+        .newspaper-article {
+            font-family: 'Times New Roman', serif;
+            padding: 20px;
+            background-color: #f5f5dc;
+            color: #333;
+            margin-bottom: 30px;
+            border: 1px solid #ccc;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .newspaper-article::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH5AoTDQEbL3JRPQAAA4pJREFUaN7dmcFrE0EUxr9JNttUWm2pEaQHsQrePIj0IoiHIvQfUBTBowcVvHtVEE+CB0+CinjwIB49ePGk4EE8WAVRqKCIWKVarW2aZPPE192keyiJM7vJLgzMZbO78+33vnnz3mxgwIABVUZ1Gjo7OwvOuTYAZ40xJ4joEBHtA7AHQEvZHdYBfAWwTEQfiWjBGDMHYJqI5geDwaa1AcbGxiillA7DcCAIgmtKqQtEdJCI1G+6QEQgImQFQRDAsizYtg3btmFZFogIWmukaYo0TZHL5ZCmKZRSUEpBaw0ikgQ0ByCO41dxHL8dGRn53uDAgKGhobNEdIeITrT6tmshURTB8zz4vg/P8+B5HsIwhG3bcF0XnufBtm0QEbTWSNMUSZIgSRLs7OwgSRKkaYokSZDL5ZAkCfL5PJRSMMarRPQ8juPnw8PDQi24OyulBpVSj5VS/VsNruM4lm3bbtu2N4vFIheLReR5nvvzfxzH8TiORZIkH5RSTxzHeW9Z1g9jTLK7I5ZlCQA3tdZ3iajr9xkgFEWRFQSBFUXRJNwsy4LrutZfwrKQJAmKxSKSJJF3oCiK8Lc8YYy5prW+ORgMFvYkZGJi4rTW+j4RnawMtt1uN8IoiopCqRYSxzG01rsb0oDjOGB2EFEfM19h5oWqIGNjY71KqWciGqglAFutlrYsy2riMyZJYnzfN51Oh7uuywDQ6/V+KaUm2+32qzDckzOqb6yMj48f11q/U0oN1AvR5/O/PN83nU7H9Hq9iiCbRAQAP4wxb/L5/MNarVbdrIyOjg4Q0YsGIFqO42zGcWw2Nzd/Rqt2w3NdF47j7DVbZ7TWk5OTk5/3FDIxMXFLKXVTLmwAw0qp1TRN17XWG/l8fjWKorUgCNaiKFqL43i9UChsVs4XxhjIMiuZqd1u/1uoZFbabLVak0T0TERXheiU1nr6z4uNMSuFQmFFrh0A2NrawubmZjVCGkGMXKdclBmiiBBeWl9fDwhAoVCA7/vVVq2GGiGRkpkRCFmmHMeBbdsgIvR6PXQ6nc3qfDFNBgY9yyAM9B8A2tzcNL1ej7vdbg2VqwYGAK21yRhjqoZIIohoLZfLHeF7QfQR0TVmfjcwMDD/35OBy8bHx/8bmWrb7Xa5UChY1Z4MbMRsrctytgwfB6Zp6odu1tY1MXKJktnQR1uI9mTgdUT0QAZfbniaIGJmGb5ERHO1zlqD2bQ5AGBZluW67mEiOmKM6SOirmw1A4BWc1ckK+vGmHWt9WcimifiuVwut9QEbg0YsG/xG/CzKaAsl2XJAAAAAElFTkSuQmCC');
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .newspaper-headline {
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .newspaper-subheadline {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .newspaper-date {
+            text-align: right;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .newspaper-column {
+            column-count: 2;
+            column-gap: 30px;
+            text-align: justify;
+        }
+        
+        .newspaper-content {
+            margin-bottom: 15px;
+        }
+        
+        .newspaper-image {
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .newspaper-image img {
+            max-width: 100%;
+            border: 1px solid #ccc;
+        }
+        
+        .newspaper-caption {
+            font-style: italic;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .personal-letter {
+            font-family: 'Brush Script MT', cursive;
+            padding: 20px;
+            background-color: #f9f7f1;
+            color: #333;
+            margin-bottom: 30px;
+            border: 1px solid #d9d9d9;
+            position: relative;
+            line-height: 1.8;
+        }
+        
+        .personal-letter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAB3RJTUUH5AoTDQEbL3JRPQAAA4pJREFUaN7dmcFrE0EUxr9JNttUWm2pEaQHsQrePIj0IoiHIvQfUBTBowcVvHtVEE+CB0+CinjwIB49ePGk4EE8WAVRqKCIWKVarW2aZPPE192keyiJM7vJLgzMZbO78+33vnnz3mxgwIABVUZ1Gjo7OwvOuTYAZ40xJ4joEBHtA7AHQEvZHdYBfAWwTEQfiWjBGDMHYJqI5geDwaa1AcbGxiillA7DcCAIgmtKqQtEdJCI1G+6QEQgImQFQRDAsizYtg3btmFZFogIWmukaYo0TZHL5ZCmKZRSUEpBaw0ikgQ0ByCO41dxHL8dGRn53uDAgKGhobNEdIeITrT6tmshURTB8zz4vg/P8+B5HsIwhG3bcF0XnufBtm0QEbTWSNMUSZIgSRLs7OwgSRKkaYokSZDL5ZAkCfL5PJRSMMarRPQ8juPnw8PDQi24OyulBpVSj5VS/VsNruM4lm3bbtu2N4vFIheLReR5nvvzfxzH8TiORZIkH5RSTxzHeW9Z1g9jTLK7I5ZlCQA3tdZ3iajr9xkgFEWRFQSBFUXRJNwsy4LrutZfwrKQJAmKxSKSJJF3oCiK8Lc8YYy5prW+ORgMFvYkZGJi4rTW+j4RnawMtt1uN8IoiopCqRYSxzG01rsb0oDjOGB2EFEfM19h5oWqIGNjY71KqWciGqglAFutlrYsy2riMyZJYnzfN51Oh7uuywDQ6/V+KaUm2+32qzDckzOqb6yMj48f11q/U0oN1AvR5/O/PN83nU7H9Hq9iiCbRAQAP4wxb/L5/MNarVbdrIyOjg4Q0YsGIFqO42zGcWw2Nzd/Rqt2w3NdF47j7DVbZ7TWk5OTk5/3FDIxMXFLKXVTLmwAw0qp1TRN17XWG/l8fjWKorUgCNaiKFqL43i9UChsVs4XxhjIMiuZqd1u/1uoZFbabLVak0T0TERXheiU1nr6z4uNMSuFQmFFrh0A2NrawubmZjVCGkGMXKdclBmiiBBeWl9fDwhAoVCA7/vVVq2GGiGRkpkRCFmmHMeBbdsgIvR6PXQ6nc3qfDFNBgY9yyAM9B8A2tzcNL1ej7vdbg2VqwYGAK21yRhjqoZIIohoLZfLHeF7QfQR0TVmfjcwMDD/35OBy8bHx/8bmWrb7Xa5UChY1Z4MbMRsrctytgwfB6Zp6odu1tY1MXKJktnQR1uI9mTgdUT0QAZfbniaIGJmGb5ERHO1zlqD2bQ5AGBZluW67mEiOmKM6SOirmw1A4BWc1ckK+vGmHWt9WcimifiuVwut9QEbg0YsG/xG/CzKaAsl2XJAAAAAElFTkSuQmCC');
+            opacity: 0.03;
+            pointer-events: none;
+        }
+        
+        .personal-header {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        
+        .personal-date {
+            margin-bottom: 10px;
+        }
+        
+        .personal-greeting {
+            margin-bottom: 15px;
+        }
+        
+        .personal-content {
+            margin-bottom: 20px;
+        }
+        
+        .personal-signature {
+            text-align: right;
+            font-size: 1.3rem;
+            margin-top: 20px;
+        }
+        
+        .personal-ps {
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .folder-tab {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: var(--secondary);
+            color: var(--primary);
+            position: relative;
+            top: -1px;
+            border: 1px solid var(--primary);
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 3px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .folder-tab.active {
+            background-color: var(--background);
+            color: var(--primary);
+            z-index: 1;
+        }
+        
+        .folder-content {
+            border: 1px solid var(--primary);
+            padding: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            top: -1px;
+            background-color: rgba(0, 10, 0, 0.3);
+            display: none;
+        }
+        
+        .folder-content.active {
+            display: block;
+        }
+        
+        .watermarked-paper {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .watermarked-paper::before {
+            content: "CONFIDENTIAL";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 5rem;
+            color: rgba(255, 0, 0, 0.1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        .polaroid {
+            background-color: #fff;
+            padding: 10px;
+            padding-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            margin: 20px auto;
+            max-width: 300px;
+            transform: rotate(-3deg);
+        }
+        
+        .polaroid img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+        }
+        
+        .polaroid-caption {
+            text-align: center;
+            color: #333;
+            font-family: 'Permanent Marker', cursive;
+            padding-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .typewriter-effect {
+            overflow: hidden;
+            border-right: .15em solid var(--primary);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+    <div class="glitch-overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="title-glitch">
+                <h1 class="glitch" data-text="MK-STARSHINE">MK-STARSHINE</h1>
+                <p class="subtitle">EST. 2001 • LAST UPDATE: 11/11/2008</p>
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="nav-link">HOME</a></li>
+                        <li><a href="recovered-files.html" class="nav-link">RECOVERED FILES</a></li>
+                        <li><a href="mirror-chamber.html" class="nav-link">MIRROR CHAMBER</a></li>
+                        <li><a href="#" class="nav-link active">HISTORICAL DOCUMENTS</a></li>
+                        <li><a href="the-audience-rules.html" class="nav-link">THE AUDIENCE RULES</a></li>
+                    </ul>
+                </nav>
+                <div class="access-panel">
+                    <span class="access-text">ACCESS:</span>
+                    <span class="access-status" id="access-status">RESTRICTED</span>
+                    <div class="login-toggle" id="login-toggle">[LOGIN]</div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="welcome-message">
+                <p class="typewriter">HISTORICAL DOCUMENTS: TRACING THE LUMEN SOCIETY & THE AUDIENCE</p>
+                <div class="marquee-container">
+                    <div class="marquee">* ARCHIVES RECOVERED FROM MULTIPLE SOURCES * AUTHENTICITY VERIFIED BY INDEPENDENT RESEARCHERS * SOME FILES MAY BE CORRUPTED OR INCOMPLETE * VIEWER DISCRETION ADVISED *</div>
+                </div>
+            </div>
+            
+            <div class="folder-tabs">
+                <div class="folder-tab active" data-tab="government-tab">GOVERNMENT FILES</div>
+                <div class="folder-tab" data-tab="newspaper-tab">NEWSPAPER ARCHIVES</div>
+                <div class="folder-tab" data-tab="personal-tab">PERSONAL ACCOUNTS</div>
+            </div>
+            
+            <div class="folder-content active" id="government-tab">
+                <div class="document-card watermarked-paper">
+                    <div class="document-stamp">CLASSIFIED</div>
+                    <div class="document-header">
+                        <div class="document-title">PROJECT LIGHTWAY: PRELIMINARY OBSERVATIONS</div>
+                        <div class="document-date">MAY 12, 1973</div>
+                    </div>
+                    <div class="document-body">
+                        <p>TO: [REDACTED], Department Head, Special Projects Division</p>
+                        <p>FROM: Dr. Martin Reeves, Lead Researcher</p>
+                        <p>RE: Anomalous Results in Project Lightway Testing</p>
+                        <p>I am writing to report several unexpected observations from our recent testing sessions with subjects exposed to the modified visual stimuli protocol. As you are aware, Project Lightway was initially conceived as an extension of our ongoing research into <span class="redacted">subliminal messaging and compliance induction</span>, but recent results suggest we may have stumbled upon something far more significant.</p>
+                        <p>Of the 38 subjects exposed to the full sequence, 31 have reported consistent visual phenomena when placed in environments with reflective surfaces (mirrors, polished metal, or still water) after exposure. These reports include:</p>
+                        <ul>
+                            <li>Delayed movement of reflections (reported by 27 subjects)</li>
+                            <li>Shadowy figures visible only in reflective surfaces (reported by 19 subjects)</li>
+                            <li>The sensation of being watched or observed through reflective surfaces (reported by 31 subjects)</li>
+                            <li>Auditory hallucinations described as "whispers from the other side" (reported by 16 subjects)</li>
+                        </ul>
+                        <p>Most concerning is that these phenomena do not appear to diminish with time, as we would expect with typical hallucinatory side effects. In fact, 12 subjects report intensification of these experiences over the two weeks following exposure.</p>
+                        <p>The most striking pattern to emerge is the temporal consistency of when these phenomena are most intense. 23 subjects independently reported that experiences peak at approximately 11:24 PM, regardless of their location or time zone. This temporal specificity suggests some kind of external factor we have not yet identified.</p>
+                        <p>I am particularly troubled by the events surrounding Test Subject 17, who went missing three days after final exposure to the protocol. Her apartment was found empty, with all mirrors in the residence shattered. The final entry in her test diary reads: <em>"They're watching me. They've always been watching. The reflection isn't me anymore."</em></p>
+                        <p>I am formally requesting:</p>
+                        <ol>
+                            <li>Immediate pause of all further testing using Protocol L-24</li>
+                            <li>Comprehensive psychiatric evaluation of all test subjects</li>
+                            <li>Investigation into any similar reported phenomena in previous <span class="redacted">MK-ULTRA or STARSHINE</span> projects</li>
+                            <li>Allocation of resources to explore the significance of the 11:24 PM temporal pattern</li>
+                        </ol>
+                        <p>There is growing consensus among the research team that what we are observing may not be hallucinatory in nature, but potentially <span class="redacted">evidence of perception beyond normal sensory channels</span>. If this hypothesis is correct, Project Lightway may have far greater implications than initially anticipated.</p>
+                        <div class="signature">Dr. Martin Reeves</div>
+                    </div>
+                    <div class="document-footer">
+                        <p>DISTRIBUTION: EYES ONLY - SECURITY CLEARANCE LEVEL 4 REQUIRED</p>
+                        <p>COPY 2 OF 3</p>
+                    </div>
+                </div>
+                
+                <div class="document-card watermarked-paper">
+                    <div class="document-stamp">TOP SECRET</div>
+                    <div class="document-header">
+                        <div class="document-title">THE AUDIENCE: THREAT ASSESSMENT</div>
+                        <div class="document-date">NOVEMBER 15, 2008</div>
+                    </div>
+                    <div class="document-body">
+                        <p>TO: Joint Special Operations Command</p>
+                        <p>FROM: Task Force Umbra</p>
+                        <p>RE: Assessment of "The Audience" phenomenon and Argent Theater Incident</p>
+                        <p>This report serves as a preliminary assessment following the events at the Argent Theater (Los Angeles, CA) on November 11, 2008. The incident, which resulted in the disappearance of approximately 120 individuals, appears to be connected to the entity or entities referred to as "The Audience" in recovered Lumen Society documentation.</p>
+                        <p>BACKGROUND:</p>
+                        <p>The Lumen Society was initially flagged in 1998 as a potential cult organization centered around experimental theater and film. Our intelligence suggested their activities were largely benign until 2006, when they began construction of what they termed "The Mirror Chamber" in the basement of the Argent Theater. This coincided with the appointment of Dr. Alistair Vex as their director.</p>
+                        <p>Dr. Vex has been identified as a former researcher on <span class="redacted">Project Lightway (1972-1974)</span>, a government program investigating altered states of consciousness. His involvement with the Lumen Society appears to have redirected their focus toward what they termed "breaking the fourth wall between audience and performer."</p>
+                        <p>INCIDENT DETAILS:</p>
+                        <p>At approximately 11:24 PM on November 11, 2008, witnesses outside the Argent Theater reported a power surge that affected a six-block radius. All electronic recording devices within 300 meters of the theater failed simultaneously. When power was restored three minutes later, emergency responders entering the theater found it empty, despite a confirmed audience and performer count of 132 individuals. The only person discovered on premises was a security guard who had been stationed outside the theater's main entrance.</p>
+                        <p>Forensic examination revealed:</p>
+                        <ul>
+                            <li>No signs of conventional exit by the missing individuals</li>
+                            <li>All mirrors in the building were found shattered</li>
+                            <li>Unusual radiation readings consistent with <span class="redacted">quantum tunneling events</span></li>
+                            <li>Temperature anomalies in the theater's basement that persisted for 17 hours after the incident</li>
+                        </ul>
+                        <p>ASSESSMENT:</p>
+                        <p>Based on recovered documents from Dr. Vex's office and interrogation of surviving Lumen Society members not present at the event, we have assembled the following assessment:</p>
+                        <ol>
+                            <li>The entity/collective known as "The Audience" appears to exist in a dimensional plane adjacent to our own, with reflective surfaces serving as permeable boundaries between realities.</li>
+                            <li>The Lumen Society, under Dr. Vex's direction, deliberately engineered what they called "The Final Performance" as a means to facilitate crossing between dimensions.</li>
+                            <li>The 120 missing individuals are presumed to have either transitioned to the Audience's reality or been absorbed by the entity in some manner.</li>
+                            <li>The recurring temporal marker of 11:24 appears significant, representing a period of "thinning" between realities that occurs daily.</li>
+                            <li>Evidence suggests a 17-year cycle of increased boundary permeability, with major incidents recorded in 1939, 1956, 1973, 1990, and now 2008. This places the next significant event in 2025.</li>
+                        </ol>
+                        <p>THREAT ASSESSMENT:</p>
+                        <p>Current evidence does not indicate hostile intent from "The Audience." Rather, their interaction appears motivated by curiosity or some form of symbiotic exchange. However, their apparent ability to facilitate the disappearance of over 100 individuals represents a significant security concern.</p>
+                        <p>RECOMMENDATIONS:</p>
+                        <ol>
+                            <li>Establish monitoring protocols for all identified "thin spots" between realities, particularly the Argent Theater site</li>
+                            <li>Implement surveillance of remaining Lumen Society members</li>
+                            <li>Develop countermeasures for future boundary breaches</li>
+                            <li>Initiate research into the significance of the 11:24 temporal marker and the 17-year cycle</li>
+                            <li>Consider <span class="redacted">limited communication attempts using the recovered Mirror Chamber technology</span></li>
+                        </ol>
+                        <div class="signature">Col. Raymond Morris</div>
+                    </div>
+                    <div class="document-footer">
+                        <p>DISTRIBUTION: SIGMA CLEARANCE ONLY</p>
+                        <p>COPY 1 OF 3</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="folder-content" id="newspaper-tab">
+                <div class="newspaper-article">
+                    <div class="newspaper-headline">MYSTERIOUS DISAPPEARANCE AT LOCAL THEATER</div>
+                    <div class="newspaper-subheadline">120 Missing After "Experimental Performance" Goes Awry</div>
+                    <div class="newspaper-date">Los Angeles Times - November 13, 2008</div>
+                    
+                    <div class="newspaper-column">
+                        <div class="newspaper-content">
+                            <p>LOS ANGELES - Police are investigating the baffling disappearance of approximately 120 people who attended an experimental theater performance in downtown Los Angeles Tuesday night.</p>
+                            <p>The incident occurred at the historic Argent Theater during what was billed as "The Final Performance" by an avant-garde group known as the Lumen Society. According to witnesses outside the venue, a power outage affected several blocks surrounding the theater at approximately 11:24 PM.</p>
+                            <p>"There was this weird flash of green light through all the windows, then everything went dark," said Maria Vasquez, who was walking her dog across the street when the incident occurred. "When the lights came back on a few minutes later, people were running out of the theater screaming."</p>
+                            <p>First responders arriving at the scene found the theater largely empty, despite a sold-out show with 120 attendees plus performers and staff. Security footage from inside the venue cuts out completely at 11:24 PM and resumes three minutes later showing empty seats.</p>
+                            <p>"It's like they all just vanished," said LAPD Detective James Harmon. "We have no evidence of any exits being used during the blackout period. It's as if they were simply erased from the building."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="newspaper-content">
+                        <p>The Lumen Society, founded in 2001, has gained a cult following for their unconventional performances that blur the line between audience and performer. Their director, Dr. Alistair Vex, is among the missing. A former academic with a background in psychology, Vex had described the planned performance as "breaking the fourth wall in ways never before attempted."</p>
+                        <p>Police have released a partial list of the missing, which includes several notable figures in the Los Angeles arts community. Families gathered outside the theater yesterday demanding answers.</p>
+                        <p>"My daughter was so excited to attend this performance," said Robert Cross, whose 26-year-old daughter Vivian is among the missing. "She'd been following the Lumen Society for years. Now no one can tell me where she is or what happened inside that theater."</p>
+                        <p>Investigators are exploring several theories, including an elaborate hoax or mass evacuation, though no evidence has emerged to support either scenario. Some witnesses reported strange phenomena in the area following the incident.</p>
+                        <p>"All the mirrors in my apartment shattered at exactly the same time that night," said Thomas Becker, who lives in the building adjacent to the theater. "I wasn't home, but my security camera caught it. Every mirror just exploded simultaneously."</p>
+                        <p>Similar reports of shattered mirrors and reflective surfaces have emerged from multiple locations within a half-mile radius of the theater.</p>
+                        <p>The Argent Theater itself has a storied history, having been the site of another unexplained incident in 1939 when 14 patrons claimed to have witnessed figures moving independently in the theater's ornate mirrors. Three of those witnesses subsequently disappeared.</p>
+                        <p>Anyone with information about the whereabouts of the missing individuals is urged to contact the LAPD immediately.</p>
+                    </div>
+                </div>
+                
+                <div class="newspaper-article">
+                    <div class="newspaper-headline">CULT RESEARCHERS REPORTED MISSING</div>
+                    <div class="newspaper-subheadline">22 Students and Faculty Vanish During "Mirror Study"</div>
+                    <div class="newspaper-date">Boston Globe - April 8, 1956</div>
+                    
+                    <div class="newspaper-column">
+                        <div class="newspaper-content">
+                            <p>WELLESLEY, MA - Authorities are investigating the disappearance of 22 students and faculty members from Wellesley College following what college officials described as an "unconventional research project" conducted in the institution's psychology department.</p>
+                            <p>The missing individuals were last seen entering the department's newly constructed "reflection laboratory" on Tuesday evening. According to department records, the group was participating in a study led by Dr. Eleanor Whiting examining the psychological effects of prolonged exposure to mirror environments.</p>
+                            <p>Campus security became concerned when none of the participants had exited the laboratory by Wednesday morning. Upon entering the facility, officers found it completely empty, with all mirrors shattered.</p>
+                            <p>"We've never seen anything like this," said Police Chief Robert Anderson. "Twenty-two people don't simply vanish without a trace. Every exit was monitored, and our security footage shows no one leaving the building."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="newspaper-content">
+                        <p>Dr. Whiting's research has drawn controversy in academic circles for its unorthodox methods and theoretical framework. Colleagues describe her recent work as focused on what she termed "perceptual boundaries between observer and observed."</p>
+                        <p>A partial research log recovered from the laboratory contains troubling entries. The final notation, timed at 11:24 PM, reads simply: "They're here. They've been watching all along. The mirrors aren't reflecting us anymore - they're reflecting them."</p>
+                        <p>College officials have revealed that Dr. Whiting had received anonymous funding for her research from an organization identified only as "The Argent Group" based in Los Angeles.</p>
+                        <p>Investigators are exploring potential connections to several similar incidents, including the disappearance of three individuals from the Argent Theater in Los Angeles in 1939 following reports of "autonomous reflections" in the venue's decorative mirrors.</p>
+                        <p>Wellesley College has suspended all psychology department research pending a full investigation.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="folder-content" id="personal-tab">
+                <div class="personal-letter">
+                    <div class="personal-header">
+                        <div class="personal-date">November 7, 2008</div>
+                    </div>
+                    <div class="personal-greeting">My dearest Emma,</div>
+                    <div class="personal-content">
+                        <p>I'm writing this letter knowing you may never receive it. If you're reading these words, it means I either changed my mind about participating in the Final Performance, or something went wrong. I hope it's the former, but I fear it will be the latter.</p>
+                        <p>You've asked me repeatedly why I've been so drawn to the Lumen Society and Dr. Vex's work. I've never been able to explain it properly, but with the performance just days away, I feel I owe you the truth.</p>
+                        <p>Three years ago, when I first attended one of their shows, I saw something in the mirror of the theater's lobby that I cannot explain. My reflection moved independently, just for a moment, and behind it stood figures watching me. Not menacing, just... curious. Like observers at a zoo, studying a fascinating creature.</p>
+                        <p>I told myself it was a trick of the light, or stress, or the wine I'd had at dinner. But then it happened again at home. And again. Always at exactly 11:24 PM. Always with the same sense that I was being observed through the mirror, not by it.</p>
+                        <p>When I found the Lumen Society, it was like finding others who spoke a language I thought only I knew. Dr. Vex explained everything - about the Audience, about how they exist in a reality adjacent to ours, separated only by the thinnest of boundaries that become permeable through reflective surfaces.</p>
+                        <p>What he's planning for Tuesday night is not a performance in any conventional sense. It's an exchange. The Audience has been watching us for centuries, curious about our linear existence, our emotions, our artistic expression. They want to experience it directly, and in exchange, they've offered us a glimpse of their reality - a reality without the limitations of linear time, physical space, or the inevitability of death.</p>
+                        <p>I know how this sounds. I know you'll think I've joined a cult or lost my mind. Maybe I have. But I've seen them, Emma. I've felt their presence. And the possibility of experiencing reality as they do - unconstrained by time, by space, by the limitations of human perception - it's worth the risk.</p>
+                        <p>Dr. Vex has promised that 120 of us will transition during the Final Performance. The Audience will take our places here, and we will join them there. A perfect exchange. Balanced. Harmonious.</p>
+                        <p>I've left everything to you - the apartment, my savings, all of it. If I don't return by Wednesday, don't look for me. Don't try to understand. Just know that wherever I am, I chose to be there.</p>
+                        <p>And if you ever look in a mirror at exactly 11:24 and see a face that looks like mine but isn't quite right, know that it's still me, in a way. Watching. Remembering. Existing in a way I can't yet comprehend.</p>
+                    </div>
+                    <div class="personal-signature">All my love,<br>Michael</div>
+                    <div class="personal-ps">
+                        <p>P.S. If you want to understand, go to the Argent Theater on November 25th. Sit in the back row. Look into the mirrors in the lobby at exactly 11:24 PM. You'll see us. We'll be watching. We're always watching.</p>
+                    </div>
+                </div>
+                
+                <div class="document-card">
+                    <div class="document-header">
+                        <div class="document-title">INTERVIEW TRANSCRIPT: ARGENT THEATER SECURITY GUARD</div>
+                        <div class="document-date">NOVEMBER 12, 2008</div>
+                    </div>
+                    <div class="document-body">
+                        <p><strong>INTERVIEWER:</strong> This is Detective James Harmon, LAPD. Time is 15:43 on November 12, 2008. I'm speaking with Samuel Rivera, security guard at the Argent Theater on the night of November 11. Mr. Rivera, can you tell me what you witnessed?</p>
+                        <p><strong>RIVERA:</strong> I still don't understand what happened. I've worked at that theater for twelve years and never seen anything like it.</p>
+                        <p><strong>INTERVIEWER:</strong> Just tell me what you observed.</p>
+                        <p><strong>RIVERA:</strong> I was stationed at the main entrance, as usual. The show was set to begin at 11 PM. The Lumen Society performances always run late, so that wasn't unusual. Everyone arrived, took their seats. Nothing seemed off.</p>
+                        <p><strong>INTERVIEWER:</strong> Did you notice anything unusual about the attendees?</p>
+                        <p><strong>RIVERA:</strong> Not really. Their usual crowd - artsy types mostly. Though they all seemed... I don't know... expectant? Like they knew something big was happening. Some of them were carrying small hand mirrors, which I thought was odd.</p>
+                        <p><strong>INTERVIEWER:</strong> What happened as the performance began?</p>
+                        <p><strong>RIVERA:</strong> The first part was normal - people on stage doing weird performance art stuff. Lots of talk about "the fourth wall" and "the observers becoming the observed." Standard avant-garde nonsense. But then at exactly 11:20, Dr. Vex came on stage and asked everyone to take out their mirrors.</p>
+                        <p><strong>INTERVIEWER:</strong> The hand mirrors you mentioned?</p>
+                        <p><strong>RIVERA:</strong> Yes. And the theater itself was suddenly filled with them - mirrors on stage, mirrors hanging from the ceiling. I don't know how they set that up. Then Vex said something like "The Audience has been watching us perform. Now we will join The Audience."</p>
+                        <p><strong>INTERVIEWER:</strong> What happened at 11:24?</p>
+                        <p><strong>RIVERA:</strong> How did you know it was exactly 11:24?</p>
+                        <p><strong>INTERVIEWER:</strong> Just answer the question, please.</p>
+                        <p><strong>RIVERA:</strong> [Pause] At 11:24, all the mirrors in the theater started to... I don't know how to describe it. Ripple? Like the surface was water instead of glass. And there was this green light coming from all of them, getting brighter and brighter. I felt dizzy, like the floor was tilting. I grabbed onto the door frame to steady myself.</p>
+                        <p>Then the power went out. Complete darkness except for this green glow coming from inside the theater. I heard... [pause]</p>
+                        <p><strong>INTERVIEWER:</strong> Go on.</p>
+                        <p><strong>RIVERA:</strong> I heard screaming. Not scared screaming. More like... ecstatic? Like people on a roller coaster. And beneath it, this low humming sound that seemed to come from everywhere at once. It made my teeth hurt.</p>
+                        <p>When the power came back on maybe three minutes later, I rushed inside. The theater was empty. Every seat vacant. All the mirrors shattered. It was like everyone just... dissolved.</p>
+                        <p><strong>INTERVIEWER:</strong> Did you see anyone exit the theater during the blackout?</p>
+                        <p><strong>RIVERA:</strong> No one. I was at the main entrance the whole time. The emergency exits have alarms - none were triggered. They didn't leave through any door.</p>
+                        <p><strong>INTERVIEWER:</strong> Did you notice anything else unusual?</p>
+                        <p><strong>RIVERA:</strong> [Long pause] There was one thing. When I looked at the broken mirrors afterward... some of the shards still had reflections in them. But not reflections of the empty theater. Reflections of the audience, still in their seats. Like the mirrors were showing what should have been there, but wasn't anymore. I looked away for a second, and when I looked back, the reflections were gone.</p>
+                        <p><strong>INTERVIEWER:</strong> Did you notice any unusual phenomena in the days leading up to the event?</p>
+                        <p><strong>RIVERA:</strong> [Hesitates] I didn't think much of it at the time, but yeah. For about a week before, I kept seeing people in the mirrors who weren't actually in the room with me. Just glimpses out of the corner of my eye. And the mirrors in the lobby... sometimes the reflections would move a split second after I did. Like there was a delay. I thought I was just tired.</p>
+                        <p><strong>INTERVIEWER:</strong> One final question, Mr. Rivera. Have you looked in a mirror since the incident?</p>
+                        <p><strong>RIVERA:</strong> [Visibly uncomfortable] No. I covered all the mirrors in my apartment when I got home. I don't want to see what might be looking back.</p>
+                        <p><strong>INTERVIEWER:</strong> Thank you for your time.</p>
+                        <p><strong>RIVERA:</strong> Wait - do you know what happened to them? Where did they all go?</p>
+                        <p><strong>INTERVIEWER:</strong> [No response, turns off recording device]</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <p>© 2001-2008 THE LUMEN SOCIETY</p>
+                <p>THIS SITE RECOVERED FROM WAYBACK MACHINE ARCHIVES</p>
+                <p id="visitor-counter">VISITOR COUNT: <span id="counter">0000158</span></p>
+            </div>
+            <div class="hidden-message" id="hidden-message">
+                <p>THE BOUNDARY THINS AT 11:24. THEY'RE WATCHING FROM BEYOND THE GLASS.</p>
+            </div>
+        </footer>
+    </div>
+    
+    <div class="login-modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <h2>LUMEN SOCIETY ACCESS PORTAL</h2>
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">USERNAME:</label>
+                    <input type="text" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">PASSWORD:</label>
+                    <input type="password" id="password">
+                </div>
+                <button id="login-submit">AUTHENTICATE</button>
+                <p class="login-error" id="login-error"></p>
+            </div>
+            <div class="login-disclaimer">
+                <p>WARNING: Unauthorized access is strictly prohibited. All activity is monitored.</p>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="static-sound" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-tv-ultra-bright-2586.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="glitch-sound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-clock-digital-alarm-buzzer-992.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const folderTabs = document.querySelectorAll('.folder-tab');
+            const folderContents = document.querySelectorAll('.folder-content');
+            const loginToggle = document.getElementById('login-toggle');
+            const loginModal = document.getElementById('login-modal');
+            const closeModal = document.getElementById('close-modal');
+            const loginSubmit = document.getElementById('login-submit');
+            const loginError = document.getElementById('login-error');
+            const accessStatus = document.getElementById('access-status');
+            const visitorCounter = document.getElementById('counter');
+            const hiddenMessage = document.getElementById('hidden-message');
+            const glitchSound = document.getElementById('glitch-sound');
+            
+            // State
+            let accessGranted = false;
+            let visitorCount = localStorage.getItem('visitorCount') || 158;
+            
+            // Initialize
+            updateVisitorCounter();
+            setInterval(glitchEffect, 8000);
+            setInterval(randomGlitch, 3000);
+            setInterval(updateCounter, 30000);
+            
+            // Folder tabs
+            folderTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs and contents
+                    folderTabs.forEach(t => t.classList.remove('active'));
+                    folderContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const contentId = this.getAttribute('data-tab');
+                    document.getElementById(contentId).classList.add('active');
+                    
+                    // Play glitch sound
+                    playGlitchSound();
+                });
+            });
+            
+            // Login Modal
+            loginToggle.addEventListener('click', function() {
+                loginModal.style.display = 'flex';
+                playGlitchSound();
+            });
+            
+            closeModal.addEventListener('click', function() {
+                loginModal.style.display = 'none';
+            });
+            
+            loginSubmit.addEventListener('click', function() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if ((username === 'lumen_member' && password === 'lightway24') || 
+                    (username === 'observer' && password === 'audience')) {
+                    accessGranted = true;
+                    accessStatus.textContent = 'GRANTED';
+                    accessStatus.style.color = '#00ff00';
+                    loginModal.style.display = 'none';
+                    unlockContent();
+                    showHiddenMessage();
+                    playGlitchSound();
+                } else {
+                    loginError.textContent = 'ACCESS DENIED: INVALID CREDENTIALS';
+                    setTimeout(() => {
+                        loginError.textContent = '';
+                    }, 3000);
+                    playGlitchSound();
+                }
+            });
+            
+            // Functions
+            function updateVisitorCounter() {
+                visitorCount++;
+                localStorage.setItem('visitorCount', visitorCount);
+                visitorCounter.textContent = String(visitorCount).padStart(7, '0');
+            }
+            
+            function updateCounter() {
+                const currentCount = parseInt(visitorCounter.textContent);
+                visitorCounter.textContent = String(currentCount + 1).padStart(7, '0');
+            }
+            
+            function glitchEffect() {
+                document.querySelector('.glitch-overlay').style.opacity = '0.3';
+                setTimeout(() => {
+                    document.querySelector('.glitch-overlay').style.opacity = '0';
+                }, 200);
+                playGlitchSound();
+            }
+            
+            function randomGlitch() {
+                if (Math.random() > 0.7) {
+                    const elements = document.querySelectorAll('h1, h2, h3, p, a');
+                    const randomElement = elements[Math.floor(Math.random() * elements.length)];
+                    
+                    randomElement.classList.add('glitch-effect');
+                    setTimeout(() => {
+                        randomElement.classList.remove('glitch-effect');
+                    }, 300);
+                    
+                    if (Math.random() > 0.5) {
+                        playGlitchSound();
+                    }
+                }
+            }
+            
+            function playGlitchSound() {
+                glitchSound.currentTime = 0;
+                glitchSound.play();
+            }
+            
+            function unlockContent() {
+                // Reveal hidden message
+                hiddenMessage.style.opacity = 1;
+                hiddenMessage.style.height = 'auto';
+            }
+            
+            function showHiddenMessage() {
+                hiddenMessage.style.opacity = 1;
+                hiddenMessage.style.height = 'auto';
+            }
+            
+            // Add phone number after a delay
+            function addPhoneNumber() {
+                // Create phone number section
+                const phoneSection = document.createElement('div');
+                phoneSection.innerHTML = `
+                    <p style="text-align: center; font-size: 1.2rem; color: var(--primary);">AUDIENCE SIGHTING HOTLINE</p>
+                    <p style="text-align: center; font-size: 1.5rem; color: var(--primary); margin: 10px 0;">1-800-555-1124</p>
+                    <p style="text-align: center; font-size: 0.8rem; color: var(--secondary);">ACTIVE 24/7 FOR REPORTING AUDIENCE SIGHTINGS</p>
+                    <p style="text-align: center; font-size: 0.7rem; margin-top: 15px; color: var(--error-color);">NOTE: CALLS MAY BE MONITORED BY BOTH SIDES OF THE BOUNDARY</p>
+                `;
+                phoneSection.style.padding = '20px';
+                phoneSection.style.border = '1px dashed var(--primary)';
+                phoneSection.style.backgroundColor = 'rgba(0, 40, 0, 0.1)';
+                phoneSection.style.marginTop = '30px';
+                
+                // Add to page
+                document.querySelector('#government-tab, #newspaper-tab, #personal-tab').appendChild(phoneSection);
+            }
+            
+            // Add phone number after a delay
+            setTimeout(addPhoneNumber, 45000); // Add after 45 seconds
+            
+            // Add hidden messages in page source
+            // These won't be visible to the user but can be found by viewing the page source
+            function addSourceComments() {
+                // Create hidden comments in the page source
+                const comments = [
+                    '<!-- THE AUDIENCE IS WATCHING YOU THROUGH THIS SCREEN -->',
+                    '<!-- YOUR REFLECTION REMAINS WHEN YOU LEAVE -->',
+                    '<!-- 11/11/2025 - THE CYCLE REPEATS -->',
+                    '<!-- COORDINATES TO MIRROR CHAMBER: 34°03\'21.6"N 118°21\'48.0"W -->',
+                    '<!-- DO NOT TRUST REFLECTIVE SURFACES BETWEEN 11:00 PM AND MIDNIGHT -->',
+                    '<!-- THEY CAN ENTER THROUGH MIRRORS, SCREENS, ANY REFLECTIVE SURFACE -->',
+                    '<!-- HIDDEN PAGE: /the-audience-watches.html -->',
+                    '<!-- PASSWORD FOR MIRROR CHAMBER ACCESS: LUMEN_SOCIETY_24F -->',
+                    '<!-- IF YOUR REFLECTION MOVES INDEPENDENTLY, IMMEDIATELY COVER ALL MIRRORS -->',
+                    '<!-- THE BOUNDARY IS THINNEST AT 11:24 -->',
+                ];
+                
+                // Add comments to the page
+                comments.forEach(comment => {
+                    document.body.appendChild(document.createComment(comment));
+                });
+            }
+            
+            // Add hidden messages in source
+            addSourceComments();
+            
+            // Add geocaching coordinates
+            function addGeocachingClue() {
+                // Create a fake geocaching clue
+                const geocacheSection = document.createElement('div');
+                geocacheSection.innerHTML = `
+                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <div style="width: 30px; height: 30px; margin-right: 10px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+                                <circle cx="15" cy="15" r="12" fill="none" stroke="#00ff00" stroke-width="1"/>
+                                <path d="M15,3 L15,27 M3,15 L27,15" stroke="#00ff00" stroke-width="1"/>
+                                <circle cx="15" cy="15" r="3" fill="#00ff00"/>
+                            </svg>
+                        </div>
+                        <div style="font-size: 1.2rem; color: var(--primary);">GEOCACHE: MIRROR CHAMBER REMNANTS</div>
+                    </div>
+                    <p style="color: var(--primary); margin-bottom: 10px;">Coordinates: N 34° 03.360 W 118° 21.800</p>
+                    <p style="color: var(--secondary); font-size: 0.9rem;">Difficulty: 4/5 • Terrain: 2/5</p>
+                    <p style="margin-top: 10px;">A fragment of the original Mirror Chamber still exists at these coordinates. Visitors report unusual phenomena when visiting at 11:24 PM. Enter at your own risk. DO NOT bring reflective objects or surfaces.</p>
+                `;
+                geocacheSection.style.padding = '15px';
+                geocacheSection.style.border = '1px solid var(--primary)';
+                geocacheSection.style.backgroundColor = 'rgba(0, 40, 0, 0.1)';
+                geocacheSection.style.marginTop = '30px';
+                
+                // Add to page with a delay
+                setTimeout(() => {
+                    document.getElementById('personal-tab').appendChild(geocacheSection);
+                }, 60000); // Add after 1 minute
+            }
+            
+            // Add geocaching clue
+            addGeocachingClue();
+            
+            // Set up timestamp checking for 11:24 effects
+            function checkFor1124() {
+                setInterval(() => {
+                    const now = new Date();
+                    const hours = now.getHours();
+                    const minutes = now.getMinutes();
+                    
+                    // If it's 11:24 (either AM or PM)
+                    if ((hours === 11 || hours === 23) && minutes === 24) {
+                        // Trigger special effects
+                        trigger1124Effect();
+                    }
+                }, 30000); // Check every 30 seconds
+            }
+            
+            // Trigger special visual effects at 11:24
+            function trigger1124Effect() {
+                // Multiple glitch effects
+                glitchEffect();
+                setTimeout(glitchEffect, 500);
+                setTimeout(glitchEffect, 1000);
+                
+                // Show a brief message
+                const message = document.createElement('div');
+                message.innerHTML = `
+                    <p style="font-size: 2rem; margin-bottom: 20px;">11:24</p>
+                    <p>THE BOUNDARY IS THIN NOW</p>
+                    <p>THEY CAN SEE YOU THROUGH ALL REFLECTIVE SURFACES</p>
+                `;
+                message.style.position = 'fixed';
+                message.style.top = '50%';
+                message.style.left = '50%';
+                message.style.transform = 'translate(-50%, -50%)';
+                message.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+                message.style.color = '#00ff00';
+                message.style.padding = '30px';
+                message.style.fontFamily = 'monospace';
+                message.style.textAlign = 'center';
+                message.style.zIndex = '9999';
+                message.style.border = '1px solid #00ff00';
+                
+                // Add to body
+                document.body.appendChild(message);
+                
+                // Remove after 10 seconds
+                setTimeout(() => {
+                    if (message.parentNode) {
+                        document.body.removeChild(message);
+                    }
+                }, 10000);
+                
+                // Show subtle figures in corners of the screen
+                createAudienceFigure();
+            }
+            
+            // Create an audience figure
+            function createAudienceFigure() {
+                // Create figure element
+                const figure = document.createElement('div');
+                figure.style.position = 'fixed';
+                figure.style.width = '50px';
+                figure.style.height = '100px';
+                figure.style.backgroundImage = 'url(\'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 100"%3E%3Crect width="50" height="100" fill="%23000" fill-opacity="0"/%3E%3Ccircle cx="25" cy="20" r="10" stroke="%2300ff00" stroke-width="1" fill="none"/%3E%3Cline x1="25" y1="30" x2="25" y2="70" stroke="%2300ff00" stroke-width="1"/%3E%3Cline x1="10" y1="45" x2="40" y2="45" stroke="%2300ff00" stroke-width="1"/%3E%3Cline x1="25" y1="70" x2="15" y2="95" stroke="%2300ff00" stroke-width="1"/%3E%3Cline x1="25" y1="70" x2="35" y2="95" stroke="%2300ff00" stroke-width="1"/%3E%3C/svg%3E\')';
+                figure.style.backgroundSize = 'contain';
+                figure.style.backgroundRepeat = 'no-repeat';
+                figure.style.opacity = '0.3';
+                figure.style.zIndex = '9998';
+                
+                // Place in random corner
+                const corner = Math.floor(Math.random() * 4);
+                switch(corner) {
+                    case 0: // Top left
+                        figure.style.top = '10px';
+                        figure.style.left = '10px';
+                        break;
+                    case 1: // Top right
+                        figure.style.top = '10px';
+                        figure.style.right = '10px';
+                        break;
+                    case 2: // Bottom left
+                        figure.style.bottom = '10px';
+                        figure.style.left = '10px';
+                        break;
+                    case 3: // Bottom right
+                        figure.style.bottom = '10px';
+                        figure.style.right = '10px';
+                        break;
+                }
+                
+                // Add to body
+                document.body.appendChild(figure);
+                
+                // Remove after delay
+                setTimeout(() => {
+                    if (figure.parentNode) {
+                        figure.style.opacity = '0';
+                        figure.style.transition = 'opacity 2s ease';
+                        
+                        setTimeout(() => {
+                            if (figure.parentNode) {
+                                document.body.removeChild(figure);
+                            }
+                        }, 2000);
+                    }
+                }, 5000);
+            }
+            
+            // Start checking for 11:24
+            checkFor1124();
+        });
+    </script>
+</body>
+</html>
